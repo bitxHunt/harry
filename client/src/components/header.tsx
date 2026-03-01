@@ -14,7 +14,7 @@ export function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 h-14 border-b border-neutral-200 dark:border-white/10 flex justify-center">
+    <header className="sticky top-0 z-50 h-14 border-b border-neutral-200 dark:border-white/10 bg-white flex justify-center">
       <div className="flex items-center justify-between w-full max-w-6xl px-6 md:px-8">
 
         {/* Logo */}

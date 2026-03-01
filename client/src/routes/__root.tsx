@@ -6,7 +6,7 @@ import { Footer } from "@/components/footer";
 const RootLayout = () => (
   <div className="bg-white dark:bg-black font-inter">
     <Header />
-    <main>
+    <main className="bg-neutral-50">
       <Outlet />
     </main>
     <Footer />
