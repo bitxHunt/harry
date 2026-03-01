@@ -125,7 +125,7 @@ export const experiences = [
     org: "Strive Education",
     period: "Sept 2025 - Jan 2026",
     type: "Education",
-    description: "Teach Python programming fundamentals to primary students.",
+    description: "Teach Python programming fundamentals to primary students by incorporating mathematical principles.",
   },
 ] as const;
 
