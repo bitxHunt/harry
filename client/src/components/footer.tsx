@@ -26,40 +26,43 @@ const socialLinks = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-border">
+    <footer className="bg-black text-white">
       <div className="max-w-6xl mx-auto px-6 md:px-16 py-12">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
+          {/* Name + tagline */}
           <div className="space-y-1">
             <Link
               to="/"
-              className="text-sm text-neutral-500 tracking-tight text-foreground"
+              className="text-sm font-bold tracking-tight text-white"
             >
               Thiha Swan Htet
             </Link>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-neutral-500">
               Developer · Builder · Community person
             </p>
           </div>
 
+          {/* Nav links */}
           <nav className="flex gap-6">
             {navLinks.map(({ label, to }) => (
               <Link
                 key={to}
                 to={to}
-                className="text-sm text-neutral-500 hover:text-sky-500"
+                className="text-sm text-neutral-400 hover:text-white transition-colors"
               >
                 {label}
               </Link>
             ))}
           </nav>
 
+          {/* Social icons */}
           <div className="flex items-center gap-1">
             {socialLinks.map(({ label, href, icon: Icon }) => (
               <Button
                 key={label}
                 variant="ghost"
                 size="icon"
-                className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                className="h-9 w-9 text-neutral-400 hover:text-white hover:bg-white/10"
                 asChild
               >
                 <a
@@ -75,9 +78,9 @@ export function Footer() {
           </div>
         </div>
 
-        <Separator className="my-8" />
+        <Separator className="my-8 bg-white/10" />
 
-        <div className="flex flex-col md:flex-row items-center justify-between gap-2 text-xs text-neutral-500">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-2 text-xs text-neutral-600">
           <span>© 2026 Thiha Swan Htet. All rights reserved.</span>
           <span>Built with React · TanStack Router · shadcn/ui</span>
         </div>

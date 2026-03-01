@@ -22,8 +22,8 @@ function HomePage() {
       <Experience />
       <Skills />
       <Projects />
-      <Articles />
       <Contact />
+      <Articles />
     </div>
   );
 }
