@@ -15,7 +15,7 @@ export function About() {
               A bit about me
             </h2>
             <p className="text-base text-neutral-600 dark:text-neutral-400 leading-relaxed mb-4">
-              I'm Thiha Swan Htet, a final-year diploma student in Singapore. I
+              I'm Thiha Swan Htet, a final-year IT diploma student in Singapore. I
               picked up web development a couple of years ago and haven't
               stopped building since.
             </p>
