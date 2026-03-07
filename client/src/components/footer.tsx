@@ -4,9 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
 const navLinks = [
-  { label: "Home", to: "/" },
-  { label: "Projects", to: "/projects" },
-  { label: "Blogs", to: "/blogs" },
+  { label: "Home", hash: "" },
+  { label: "Projects", hash: "projects" },
+  { label: "Blogs", hash: "articles" },
 ] as const;
 
 const socialLinks = [
@@ -26,8 +26,8 @@ const socialLinks = [
 
 export function Footer() {
   return (
-    <footer className="bg-black text-white">
-      <div className="max-w-6xl mx-auto px-6 md:px-16 py-12">
+    <footer className="bg-neutral-950 text-white">
+      <div className="max-w-6xl mx-auto px-6 md:px-8 py-12">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
           {/* Name + tagline */}
           <div className="space-y-1">
@@ -44,10 +44,12 @@ export function Footer() {
 
           {/* Nav links */}
           <nav className="flex gap-6">
-            {navLinks.map(({ label, to }) => (
+            {navLinks.map(({ label, hash }) => (
               <Link
-                key={to}
-                to={to}
+                key={hash}
+                to="/"
+                hash={hash || undefined}
+                resetScroll={false}
                 className="text-sm text-neutral-400 hover:text-white transition-colors"
               >
                 {label}

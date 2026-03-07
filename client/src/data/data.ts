@@ -1,5 +1,8 @@
 import SMULogo from "@/assets/SMU_Logo.jpg";
 import SPLogo from "@/assets/SP_Logo.png";
+import RExusLogo from "@/assets/RExus_Logo.png";
+import IMCSLogo from "@/assets/IMCS_Logo.png";
+import StriveLogo from "@/assets/Strive_Logo.webp";
 
 export const skillRow1 = [
   {
@@ -45,6 +48,7 @@ export const skillRow1 = [
   {
     name: "Express",
     src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg",
+    invert: true,
   },
   {
     name: "Spring Boot",
@@ -64,6 +68,7 @@ export const skillRow2 = [
   {
     name: "Prisma",
     src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prisma/prisma-original.svg",
+    invert: true,
   },
   {
     name: "PostgreSQL",
@@ -106,28 +111,48 @@ export const skillRow2 = [
 export const experiences = [
   {
     role: "Lead DevOps",
-    org: "IMCS Toolkit @Singapore Polytechnic",
-    period: "Oct 2024 - Aug 2025",
+    org: "IMCS x Singapore Polytechnic",
     type: "Leadership",
-    description:
+    period: "Oct 2024 – Aug 2025",
+    year: "2024",
+    location: "Singapore",
+    logo: IMCSLogo,
+    bullets: [
       "Developed an AI-powered business excellence toolkit, featuring automated digital forms and management dashboard for 500 users.",
+      "Implemented infrastructure-as-code using Terraform and GitHub Actions for automated testing, containerized deployments, and AWS resource provisioning.",
+      "Integrated budget alarms, and AI autofill feature with AWS OpenSearch and Bedrock.",
+      "Contributed to authentication and management dashboard for admins, consultants and stakeholders.",
+    ],
   },
   {
-    role: "Full Stack Developer & Maintainer",
+    role: "Web Developer & Maintainer",
     org: "RExus Bioenergy",
-    period: "Apr 2025 – Present",
     type: "Work",
-    description:
-      "Designed a responsive company portfolio website to attract potential visitors. Singapore's First Circular Biomass Power Plant.",
+    period: "Apr 2025 – Present",
+    year: "2025",
+    location: "Singapore",
+    logo: RExusLogo,
+    bullets: [
+      "Designed a responsive company portfolio website to attract potential stakeholders",
+      "Developed REST APIs and integrated third-party data sources for real-time reporting.",
+      "Maintain production environment with proactive monitoring, security patches, and performance optimization.",
+    ],
   },
   {
-    role: "Part time Tutor",
+    role: "Part-time Tutor",
     org: "Strive Education",
-    period: "Sept 2025 - Jan 2026",
     type: "Education",
-    description: "Teach Python programming fundamentals to primary students by incorporating mathematical principles.",
+    period: "Sept 2025 – Jan 2026",
+    year: "2025",
+    location: "Singapore",
+    logo: StriveLogo,
+    bullets: [
+      "Tutored Python programming fundamentals to primary students",
+      " Design and facilitate interdisciplinary lessons combining mathematics with coding concepts.",
+      "Guide students through hands-on projects using the company’s web-based IDE, creating visual art and animations with Python.",
+    ],
   },
-] as const;
+];
 
 export const projects = [
   {

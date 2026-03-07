@@ -1,58 +1,87 @@
-import { Badge } from "@/components/ui/badge";
-
+import { CalendarDays, MapPin } from "lucide-react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { experiences } from "@/data/data";
 
 export function Experience() {
   return (
-    <section className="bg-neutral-50 dark:bg-neutral-900">
+    <section id="experience" className="border-t border-neutral-200 dark:border-white/10">
       <div className="max-w-6xl mx-auto px-6 md:px-8 py-20">
         {/* Header */}
-        <div className="flex items-end justify-between mb-12">
-          <div>
-            <p className="text-xs font-medium uppercase tracking-widest text-sky-500 mb-3">
-              Experience
-            </p>
-            <h2 className="text-3xl font-bold tracking-tight">
-              Contributions
-            </h2>
-          </div>
+        <div className="mb-12">
+          <p className="text-xs font-medium uppercase tracking-widest text-indigo-500 mb-3">
+            Work Experience
+          </p>
+          <h2 className="text-3xl font-bold tracking-tight">Contributions</h2>
         </div>
 
-        {/* Cards */}
-        <div className="grid md:grid-cols-3 gap-5">
+        {/* Accordion */}
+        <Accordion type="single" collapsible defaultValue="experience-0">
           {experiences.map((e, i) => (
-            <div
+            <AccordionItem
               key={i}
-              className="bg-white dark:bg-neutral-800 rounded-2xl p-6 border border-neutral-200 dark:border-white/10 flex flex-col gap-4 hover:border-neutral-300 dark:hover:border-white/20 transition-colors"
+              value={`experience-${i}`}
+              className="border border-neutral-200 dark:border-white/10 rounded-2xl mb-4 bg-white dark:bg-neutral-900 overflow-hidden shadow-sm"
             >
-              {/* Top row */}
-              <div className="flex items-start justify-between gap-2">
-                <Badge
-                  variant="secondary"
-                  className="rounded-full text-xs font-normal px-2.5"
-                >
-                  {e.type}
-                </Badge>
-                <span className="text-xs text-neutral-400 tabular-nums shrink-0">
-                  {e.period}
+              <AccordionTrigger className="hover:no-underline px-4 py-4 md:px-8 md:py-6 hover:bg-neutral-100/60 dark:hover:bg-neutral-700/40 transition-colors items-center">
+                {/* Left: logo + role + org */}
+                <div className="flex items-center gap-3 md:gap-5 flex-1 min-w-0">
+                  <div className="size-12 md:size-16 rounded-xl border border-neutral-200 dark:border-white/10 bg-white dark:bg-neutral-700 flex items-center justify-center shrink-0 overflow-hidden p-1">
+                    <img
+                      src={e.logo}
+                      alt={`${e.org} logo`}
+                      className="w-9 h-9 md:w-11 md:h-11 object-contain"
+                    />
+                  </div>
+                  <div className="text-left min-w-0">
+                    <h3 className="text-sm md:text-lg font-bold tracking-tight truncate">
+                      {e.role}
+                    </h3>
+                    <p className="text-xs md:text-base text-indigo-500 truncate">{e.org}</p>
+                  </div>
+                </div>
+
+                {/* Year */}
+                <span className="text-xs md:text-lg font-bold text-neutral-400 dark:text-neutral-500 tabular-nums shrink-0 mr-3">
+                  {e.year}
                 </span>
-              </div>
+              </AccordionTrigger>
 
-              {/* Role */}
-              <div>
-                <h3 className="text-base font-semibold tracking-tight mb-0.5">
-                  {e.role}
-                </h3>
-                <p className="text-sm text-sky-500">{e.org}</p>
-              </div>
+              {/* Expanded content */}
+              <AccordionContent className="px-4 pb-6 md:px-8 md:pb-8">
+                <div className="border-t border-neutral-200 dark:border-white/10 pt-6">
+                  {/* Meta row */}
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-6">
+                    <div className="flex items-center gap-2 text-sm text-neutral-400">
+                      <CalendarDays className="size-4 shrink-0" />
+                      <span>{e.period}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-neutral-400">
+                      <MapPin className="size-4 shrink-0" />
+                      <span>{e.location}</span>
+                    </div>
+                  </div>
 
-              {/* Description */}
-              <p className="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">
-                {e.description}
-              </p>
-            </div>
+                  {/* Bullets */}
+                  <ul className="space-y-3">
+                    {e.bullets.map((point, j) => (
+                      <li key={j} className="flex items-start gap-3">
+                        <span className="mt-2 size-1.5 rounded-full bg-indigo-500 shrink-0" />
+                        <p className="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">
+                          {point}
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
           ))}
-        </div>
+        </Accordion>
       </div>
     </section>
   );

@@ -54,11 +54,14 @@ export function Contact() {
   }
 
   return (
-    <section className="bg-black text-white [&_*]:outline-white/10">
+    <section id="contact" className="bg-neutral-950 text-white [&_*]:outline-white/10">
       <div className="max-w-6xl mx-auto px-6 md:px-8 py-20">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
           {/* Left */}
           <div>
+            <p className="text-xs font-medium uppercase tracking-widest text-indigo-300 mb-3">
+              Contact
+            </p>
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-3">
               Want to work together?
             </h2>
@@ -94,7 +97,7 @@ export function Contact() {
                         control={form.control}
                         render={({ field, fieldState }) => (
                           <Field data-invalid={fieldState.invalid}>
-                            <FieldLabel className="text-xs text-neutral-400 uppercase tracking-widest">
+                            <FieldLabel className="text-sm text-neutral-400 uppercase tracking-widest">
                               Name
                             </FieldLabel>
                             <Input
@@ -114,7 +117,7 @@ export function Contact() {
                         control={form.control}
                         render={({ field, fieldState }) => (
                           <Field data-invalid={fieldState.invalid}>
-                            <FieldLabel className="text-xs text-neutral-400 uppercase tracking-widest">
+                            <FieldLabel className="text-sm text-neutral-400 uppercase tracking-widest">
                               Email
                             </FieldLabel>
                             <Input
@@ -138,7 +141,7 @@ export function Contact() {
                       control={form.control}
                       render={({ field, fieldState }) => (
                         <Field data-invalid={fieldState.invalid}>
-                          <FieldLabel className="text-xs text-neutral-400 uppercase tracking-widest">
+                          <FieldLabel className="text-sm text-neutral-400 uppercase tracking-widest">
                             Message
                           </FieldLabel>
                           <InputGroup className="outline-none">

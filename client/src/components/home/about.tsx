@@ -3,14 +3,17 @@ import { ArrowUpRight } from "lucide-react";
 
 export function About() {
   return (
-    <section className="border-t border-neutral-200 dark:border-white/10">
+    <section id="about" className="border-t border-neutral-200 dark:border-white/10 bg-neutral-50 dark:bg-neutral-900/50">
       <div className="max-w-6xl mx-auto px-6 md:px-8 py-20">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           {/* Left — text + button (desktop only button) */}
           <div>
-            <p className="text-xs font-medium uppercase tracking-widest text-sky-500 mb-4">
+            <p className="text-xs font-medium uppercase tracking-widest text-indigo-500 mb-3">
               About
             </p>
+            <h2 className="text-3xl font-bold tracking-tight mb-6">
+              A bit about me
+            </h2>
             <p className="text-base text-neutral-600 dark:text-neutral-400 leading-relaxed mb-4">
               I'm Thiha Swan Htet, a final-year diploma student in Singapore. I
               picked up web development a couple of years ago and haven't
