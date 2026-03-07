@@ -50,7 +50,7 @@ export function Footer() {
                 to="/"
                 hash={hash || undefined}
                 resetScroll={false}
-                className="text-sm text-neutral-400 hover:text-white transition-colors"
+                className="text-sm text-neutral-400 hover:text-indigo-300 transition-colors"
               >
                 {label}
               </Link>
@@ -64,7 +64,7 @@ export function Footer() {
                 key={label}
                 variant="ghost"
                 size="icon"
-                className="h-9 w-9 text-neutral-400 hover:text-white hover:bg-white/10 hover:scale-110 transition-all duration-200"
+                className="h-9 w-9 text-neutral-400 hover:text-indigo-300 hover:bg-white/10"
                 asChild
               >
                 <a
