@@ -7,6 +7,6 @@ export const prisma = new PrismaClient({ adapter });
 
 export const corsOptions = {
   origin: env.APP_URL,
-  methods: ["POST"],
+  methods: ["GET", "POST"],
   allowedHeaders: ["Content-Type"],
 };

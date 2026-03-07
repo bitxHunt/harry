@@ -12,4 +12,11 @@ app.use(cors(corsOptions));
 
 app.use("/api", mainRoutes);
 
+// Health Check
+app.use("/health", (req, res) => {
+  res.status(200).json({
+    success: "server is running",
+  });
+});
+
 export default app;
