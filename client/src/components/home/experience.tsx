@@ -9,7 +9,10 @@ import { experiences } from "@/data/data";
 
 export function Experience() {
   return (
-    <section id="experience" className="border-t border-neutral-200 dark:border-white/20">
+    <section
+      id="experience"
+      className="border-t border-neutral-200 dark:border-white/20"
+    >
       <div className="max-w-6xl mx-auto px-8 md:px-10 py-20">
         {/* Header */}
         <div className="mb-12 text-center md:text-left">
@@ -41,7 +44,9 @@ export function Experience() {
                     <h3 className="text-sm md:text-lg font-bold tracking-tight truncate">
                       {e.role}
                     </h3>
-                    <p className="text-xs md:text-base text-indigo-500 dark:text-indigo-300 truncate">{e.org}</p>
+                    <p className="text-xs md:text-base text-indigo-500 dark:text-indigo-300 truncate">
+                      {e.org}
+                    </p>
                   </div>
                 </div>
 
@@ -70,7 +75,7 @@ export function Experience() {
                   <ul className="space-y-3">
                     {e.bullets.map((point, j) => (
                       <li key={j} className="flex items-start gap-3">
-                        <span className="mt-2 size-1.5 rounded-full bg-indigo-500 shrink-0" />
+                        <span className="mt-2 size-1.5 rounded-full bg-indigo-300 shrink-0" />
                         <p className="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">
                           {point}
                         </p>

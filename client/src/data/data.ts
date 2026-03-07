@@ -4,7 +4,7 @@ import RExusLogo from "@/assets/RExus_Logo.png";
 import StriveLogo from "@/assets/Strive_Logo.webp";
 import IMCSLogo from "@/assets/IMCS_Logo.png";
 import ILFLogo from "@/assets/ILF_Logo.png";
-import GSMLogo from "@/assets/GSM_Logo.jpeg";
+import SASApp from "@/assets/SAS_App.png";
 
 export const skillRow1 = [
   {
@@ -130,7 +130,7 @@ export const experiences = [
     role: "Web Developer",
     org: "RExus Bioenergy",
     type: "Work",
-    period: "Apr 2025 – Present",
+    period: "Apr 2025 – Oct 2025",
     year: "2025",
     location: "Singapore",
     logo: RExusLogo,
@@ -172,7 +172,16 @@ export const projects: Project[] = [
     title: "IMCS Toolkit",
     description:
       "Developed an AI-powered business excellence toolkit, featuring automated digital forms and management dashboard for 500 users.",
-    tags: ["React", "Node.js", "Express", "Prisma", "NeonDB", "AWS", "Docker"],
+    tags: [
+      "React",
+      "Tailwind",
+      "Node.js",
+      "Express",
+      "Prisma",
+      "NeonDB",
+      "AWS",
+      "Docker",
+    ],
     github: null,
     live: null,
     article:
@@ -184,7 +193,15 @@ export const projects: Project[] = [
     title: "International Learning Festival",
     description:
       "Selected to lead 3 students to refactor existing application and implement new features for an internal school event.",
-    tags: ["React", "Tailwind", "Firebase", "Google Maps"],
+    tags: [
+      "React",
+      "Tailwind",
+      "Node.js",
+      "Express",
+      "Prisma",
+      "Firebase",
+      "Google Maps",
+    ],
     github: "https://github.com/bitxHunt/INC_International-Learning-Festival",
     article:
       "https://www.sp.edu.sg/about-sp/sustainability/detail/press-release/global-education-leaders-converge-at-sp's-international-learning-festival-in-advancing-teaching-and-learning-with-generative-ai-and-sustainability-focus",
@@ -193,14 +210,14 @@ export const projects: Project[] = [
     image: ILFLogo,
   },
   {
-    title: "Gamified Sustainability Movement",
+    title: "Smart Attendance System",
     description:
-      "A gamified web app which allows users to purchase pets, assign tasks to level up, learn skill, and get rewards.",
-    tags: ["Bootstrap", "Node.js", "Express.js", "MySQL"],
-    github: "https://github.com/bitxHunt/Gamified-Sustainability-Movement",
+      "Attendance management system built with Java and OpenCV, using facial recognition to automatically track and record student attendance.",
+    tags: ["JavaFX", "Maven", "OpenCV", "PostgreSQL", "Supabase"],
+    github: "https://github.com/bitxHunt/Smart-Attendance-System",
     live: null,
-    highlight: "ST0503 – Backend Web Development",
-    image: GSMLogo,
+    highlight: "CS102 – Programming Fundamentals 2",
+    image: SASApp,
   },
 ];
 

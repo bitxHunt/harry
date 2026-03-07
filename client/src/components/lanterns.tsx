@@ -3,7 +3,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import * as THREE from "three";
 
-const LANTERN_COUNT = 16;
+const LANTERN_COUNT = 20;
 const BOTTOM = -10;
 const TOP = 9;
 const RANGE = TOP - BOTTOM;

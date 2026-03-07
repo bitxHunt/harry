@@ -1,11 +1,11 @@
-import { Button } from "@/components/ui/button";
-import { ArrowUpRight } from "lucide-react";
+// import { Button } from "@/components/ui/button";
+// import { ArrowUpRight } from "lucide-react";
 
 export function About() {
   return (
     <section id="about" className="border-t border-neutral-200 dark:border-white/20 bg-neutral-50 dark:bg-neutral-900">
       <div className="max-w-6xl mx-auto px-8 md:px-10 py-20">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="grid md:grid-cols-2 gap-4 md:gap-12 items-center">
           {/* Left — text + button (desktop only button) */}
           <div className="text-center md:text-left">
             <p className="text-xs font-medium uppercase tracking-widest text-indigo-500 dark:text-indigo-300 mb-3">
@@ -26,11 +26,11 @@ export function About() {
             </p>
 
             {/* Desktop button — hidden on mobile */}
-            <div className="hidden md:block">
-              <Button>
+            {/* <div className="hidden md:block">
+              <Button className="shimmer">
                 Read more <ArrowUpRight className="ml-1 h-4 w-4" />
               </Button>
-            </div>
+            </div> */}
           </div>
 
           {/* Right — YouTube embed + mobile button */}
@@ -46,11 +46,11 @@ export function About() {
             </div>
 
             {/* Mobile button — hidden on desktop */}
-            <div className="block md:hidden">
+            {/* <div className="block md:hidden">
               <Button variant="outline" className="w-full">
                 Read more <ArrowUpRight className="ml-1 h-4 w-4" />
               </Button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

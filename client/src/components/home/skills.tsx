@@ -36,7 +36,7 @@ export function MarqueeRow({
 
 export function Skills() {
   return (
-    <section id="skills" className="bg-neutral-950 py-20">
+    <section id="skills" className="bg-neutral-900 py-20">
       <div className="max-w-6xl mx-auto px-8 md:px-10 mb-10 text-center md:text-left">
         <p className="text-xs font-medium uppercase tracking-widest text-indigo-300 mb-3">
           What I work with
