@@ -19,6 +19,7 @@
     "cors": "^2.8.6",
     "express": "^5.2.1",
     "nodemailer": "^8.0.1",
+    "typescript": "^5.9.3",
     "zod": "^4.3.6"
   },
   "devDependencies": {
@@ -27,7 +28,6 @@
     "@types/node": "^25.3.3",
     "dotenv": "^17.3.1",
     "prisma": "^7.4.2",
-    "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "tsx": "^4.21.0"
   }
 }
