@@ -3,7 +3,10 @@
 
 export function About() {
   return (
-    <section id="about" className="border-t border-neutral-200 dark:border-white/20 bg-neutral-50 dark:bg-neutral-900">
+    <section
+      id="about"
+      className="border-t border-neutral-200 dark:border-white/20 bg-neutral-50 dark:bg-neutral-900"
+    >
       <div className="max-w-6xl mx-auto px-8 md:px-10 py-20">
         <div className="grid md:grid-cols-2 gap-4 md:gap-12 items-center">
           {/* Left — text + button (desktop only button) */}
@@ -15,14 +18,13 @@ export function About() {
               A bit about me
             </h2>
             <p className="text-base text-neutral-600 dark:text-neutral-400 leading-relaxed mb-4">
-              I'm Thiha Swan Htet, a final-year IT diploma student in Singapore. I
+              My name is Thiha Swan Htet, a final-year IT diploma student. I
               picked up web development a couple of years ago and haven't
               stopped building since.
             </p>
             <p className="text-base text-neutral-600 dark:text-neutral-400 leading-relaxed mb-8">
-              Outside of code, I run community workshops, take on leadership
-              roles in school, and care about making technology accessible to
-              everyone.
+              I also run community workshops, take on leadership roles, and care
+              about making technology accessible to everyone.
             </p>
 
             {/* Desktop button — hidden on mobile */}

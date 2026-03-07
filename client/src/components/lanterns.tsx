@@ -86,7 +86,11 @@ function Flame({ phase }: { phase: number }) {
 // --- Wire frame at bottom of lantern ---
 function WireFrame() {
   const mat = (
-    <meshStandardMaterial color="#5a4a30" emissive="#221a08" emissiveIntensity={0.4} />
+    <meshStandardMaterial
+      color="#5a4a30"
+      emissive="#221a08"
+      emissiveIntensity={0.4}
+    />
   );
   const half = 0.13;
   const y = -0.37;
@@ -127,7 +131,11 @@ function WireFrame() {
       {/* Fuel cell (small wax cylinder in center) */}
       <mesh position={[0, y + 0.01, 0]}>
         <cylinderGeometry args={[0.025, 0.025, 0.02, 8]} />
-        <meshStandardMaterial color="#ddd8b0" emissive="#eecc66" emissiveIntensity={0.6} />
+        <meshStandardMaterial
+          color="#ddd8b0"
+          emissive="#eecc66"
+          emissiveIntensity={0.6}
+        />
       </mesh>
     </group>
   );
@@ -166,7 +174,7 @@ function Lantern({
     groupRef.current.position.set(
       initialX + Math.sin(t * swaySpeed + phase) * swayAmount,
       y,
-      initialZ
+      initialZ,
     );
     // Gentle body sway
     groupRef.current.rotation.z = Math.sin(t * swaySpeed * 0.6 + phase) * 0.05;
@@ -216,7 +224,11 @@ function Lantern({
       {/* === Top knot === */}
       <mesh position={[0, 0.31, 0]}>
         <sphereGeometry args={[0.038, 8, 8]} />
-        <meshStandardMaterial color="#7a4a1a" emissive="#331100" emissiveIntensity={0.6} />
+        <meshStandardMaterial
+          color="#7a4a1a"
+          emissive="#331100"
+          emissiveIntensity={0.6}
+        />
       </mesh>
       {/* Small string loop at top */}
       <mesh position={[0, 0.35, 0]} rotation={[Math.PI / 2, 0, 0]}>
@@ -244,12 +256,11 @@ const LANTERN_DATA: (LanternProps & { id: number })[] = Array.from(
     swaySpeed: 0.25 + Math.random() * 0.45,
     phase: Math.random() * Math.PI * 2,
     scale: 0.55 + Math.random() * 0.85,
-  })
+  }),
 );
 
 // --- Scene with all lanterns ---
 function Scene() {
-
   return (
     <>
       {/* Dark warm background fills entire hero area */}

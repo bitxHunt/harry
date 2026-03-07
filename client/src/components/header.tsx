@@ -33,7 +33,6 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 h-14 border-b border-neutral-200 dark:border-white/20 bg-white dark:bg-neutral-950 flex justify-center">
       <div className="flex items-center justify-between w-full max-w-6xl px-8 md:px-10">
-
         {/* Logo */}
         <Link
           to="/"
@@ -60,7 +59,12 @@ export function Header() {
               Contact Me
             </Link>
           </Button>
-          <Button variant="ghost" size="icon" onClick={toggleTheme} className="h-8 w-8">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={toggleTheme}
+            className="h-8 w-8"
+          >
             {effectiveTheme === "dark" ? (
               <Moon className="h-4 w-4" />
             ) : (
@@ -71,7 +75,12 @@ export function Header() {
 
         {/* Mobile nav */}
         <div className="flex md:hidden items-center gap-2">
-          <Button variant="ghost" size="icon" onClick={toggleTheme} className="h-8 w-8">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={toggleTheme}
+            className="h-8 w-8"
+          >
             {effectiveTheme === "dark" ? (
               <Moon className="h-4 w-4" />
             ) : (
@@ -112,7 +121,6 @@ export function Header() {
             </SheetContent>
           </Sheet>
         </div>
-
       </div>
     </header>
   );

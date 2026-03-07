@@ -9,7 +9,7 @@ function publicRequestInterceptor(config: InternalAxiosRequestConfig) {
 }
 
 export const public_api = Axios.create({
-  baseURL: env.VITE_DEV_API_URL,
+  baseURL: env.VITE_DEV_API_URL + "/public",
 });
 
 public_api.interceptors.request.use(publicRequestInterceptor);

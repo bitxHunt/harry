@@ -1,9 +1,13 @@
 import express from "express";
-import formRoute from "@/routes/public/formRoute.js";
+import enquiryRoute from "@/routes/public/enquiryRoute.js";
+import subscriptionRoute from "@/routes/public/subscriptionRoute.js";
 
 const router = express.Router();
 
-// Form API Route
-router.use("/form", formRoute);
+// Enquiry API Route
+router.use("/enquiry", enquiryRoute);
+
+// Subscription API Route
+router.use("/subscribe", subscriptionRoute);
 
 export default router;
