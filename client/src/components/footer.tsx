@@ -64,7 +64,7 @@ export function Footer() {
                 key={label}
                 variant="ghost"
                 size="icon"
-                className="h-9 w-9 text-neutral-400 hover:text-white hover:bg-white/10"
+                className="h-9 w-9 text-neutral-400 hover:text-white hover:bg-white/10 hover:scale-110 transition-all duration-200"
                 asChild
               >
                 <a

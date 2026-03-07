@@ -31,7 +31,7 @@ export function Header() {
     setTheme(effectiveTheme === "dark" ? "light" : "dark");
 
   return (
-    <header className="sticky top-0 z-50 h-14 border-b border-neutral-200 dark:border-white/10 bg-white dark:bg-neutral-950 flex justify-center">
+    <header className="sticky top-0 z-50 h-14 border-b border-neutral-200 dark:border-white/20 bg-white dark:bg-neutral-950 flex justify-center">
       <div className="flex items-center justify-between w-full max-w-6xl px-8 md:px-10">
 
         {/* Logo */}
@@ -50,12 +50,12 @@ export function Header() {
               to="/"
               hash={hash}
               resetScroll={false}
-              className="text-sm text-neutral-500 hover:text-indigo-500 dark:hover:text-indigo-300 transition-colors"
+              className="text-sm text-neutral-500 hover:text-indigo-500 dark:hover:text-indigo-300 transition-colors relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 hover:after:w-full after:bg-indigo-500 dark:after:bg-indigo-300 after:transition-all after:duration-300"
             >
               {label}
             </Link>
           ))}
-          <Button asChild>
+          <Button className="shimmer" asChild>
             <Link to="/" hash="contact" resetScroll={false}>
               Contact Me
             </Link>

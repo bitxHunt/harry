@@ -3,7 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 
 export function About() {
   return (
-    <section id="about" className="border-t border-neutral-200 dark:border-white/10 bg-neutral-50 dark:bg-neutral-900">
+    <section id="about" className="border-t border-neutral-200 dark:border-white/20 bg-neutral-50 dark:bg-neutral-900">
       <div className="max-w-6xl mx-auto px-8 md:px-10 py-20">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           {/* Left — text + button (desktop only button) */}
@@ -35,7 +35,7 @@ export function About() {
 
           {/* Right — YouTube embed + mobile button */}
           <div className="flex flex-col gap-4">
-            <div className="rounded-2xl overflow-hidden border border-neutral-200 dark:border-white/10 aspect-video w-full">
+            <div className="rounded-2xl overflow-hidden border border-neutral-200 dark:border-white/20 aspect-video w-full">
               <iframe
                 className="w-full h-full"
                 src="https://www.youtube.com/embed/PbpP_F_-t7Q?si=3pWQeoGSjs1U6w9S"

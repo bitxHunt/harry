@@ -23,7 +23,7 @@ export function Projects() {
           {projects.map((p, i) => (
             <Card
               key={i}
-              className="border-neutral-200 dark:border-white/10 hover:border-neutral-400 dark:hover:border-white/30 transition-colors rounded-2xl"
+              className="border-neutral-200 dark:border-white/20 hover:border-indigo-300/60 dark:hover:border-indigo-400/40 hover:-translate-y-1 hover:shadow-lg hover:shadow-indigo-500/10 dark:hover:shadow-indigo-400/10 transition-all duration-300 rounded-2xl"
             >
               <CardContent className="p-6 flex flex-col h-full gap-4">
                 {/* Highlight badge */}

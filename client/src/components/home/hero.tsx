@@ -23,7 +23,7 @@ export function Hero() {
 
         {/* CTAs */}
         <div className="flex flex-wrap gap-3 justify-center md:justify-start">
-          <Button className="rounded-full" asChild>
+          <Button className="rounded-full shimmer" asChild>
             <a href="https://tsh-profile.s3.ap-southeast-1.amazonaws.com/Thiha_Swan_Htet_CV.pdf" target="_blank" rel="noopener noreferrer">
               View CV <ArrowUpRight className="ml-1 h-4 w-4" />
             </a>

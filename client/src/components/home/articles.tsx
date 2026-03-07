@@ -5,7 +5,7 @@ import { ArrowRight } from "lucide-react";
 
 export function Articles() {
   return (
-    <section id="articles" className="border-t border-neutral-200 dark:border-white/10">
+    <section id="articles" className="border-t border-neutral-200 dark:border-white/20">
       <div className="max-w-6xl mx-auto px-8 md:px-10 py-20">
         <div className="grid md:grid-cols-2 gap-12 items-center">
 
@@ -22,7 +22,7 @@ export function Articles() {
           </div>
 
           {/* Right — notify me */}
-          <div className="border border-neutral-200 dark:border-white/10 rounded-2xl p-8 flex flex-col gap-4">
+          <div className="border border-neutral-200 dark:border-white/20 rounded-2xl p-8 flex flex-col gap-4">
             <div className="flex items-center gap-2">
               <Badge
                 variant="outline"

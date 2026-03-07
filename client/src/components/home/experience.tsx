@@ -9,7 +9,7 @@ import { experiences } from "@/data/data";
 
 export function Experience() {
   return (
-    <section id="experience" className="border-t border-neutral-200 dark:border-white/10">
+    <section id="experience" className="border-t border-neutral-200 dark:border-white/20">
       <div className="max-w-6xl mx-auto px-8 md:px-10 py-20">
         {/* Header */}
         <div className="mb-12 text-center md:text-left">
@@ -25,12 +25,12 @@ export function Experience() {
             <AccordionItem
               key={i}
               value={`experience-${i}`}
-              className="border border-neutral-200 dark:border-white/10 rounded-2xl mb-4 bg-white dark:bg-neutral-900 overflow-hidden shadow-sm"
+              className="border border-neutral-200 dark:border-white/20 rounded-2xl mb-4 bg-white dark:bg-neutral-900 overflow-hidden shadow-sm border-l-2 border-l-transparent hover:border-l-indigo-400 dark:hover:border-l-indigo-300/60 transition-colors duration-300"
             >
               <AccordionTrigger className="hover:no-underline px-4 py-4 md:px-8 md:py-6 hover:bg-neutral-100/60 dark:hover:bg-neutral-700/40 transition-colors items-center">
                 {/* Left: logo + role + org */}
                 <div className="flex items-center gap-3 md:gap-5 flex-1 min-w-0">
-                  <div className="size-12 md:size-16 rounded-xl border border-neutral-200 dark:border-white/10 bg-white flex items-center justify-center shrink-0 overflow-hidden p-1">
+                  <div className="size-12 md:size-16 rounded-xl border border-neutral-200 dark:border-white/20 bg-white flex items-center justify-center shrink-0 overflow-hidden p-1">
                     <img
                       src={e.logo}
                       alt={`${e.org} logo`}
@@ -53,7 +53,7 @@ export function Experience() {
 
               {/* Expanded content */}
               <AccordionContent className="px-4 pb-6 md:px-8 md:pb-8">
-                <div className="border-t border-neutral-200 dark:border-white/10 pt-6">
+                <div className="border-t border-neutral-200 dark:border-white/20 pt-6">
                   {/* Meta row */}
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-6">
                     <div className="flex items-center gap-2 text-sm text-neutral-500 dark:text-neutral-400">

@@ -16,7 +16,7 @@ export function Education() {
         {/* Timeline */}
         <div className="relative">
           {/* Vertical line */}
-          <div className="absolute left-[7px] top-2 bottom-2 w-px bg-neutral-200 dark:bg-white/10 md:left-[7px]" />
+          <div className="absolute left-[7px] top-2 bottom-2 w-px bg-neutral-200 dark:bg-white/20 md:left-[7px]" />
 
           <div className="flex flex-col gap-12">
             {education.map((e, i) => (
@@ -25,7 +25,7 @@ export function Education() {
                 <div className="absolute left-0 top-1.5 h-[15px] w-[15px] rounded-full border-2 border-sky-500 bg-white dark:bg-neutral-950" />
 
                 {/* Card */}
-                <div className="bg-neutral-50 dark:bg-neutral-900 rounded-2xl border border-neutral-200 dark:border-white/10 hover:border-neutral-300 dark:hover:border-white/20 transition-colors overflow-hidden">
+                <div className="bg-neutral-50 dark:bg-neutral-900 rounded-2xl border border-neutral-200 dark:border-white/20 hover:border-indigo-300/60 dark:hover:border-indigo-400/40 transition-colors overflow-hidden">
                   <div className="grid md:grid-cols-[200px_1fr]">
                     {/* Logo panel */}
                     <div className="flex items-center justify-center bg-white dark:bg-neutral-800 p-8 min-h-40">

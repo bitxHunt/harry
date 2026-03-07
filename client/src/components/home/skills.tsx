@@ -10,21 +10,21 @@ export function MarqueeRow({
   const repeated = [...icons, ...icons, ...icons, ...icons];
 
   return (
-    <div className="relative flex overflow-hidden [mask-image:linear-gradient(to_right,transparent_0%,black_8%,black_92%,transparent_100%)]">
+    <div className="group relative flex overflow-hidden [mask-image:linear-gradient(to_right,transparent_0%,black_8%,black_92%,transparent_100%)]">
       <div
-        className={`flex gap-3 ${reverse ? "animate-marquee-reverse" : "animate-marquee"} whitespace-nowrap`}
+        className={`flex gap-3 ${reverse ? "animate-marquee-reverse" : "animate-marquee"} group-hover:[animation-play-state:paused] whitespace-nowrap`}
       >
         {repeated.map((icon, i) => (
           <div
             key={`${icon.name}-${i}`}
-            className="shrink-0 flex flex-col items-center justify-center gap-2 bg-white/10 hover:bg-white/15 transition-colors rounded-xl px-5 py-4 w-28"
+            className="shrink-0 flex flex-col items-center justify-center gap-1.5 md:gap-2 bg-white/10 hover:bg-white/15 hover:ring-1 hover:ring-indigo-400/50 transition-all duration-200 rounded-xl px-3 py-3 md:px-5 md:py-4 w-20 md:w-28"
           >
             <img
               src={icon.src}
               alt={icon.name}
-              className={`h-11 w-11 ${icon.invert ? "invert" : ""}`}
+              className={`h-7 w-7 md:h-11 md:w-11 ${icon.invert ? "invert" : ""}`}
             />
-            <span className="text-xs text-neutral-400 font-medium text-center leading-tight">
+            <span className="text-[10px] md:text-xs text-neutral-400 font-medium text-center leading-tight">
               {icon.name}
             </span>
           </div>
