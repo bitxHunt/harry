@@ -1,5 +1,5 @@
 import express from "express";
-import publicRoute from "@/routes/public/index";
+import publicRoute from "@/routes/public/index.js";
 const router = express.Router();
 
 // Public route

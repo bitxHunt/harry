@@ -1,7 +1,7 @@
 import { transporter } from "@/middlewares/mailMiddleware.js";
 import { generateEnquiryHTML } from "@/templates/enquiry.js";
-import { generateSubscriptionHTML } from "@/templates/subscription";
-import { enquiry, subscription } from "@/generated/client";
+import { generateSubscriptionHTML } from "@/templates/subscription.js";
+import { enquiry, subscription } from "@/generated/client.js";
 import { env } from "@/config/env.js";
 
 export const sendEnquiryEmail = async (enquiryFormData: enquiry) => {

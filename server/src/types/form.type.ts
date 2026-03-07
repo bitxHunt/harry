@@ -3,7 +3,7 @@ import {
   EnquiryFormSchema,
   SubscriptionFormSchema,
   BaseEmailSchema,
-} from "@/types/schemas/form.schema";
+} from "@/types/schemas/form.schema.js";
 
 export type BaseEmailType = z.infer<typeof BaseEmailSchema>;
 export type EnquiryFormType = z.infer<typeof EnquiryFormSchema>;

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import * as subscriptionModel from "@/models/subscriptionModel";
-import * as mailService from "@/services/mailService";
-import { SubscriptionFormSchema } from "@/types/schemas/form.schema";
+import * as subscriptionModel from "@/models/subscriptionModel.js";
+import * as mailService from "@/services/mailService.js";
+import { SubscriptionFormSchema } from "@/types/schemas/form.schema.js";
 
 export const createSubscriptionResponse = async (
   req: Request,

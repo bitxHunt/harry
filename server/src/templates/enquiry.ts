@@ -1,4 +1,4 @@
-import { enquiry } from "@/generated/client";
+import { enquiry } from "@/generated/client.js";
 
 export const generateEnquiryHTML = (enquiryData: enquiry): string => {
   const { name, email, message } = enquiryData;

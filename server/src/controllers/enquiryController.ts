@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import * as enquiryModel from "@/models/enquiryModel";
-import * as mailService from "@/services/mailService";
-import { EnquiryFormSchema } from "@/types/schemas/form.schema";
+import * as enquiryModel from "@/models/enquiryModel.js";
+import * as mailService from "@/services/mailService.js";
+import { EnquiryFormSchema } from "@/types/schemas/form.schema.js";
 
 export const createEnquiryResponse = async (req: Request, res: Response) => {
   try {
