@@ -2,7 +2,7 @@ import SMULogo from "@/assets/SMU_Logo.jpg";
 import SPLogo from "@/assets/SP_Logo.png";
 import RExusLogo from "@/assets/RExus_Logo.png";
 import StriveLogo from "@/assets/Strive_Logo.webp";
-import IMCSLogo from "@/assets/IMCS_Logo.png";
+import IMCSToolKit from "@/assets/IMCS_Toolkit.png";
 import ILFLogo from "@/assets/ILF_Logo.png";
 import SASApp from "@/assets/SAS_App.png";
 
@@ -187,7 +187,7 @@ export const projects: Project[] = [
     article:
       "https://www.instagram.com/p/DGiCphstgqk/?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
     highlight: "Industry Now Curriculum (INC) Pathway",
-    image: IMCSLogo,
+    image: IMCSToolKit,
   },
   {
     title: "International Learning Festival",
