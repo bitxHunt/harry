@@ -17,7 +17,7 @@ export function Articles() {
             <h2 className="text-3xl font-bold tracking-tight mb-3">Articles</h2>
             <p className="text-base text-neutral-500 dark:text-neutral-400 max-w-md leading-relaxed">
               I'm working on writing about things I've built and learnt. First
-              few pieces are in the works — check back soon.
+              few pieces are in the works.
             </p>
           </div>
 
@@ -35,7 +35,7 @@ export function Articles() {
               Get notified when I publish
             </p>
             <p className="text-xs text-neutral-400 leading-relaxed">
-              Drop your email and I'll let you know when the first article is out. No spam.
+              Drop your email and I'll let you know when the first article is out.
             </p>
             <div className="flex gap-2 mt-1">
               <Input

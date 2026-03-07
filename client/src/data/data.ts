@@ -2,6 +2,9 @@ import SMULogo from "@/assets/SMU_Logo.jpg";
 import SPLogo from "@/assets/SP_Logo.png";
 import RExusLogo from "@/assets/RExus_Logo.png";
 import StriveLogo from "@/assets/Strive_Logo.webp";
+import IMCSLogo from "@/assets/IMCS_Logo.png";
+import ILFLogo from "@/assets/ILF_Logo.png";
+import GSMLogo from "@/assets/GSM_Logo.jpeg";
 
 export const skillRow1 = [
   {
@@ -153,35 +156,53 @@ export const experiences = [
   },
 ];
 
-export const projects = [
+export type Project = {
+  title: string;
+  description: string;
+  tags: readonly string[];
+  github: string | null;
+  live: string | null;
+  article?: string;
+  highlight?: string;
+  image?: string;
+};
+
+export const projects: Project[] = [
   {
     title: "IMCS Toolkit",
     description:
-      "Developed an AI-powered business excellence toolkit, featuring automated digital forms and management dashboard for 500 users",
+      "Developed an AI-powered business excellence toolkit, featuring automated digital forms and management dashboard for 500 users.",
     tags: ["React", "Node.js", "Express", "Prisma", "NeonDB", "AWS", "Docker"],
-    github: "https://github.com",
+    github: null,
     live: null,
+    article:
+      "https://www.instagram.com/p/DGiCphstgqk/?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
     highlight: "Industry Now Curriculum (INC) Pathway",
+    image: IMCSLogo,
   },
   {
     title: "International Learning Festival",
     description:
       "Selected to lead 3 students to refactor existing application and implement new features for an internal school event.",
     tags: ["React", "Tailwind", "Firebase", "Google Maps"],
-    github: "https://github.com",
+    github: "https://github.com/bitxHunt/INC_International-Learning-Festival",
+    article:
+      "https://www.sp.edu.sg/about-sp/sustainability/detail/press-release/global-education-leaders-converge-at-sp's-international-learning-festival-in-advancing-teaching-and-learning-with-generative-ai-and-sustainability-focus",
     live: null,
     highlight: "Industry Now Curriculum (INC) Pathway",
+    image: ILFLogo,
   },
   {
     title: "Gamified Sustainability Movement",
     description:
       "A gamified web app which allows users to purchase pets, assign tasks to level up, learn skill, and get rewards.",
     tags: ["Bootstrap", "Node.js", "Express.js", "MySQL"],
-    github: "https://github.com",
+    github: "https://github.com/bitxHunt/Gamified-Sustainability-Movement",
     live: null,
     highlight: "ST0503 – Backend Web Development",
+    image: GSMLogo,
   },
-] as const;
+];
 
 export const education = [
   {

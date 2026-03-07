@@ -1,12 +1,15 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowUpRight, Github } from "lucide-react";
+import { ArrowUpRight, Github, BookOpen } from "lucide-react";
 import { projects } from "@/data/data";
 
 export function Projects() {
   return (
-    <section id="projects" className="border-t border-neutral-200 dark:border-white/10">
+    <section
+      id="projects"
+      className="border-t border-neutral-200 dark:border-white/10"
+    >
       <div className="max-w-6xl mx-auto px-8 md:px-10 py-20">
         {/* Header */}
         <div className="mb-12 text-center md:text-left">
@@ -23,9 +26,26 @@ export function Projects() {
           {projects.map((p, i) => (
             <Card
               key={i}
-              className="border-neutral-200 dark:border-white/20 hover:border-indigo-300/60 dark:hover:border-indigo-400/40 hover:-translate-y-1 hover:shadow-lg hover:shadow-indigo-500/10 dark:hover:shadow-indigo-400/10 transition-all duration-300 rounded-2xl"
+              className="group flex flex-col border-neutral-200 dark:border-white/20 hover:border-indigo-300/60 dark:hover:border-indigo-400/40 hover:-translate-y-1 hover:shadow-lg hover:shadow-indigo-500/10 dark:hover:shadow-indigo-400/10 transition-all duration-300 rounded-2xl overflow-hidden p-0"
             >
-              <CardContent className="p-6 flex flex-col h-full gap-4">
+              {/* Project image */}
+              <div className="h-56 w-full overflow-hidden bg-neutral-100 dark:bg-neutral-800/60">
+                {p.image ? (
+                  <img
+                    src={p.image}
+                    alt={p.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gradient-to-br from-indigo-500/10 via-neutral-100 to-neutral-200 dark:from-indigo-500/10 dark:via-neutral-800 dark:to-neutral-900 flex items-center justify-center">
+                    <span className="text-xs tracking-widest uppercase text-neutral-400 dark:text-neutral-600">
+                      Preview
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              <CardContent className="p-6 flex flex-col gap-3 flex-1">
                 {/* Highlight badge */}
                 {p.highlight && (
                   <span className="text-xs text-neutral-400">
@@ -57,7 +77,7 @@ export function Projects() {
                 </div>
 
                 {/* Links */}
-                <div className="flex gap-2 pt-1">
+                <div className="flex gap-2 pt-4 mt-auto">
                   {p.github && (
                     <Button
                       variant="outline"
@@ -71,6 +91,22 @@ export function Projects() {
                         rel="noopener noreferrer"
                       >
                         <Github className="h-3 w-3 mr-1" /> Code
+                      </a>
+                    </Button>
+                  )}
+                  {p.article && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="rounded-full text-xs h-7 px-3"
+                      asChild
+                    >
+                      <a
+                        href={p.article}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <BookOpen className="h-3 w-3 mr-1" /> Article
                       </a>
                     </Button>
                   )}
