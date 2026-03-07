@@ -4,9 +4,9 @@ import { education } from "@/data/data";
 export function Education() {
   return (
     <section className="bg-white dark:bg-neutral-950">
-      <div className="max-w-6xl mx-auto px-6 md:px-8 py-20">
+      <div className="max-w-6xl mx-auto px-8 md:px-10 py-20">
         {/* Header */}
-        <div className="mb-16">
+        <div className="mb-16 text-center md:text-left">
           <p className="text-xs font-medium uppercase tracking-widest text-sky-500 mb-3">
             Education
           </p>

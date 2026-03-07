@@ -27,10 +27,10 @@ const socialLinks = [
 export function Footer() {
   return (
     <footer className="bg-neutral-950 text-white">
-      <div className="max-w-6xl mx-auto px-6 md:px-8 py-12">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
+      <div className="max-w-6xl mx-auto px-8 md:px-10 py-12">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 items-center md:items-stretch">
           {/* Name + tagline */}
-          <div className="space-y-1">
+          <div className="space-y-1 text-center md:text-left">
             <Link
               to="/"
               className="text-sm font-bold tracking-tight text-white"
@@ -82,7 +82,7 @@ export function Footer() {
 
         <Separator className="my-8 bg-white/10" />
 
-        <div className="flex flex-col md:flex-row items-center justify-between gap-2 text-xs text-neutral-600">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-2 text-xs text-neutral-600 text-center">
           <span>© 2026 Thiha Swan Htet. All rights reserved.</span>
           <span>Built with React · TanStack Router · shadcn/ui</span>
         </div>

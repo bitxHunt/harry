@@ -7,10 +7,10 @@ import { projects } from "@/data/data";
 export function Projects() {
   return (
     <section id="projects" className="border-t border-neutral-200 dark:border-white/10">
-      <div className="max-w-6xl mx-auto px-6 md:px-8 py-20">
+      <div className="max-w-6xl mx-auto px-8 md:px-10 py-20">
         {/* Header */}
-        <div className="mb-12">
-          <p className="text-xs font-medium uppercase tracking-widest text-indigo-500 mb-3">
+        <div className="mb-12 text-center md:text-left">
+          <p className="text-xs font-medium uppercase tracking-widest text-indigo-500 dark:text-indigo-300 mb-3">
             Projects
           </p>
           <h2 className="text-3xl font-bold tracking-tight">

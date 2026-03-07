@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
+import { ThemeProvider } from "@/context/theme-provider";
 
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen";
@@ -20,7 +21,9 @@ const queryClient = new QueryClient();
 export function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router}></RouterProvider>
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <RouterProvider router={router}></RouterProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }

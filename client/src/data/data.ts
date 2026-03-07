@@ -1,7 +1,6 @@
 import SMULogo from "@/assets/SMU_Logo.jpg";
 import SPLogo from "@/assets/SP_Logo.png";
 import RExusLogo from "@/assets/RExus_Logo.png";
-import IMCSLogo from "@/assets/IMCS_Logo.png";
 import StriveLogo from "@/assets/Strive_Logo.webp";
 
 export const skillRow1 = [
@@ -111,12 +110,12 @@ export const skillRow2 = [
 export const experiences = [
   {
     role: "Lead DevOps",
-    org: "IMCS x Singapore Polytechnic",
+    org: "Singapore Polytechnic",
     type: "Leadership",
     period: "Oct 2024 – Aug 2025",
     year: "2024",
     location: "Singapore",
-    logo: IMCSLogo,
+    logo: SPLogo,
     bullets: [
       "Developed an AI-powered business excellence toolkit, featuring automated digital forms and management dashboard for 500 users.",
       "Implemented infrastructure-as-code using Terraform and GitHub Actions for automated testing, containerized deployments, and AWS resource provisioning.",
@@ -125,7 +124,7 @@ export const experiences = [
     ],
   },
   {
-    role: "Web Developer & Maintainer",
+    role: "Web Developer",
     org: "RExus Bioenergy",
     type: "Work",
     period: "Apr 2025 – Present",

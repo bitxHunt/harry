@@ -6,12 +6,12 @@ import { ArrowRight } from "lucide-react";
 export function Articles() {
   return (
     <section id="articles" className="border-t border-neutral-200 dark:border-white/10">
-      <div className="max-w-6xl mx-auto px-6 md:px-8 py-20">
+      <div className="max-w-6xl mx-auto px-8 md:px-10 py-20">
         <div className="grid md:grid-cols-2 gap-12 items-center">
 
           {/* Left — unchanged */}
-          <div>
-            <p className="text-xs font-medium uppercase tracking-widest text-indigo-500 mb-4">
+          <div className="text-center md:text-left">
+            <p className="text-xs font-medium uppercase tracking-widest text-indigo-500 dark:text-indigo-300 mb-4">
               Writing
             </p>
             <h2 className="text-3xl font-bold tracking-tight mb-3">Articles</h2>
@@ -26,7 +26,7 @@ export function Articles() {
             <div className="flex items-center gap-2">
               <Badge
                 variant="outline"
-                className="rounded-full px-3 py-1 text-xs text-indigo-500 border-indigo-500/40"
+                className="rounded-full px-3 py-1 text-xs text-indigo-300 dark:text-indigo-300 border-indigo-500/40"
               >
                 ✦ Coming soon
               </Badge>

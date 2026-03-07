@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu } from "lucide-react";
+import { Menu, Sun, Moon } from "lucide-react";
+import { useTheme } from "@/context/useTheme";
 
 type NavLink = {
   label: string;
@@ -17,10 +18,21 @@ const navLinks: NavLink[] = [
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const { theme, setTheme } = useTheme();
+
+  const effectiveTheme =
+    theme === "system"
+      ? window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light"
+      : theme;
+
+  const toggleTheme = () =>
+    setTheme(effectiveTheme === "dark" ? "light" : "dark");
 
   return (
     <header className="sticky top-0 z-50 h-14 border-b border-neutral-200 dark:border-white/10 bg-white dark:bg-neutral-950 flex justify-center">
-      <div className="flex items-center justify-between w-full max-w-6xl px-6 md:px-8">
+      <div className="flex items-center justify-between w-full max-w-6xl px-8 md:px-10">
 
         {/* Logo */}
         <Link
@@ -38,7 +50,7 @@ export function Header() {
               to="/"
               hash={hash}
               resetScroll={false}
-              className="text-sm text-neutral-500 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors"
+              className="text-sm text-neutral-500 hover:text-indigo-500 dark:hover:text-indigo-300 transition-colors"
             >
               {label}
             </Link>
@@ -48,10 +60,24 @@ export function Header() {
               Contact Me
             </Link>
           </Button>
+          <Button variant="ghost" size="icon" onClick={toggleTheme} className="h-8 w-8">
+            {effectiveTheme === "dark" ? (
+              <Moon className="h-4 w-4" />
+            ) : (
+              <Sun className="h-4 w-4" />
+            )}
+          </Button>
         </nav>
 
         {/* Mobile nav */}
-        <div className="flex md:hidden">
+        <div className="flex md:hidden items-center gap-2">
+          <Button variant="ghost" size="icon" onClick={toggleTheme} className="h-8 w-8">
+            {effectiveTheme === "dark" ? (
+              <Moon className="h-4 w-4" />
+            ) : (
+              <Sun className="h-4 w-4" />
+            )}
+          </Button>
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="h-8 w-8">

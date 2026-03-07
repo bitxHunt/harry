@@ -55,10 +55,10 @@ export function Contact() {
 
   return (
     <section id="contact" className="bg-neutral-950 text-white [&_*]:outline-white/10">
-      <div className="max-w-6xl mx-auto px-6 md:px-8 py-20">
+      <div className="max-w-6xl mx-auto px-8 md:px-10 py-20">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           {/* Left */}
-          <div>
+          <div className="text-center md:text-left">
             <p className="text-xs font-medium uppercase tracking-widest text-indigo-300 mb-3">
               Contact
             </p>
