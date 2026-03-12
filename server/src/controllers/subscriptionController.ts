@@ -9,7 +9,7 @@ export const createSubscriptionResponse = async (
 ) => {
   try {
     const validatedFormData = SubscriptionFormSchema.parse(req.body);
-    const user = subscriptionModel.findUser(validatedFormData);
+    const user = await subscriptionModel.findUser(validatedFormData);
 
     // If user is already subscribed, don't send email
     if (user != null) {

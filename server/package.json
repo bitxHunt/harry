@@ -6,7 +6,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "pnpm prisma generate && pnpm tsc && pnpm ts-alias && cp -r ./src/generated ./dist/src/generated",
+    "build": "pnpm prisma generate && pnpm tsc && pnpm tsc-alias && cp -r ./src/generated ./dist/src",
     "start": "node dist/index.js",
     "dev": "pnpm dlx tsx watch index.ts"
   },

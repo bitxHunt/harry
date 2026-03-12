@@ -8,6 +8,6 @@
  *
  * 🟢 You can import this file directly.
  */
-export type * from './models/enquiry'
-export type * from './models/subscription'
-export type * from './commonInputTypes'
+export type * from './models/enquiry.js'
+export type * from './models/subscription.js'
+export type * from './commonInputTypes.js'
