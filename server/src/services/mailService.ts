@@ -1,4 +1,4 @@
-import { transporter } from "@/middlewares/mailMiddleware.js";
+import { resend } from "@/config";
 import { generateEnquiryHTML } from "@/templates/enquiry.js";
 import { generateSubscriptionHTML } from "@/templates/subscription.js";
 import { enquiry, subscription } from "@/generated/client.js";
@@ -8,17 +8,15 @@ export const sendEnquiryEmail = async (enquiryFormData: enquiry) => {
   try {
     const { name, email } = enquiryFormData;
 
-    const emailSource = env.SMTP_USER;
-    const emailReceipient = env.SMTP_USER;
-
     const emailObj = {
-      from: `"Enquiries" <${emailSource}>`,
-      to: emailReceipient,
+      from: `Enquiries <${env.SENDER_EMAIL}>`,
+      to: env.SENDER_SOURCE,
       replyTo: email,
       subject: `New Enquiry: ${name}`,
       html: generateEnquiryHTML(enquiryFormData),
     };
-    await transporter.sendMail(emailObj);
+
+    await resend.emails.send(emailObj);
   } catch (error) {
     console.error(error);
   }
@@ -33,13 +31,14 @@ export const sendSubscriptionEmail = async (
     const emailReceipient = email;
 
     const emailObj = {
-      from: "Articles Subscription",
+      from: `Articles <${env.SENDER_EMAIL}>`,
       to: emailReceipient,
-      replyTo: env.SMTP_USER,
+      replyTo: env.SENDER_SOURCE,
       subject: `Subscription Confirmed`,
       html: generateSubscriptionHTML(email),
     };
-    await transporter.sendMail(emailObj);
+
+    await resend.emails.send(emailObj);
   } catch (error) {
     console.error(error);
   }
