@@ -1,4 +1,4 @@
-import { resend } from "@/config";
+import { resend } from "@/config/index.js";
 import { generateEnquiryHTML } from "@/templates/enquiry.js";
 import { generateSubscriptionHTML } from "@/templates/subscription.js";
 import { enquiry, subscription } from "@/generated/client.js";
