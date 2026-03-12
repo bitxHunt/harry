@@ -31,7 +31,6 @@ export const sendSubscriptionEmail = async (
     const { email } = subscriptionFormData;
 
     const emailReceipient = email;
-    console.log("Sending Email?")
 
     const emailObj = {
       from: "Articles Subscription",
