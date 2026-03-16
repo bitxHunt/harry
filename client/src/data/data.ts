@@ -5,6 +5,7 @@ import StriveLogo from "@/assets/Strive_Logo.webp";
 import IMCSToolKit from "@/assets/IMCS_Toolkit.png";
 import ILFLogo from "@/assets/ILF_Logo.png";
 import SASApp from "@/assets/SAS_App.png";
+import { type ArticlePost } from "@/types/article.type";
 
 export const skillRow1 = [
   {
@@ -243,3 +244,39 @@ export const education = [
     imageAlt: "Singapore Management University",
   },
 ] as const;
+
+export const articles: ArticlePost[] = [
+  {
+    id: 1,
+    title: "Founding a School Club",
+    excerpt:
+      "Starting something from zero is harder than it looks. No template, no budget, no guarantee anyone shows up. Under a year, I managed to found an iOS development club to bring like-minded people, conducting workshops and competitions.",
+    category: "Events",
+    tag: "Club",
+    date: "Mar 2025",
+    readTime: "6 min read",
+    slug: "founding-school-club",
+  },
+  // {
+  //   id: 2,
+  //   title: "International Students Survival Guide",
+  //   excerpt:
+  //     "Moving to a new country for school comes with challenges beyond academics. From navigating the country to building friendships and adapting to a new environment, these experiences shaped how I grew both personally and academically.",
+  //   category: "Events",
+  //   tag: "Growth",
+  //   date: "Feb 2025",
+  //   readTime: "5 min read",
+  //   slug: "school-events-growth",
+  // },
+  {
+    id: 3,
+    title: "Brisk Walk Activities",
+    excerpt:
+      "Organizing brisk walk activities for seniors taught me the importance of patience, empathy, and thoughtful planning. Small community initiatives can create meaningful connections and bring people together.",
+    category: "Community",
+    tag: "Volunteering",
+    date: "Jan 2025",
+    readTime: "4 min read",
+    slug: "brisk-walk",
+  },
+];
