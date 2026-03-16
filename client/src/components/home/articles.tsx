@@ -1,6 +1,7 @@
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
+import { Link } from "@tanstack/react-router";
 import { AxiosError } from "axios";
 
 import { public_api } from "@/lib/api-client";
@@ -11,6 +12,8 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Field, FieldError } from "@/components/ui/field";
+
+import { ArrowUpRight } from "lucide-react";
 import { ArrowRight } from "lucide-react";
 
 const postSubscribe = async (formData: SubscriptionFormType) => {
@@ -51,10 +54,15 @@ export function Articles() {
               Writing
             </p>
             <h2 className="text-3xl font-bold tracking-tight mb-3">Articles</h2>
-            <p className="text-base text-neutral-500 dark:text-neutral-400 max-w-md leading-relaxed">
+            <p className="text-base text-neutral-500 dark:text-neutral-400 max-w-md leading-relaxed mb-6">
               I'm working on writing about things I've built and learnt. First
               few pieces are in the works.
             </p>
+            <Button variant="outline" className="rounded-full" asChild>
+              <Link to="/articles">
+                Explore articles <ArrowUpRight className="ml-1 h-4 w-4" />
+              </Link>
+            </Button>
           </div>
 
           {/* Right — notify me */}

@@ -3,13 +3,17 @@ import { Link } from "@tanstack/react-router";
 
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Search, SlidersHorizontal, ArrowUpRight } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Search, ArrowUpRight } from "lucide-react";
 
-import { type Category } from "@/types/article.type";
-import { type ArticlePost } from "@/types/article.type";
+import { type Category, type ArticlePost } from "@/types/article.type";
 import { articles } from "@/data/data";
 
 const categories: Category[] = ["All", "Events", "Community", "Life", "Dev"];
@@ -89,10 +93,11 @@ function ArticleCard({ post }: { post: ArticlePost }) {
   );
 }
 
+// ── Page ──────────────────────────────────────────────────────────────────────
+
 export function ArticlesPage() {
   const [selected, setSelected] = useState<Category>("All");
   const [search, setSearch] = useState("");
-  const [mobileOpen, setMobileOpen] = useState(false);
 
   const filtered = articles.filter((p) => {
     const matchCategory = selected === "All" || p.category === selected;
@@ -123,7 +128,7 @@ export function ArticlesPage() {
 
       {/* Body */}
       <div className="max-w-6xl mx-auto px-8 md:px-10 py-12">
-        {/* Search + mobile filter */}
+        {/* Search + mobile dropdown */}
         <div className="flex gap-3 mb-10">
           <div className="relative flex-1 max-w-sm">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-400" />
@@ -135,49 +140,28 @@ export function ArticlesPage() {
             />
           </div>
 
-          <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-            <SheetTrigger asChild>
-              <Button
-                variant="outline"
-                className="md:hidden rounded-full gap-2"
-              >
-                <SlidersHorizontal className="h-4 w-4" />
-                Filter
-                {selected !== "All" && (
-                  <span className="bg-indigo-500 text-white rounded-full h-4 w-4 flex items-center justify-center text-[10px] font-medium">
-                    1
-                  </span>
-                )}
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="w-60 pt-12">
-              <FilterPanel
-                selected={selected}
-                onSelect={(c) => {
-                  setSelected(c);
-                  setMobileOpen(false);
-                }}
-              />
-              {selected !== "All" && (
-                <>
-                  <Separator className="my-4" />
-                  <button
-                    onClick={() => {
-                      setSelected("All");
-                      setMobileOpen(false);
-                    }}
-                    className="text-xs text-neutral-400 hover:text-black dark:hover:text-white transition-colors"
-                  >
-                    Clear filter ×
-                  </button>
-                </>
-              )}
-            </SheetContent>
-          </Sheet>
+          {/* Mobile dropdown — hidden on desktop */}
+          <div className="md:hidden">
+            <Select
+              value={selected}
+              onValueChange={(val) => setSelected(val as Category)}
+            >
+              <SelectTrigger className="rounded-full w-36">
+                <SelectValue placeholder="Category" />
+              </SelectTrigger>
+              <SelectContent>
+                {categories.map((c) => (
+                  <SelectItem key={c} value={c}>
+                    {c}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
         </div>
 
         <div className="flex gap-12">
-          {/* Sidebar — desktop */}
+          {/* Sidebar — desktop only */}
           <aside className="hidden md:block w-40 shrink-0">
             <div className="sticky top-24">
               <FilterPanel selected={selected} onSelect={setSelected} />

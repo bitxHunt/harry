@@ -13,7 +13,7 @@ type NavLink = {
 const navLinks: NavLink[] = [
   { label: "About", hash: "about" },
   { label: "Projects", hash: "projects" },
-  { label: "Blogs", hash: "articles" },
+  { label: "Articles", hash: "articles" },
 ];
 
 export function Header() {
