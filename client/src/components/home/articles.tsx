@@ -72,7 +72,7 @@ export function Articles() {
                 variant="outline"
                 className="rounded-full px-3 py-1 text-xs text-indigo-300 dark:text-indigo-300 border-indigo-500/40"
               >
-                ✦ Coming soon
+                ✦ Work in Progress
               </Badge>
             </div>
             <p className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
