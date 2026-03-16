@@ -4,9 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
 const navLinks = [
-  { label: "Home", hash: "" },
+  { label: "About", hash: "about" },
   { label: "Projects", hash: "projects" },
-  { label: "Blogs", hash: "articles" },
+  { label: "Articles", hash: "articles" },
 ] as const;
 
 const socialLinks = [
