@@ -6,7 +6,6 @@ export const profile = {
   handle: "harry",
   host: "arch",
   location: "Singapore",
-  timezone: "SGT · UTC+8",
   status: "Open to Summer 2027 internships",
   cv: "https://tsh-profile.s3.ap-southeast-1.amazonaws.com/Thiha_Swan_Htet_CV.pdf",
   email: "tsh.harry.dev@gmail.com",

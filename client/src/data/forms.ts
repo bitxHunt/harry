@@ -1,4 +1,6 @@
 // The hero's transformation dial: one person, several forms. Facts only from the CV.
+import { profile } from "./profile";
+
 export type FormId = "harry" | "developer" | "devops" | "pm" | "tutor" | "volunteer" | "offduty";
 export type Form = {
   id: FormId;
@@ -17,7 +19,7 @@ export const baseForm: Form = {
   tagline: "Computer Science at NUS. Developer by training, project manager by experience, coding tutor on the side. Pick a form to see each side.",
   powers: ["TypeScript", "Java", "Python", "Arch Linux"],
   origin: "Singapore",
-  knownFor: "Open to Summer 2027 internships",
+  knownFor: profile.status,
 };
 
 export const forms: Form[] = [

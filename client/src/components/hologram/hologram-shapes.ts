@@ -9,7 +9,11 @@ export type Shape = {
   positions: Float32Array;
   motion?: (out: Float32Array, t: number) => void;
   pointScale?: number; // particle size multiplier for this shape (default 1)
+  tones?: Float32Array; // per-particle colour role (see TONE); default: theme colours
 };
+
+// Colour roles a shape can give its particles (read by the shader in hologram-scene).
+export const TONE = { theme: 0, white: 1, warm: 2, dim: 3 } as const;
 
 type Vec = [number, number, number];
 
@@ -28,22 +32,13 @@ const onSphere = (r: number): Vec => {
 const rotX = ([x, y, z]: Vec, a: number): Vec => [x, y * Math.cos(a) - z * Math.sin(a), y * Math.sin(a) + z * Math.cos(a)];
 
 // surface samplers
-const box = (x0: number, x1: number, y0: number, y1: number, z0: number, z1: number): Vec => {
-  const face = Math.floor(Math.random() * 6);
-  const x = rand(x0, x1), y = rand(y0, y1), z = rand(z0, z1);
-  if (face === 0) return [x0, y, z];
-  if (face === 1) return [x1, y, z];
-  if (face === 2) return [x, y0, z];
-  if (face === 3) return [x, y1, z];
-  if (face === 4) return [x, y, z0];
-  return [x, y, z1];
-};
 const fill = (n: number, gen: (i: number) => Vec) => {
   const out = new Float32Array(n * 3);
   for (let i = 0; i < n; i++) out.set(gen(i), i * 3);
   return out;
 };
 const still = (positions: Float32Array): Shape => ({ positions });
+const scaled = (positions: Float32Array, k: number) => positions.map((v) => v * k);
 
 // harry: a black hole. The accretion disk orbits (inner particles faster), the centre
 // stays empty, and a photon ring faces the viewer.
@@ -96,44 +91,85 @@ const blackHole = (n: number): Shape => {
   return { positions, motion, pointScale: 0.72 };
 };
 
-// dev: a laptop with a big </> on the screen.
-const laptop = (n: number): Shape => {
-  const TILT = 0.26; // screen leans back
-  const HINGE_Z = -0.25;
-  // a point on the screen plane at (x, y), pushed slightly forward by `lift`
-  const screen = (x: number, y: number, lift = 0): Vec => [x, y, HINGE_Z - (y + 0.85) * Math.tan(TILT) + lift];
-  // thick stroke between two screen points (for the </> glyph)
-  const stroke = (a: [number, number], b: [number, number]): Vec => {
-    const t = Math.random();
-    return screen(a[0] + (b[0] - a[0]) * t + rand(-0.05, 0.05), a[1] + (b[1] - a[1]) * t + rand(-0.05, 0.05), 0.05 + rand(-0.03, 0.03));
+// dev: Tux, modelled on Larry Ewing's original Linux penguin. Pear-shaped dark body,
+// white face + belly, white eyes with pupils, a wide warm beak and big flat feet.
+const penguin = (n: number): Shape => {
+  // body half-width at height y: narrow at the head, widest low down (pear shape)
+  const halfWidth = (y: number) => 0.5 + 0.42 * Math.exp(-((y + 0.55) ** 2) / 0.55);
+  const BOTTOM = -1.15, TOP = 1.3;
+  // a point on the body surface at height y and angle a (a = 0 faces the viewer)
+  const body = (y: number, a: number): Vec => {
+    const w = halfWidth(y);
+    const round = Math.sqrt(Math.max(0, 1 - ((y - (BOTTOM + TOP) / 2) / ((TOP - BOTTOM) / 2)) ** 2)) * 0.35 + 0.65;
+    return [Math.sin(a) * w * round, y, Math.cos(a) * w * 0.8 * round];
   };
-  const GLYPH: [[number, number], [number, number]][] = [
-    [[-0.72, 0.38], [-0.38, 0.66]], // <
-    [[-0.72, 0.38], [-0.38, 0.1]],
-    [[-0.13, -0.02], [0.13, 0.78]], // /
-    [[0.38, 0.66], [0.72, 0.38]], // >
-    [[0.38, 0.1], [0.72, 0.38]],
-  ];
-  return still(
-    fill(n, (i) => {
-      const part = i / n;
-      if (part < 0.22) return box(-1.4, 1.4, -1.0, -0.86, HINGE_Z, 1.15); // keyboard deck
-      if (part < 0.32) {
-        // key rows on top of the deck
-        const row = Math.floor(Math.random() * 4);
-        return [Math.round(rand(-1.15, 1.15) / 0.16) * 0.16, -0.84, 0.05 + row * 0.2 + rand(-0.02, 0.02)];
+  // project (x, y) onto the front of the body, lifted by `lift`
+  const front = (x: number, y: number, lift = 0.02): Vec => {
+    const w = halfWidth(y);
+    const a = Math.asin(Math.max(-1, Math.min(1, x / (w * 0.98))));
+    const p = body(y, a);
+    return [x, y, p[2] + lift];
+  };
+  const tones = new Float32Array(n);
+  const positions = fill(n, (i) => {
+    const part = i / n;
+    if (part < 0.3) {
+      tones[i] = TONE.dim; // the black body and head
+      return body(rand(BOTTOM, TOP), Math.random() * Math.PI * 2);
+    }
+    if (part < 0.52) {
+      // white belly + face: an oval from the chin down, plus the face patch around the eyes
+      tones[i] = TONE.white;
+      for (;;) {
+        const x = rand(-0.7, 0.7), y = rand(-1.05, 1.15);
+        const belly = (x / 0.62) ** 2 + ((y + 0.3) / 0.78) ** 2 < 1;
+        const face = (x / 0.42) ** 2 + ((y - 0.78) / 0.32) ** 2 < 1;
+        if (belly || face) return front(x, y);
       }
-      if (part < 0.52) {
-        // screen frame: the four edges, a little thick
-        const edge = Math.floor(Math.random() * 4);
-        if (edge === 0) return screen(rand(-1.3, 1.3), -0.82 + rand(-0.03, 0.03));
-        if (edge === 1) return screen(rand(-1.3, 1.3), 1.08 + rand(-0.03, 0.03));
-        return screen((edge === 2 ? -1.3 : 1.3) + rand(-0.03, 0.03), rand(-0.82, 1.08));
+    }
+    if (part < 0.62) {
+      // eyes: white ovals, close together
+      tones[i] = TONE.white;
+      const side = Math.random() < 0.5 ? -1 : 1;
+      for (;;) {
+        const a = Math.random() * Math.PI * 2, r = Math.sqrt(Math.random());
+        const x = side * 0.15 + Math.cos(a) * 0.1 * r, y = 0.98 + Math.sin(a) * 0.15 * r;
+        // leave a hole where the pupil sits so it reads as dark
+        if (((x - side * 0.12) / 0.055) ** 2 + ((y - 0.95) / 0.075) ** 2 > 1) return front(x, y, 0.05);
       }
-      if (part < 0.6) return screen(rand(-1.25, 1.25), rand(-0.78, 1.04), -0.01); // dim screen glass
-      return stroke(...GLYPH[Math.floor(Math.random() * GLYPH.length)]); // </>
-    }),
-  );
+    }
+    if (part < 0.66) {
+      // pupils, looking slightly inward
+      tones[i] = TONE.dim;
+      const side = Math.random() < 0.5 ? -1 : 1;
+      const a = Math.random() * Math.PI * 2, r = Math.sqrt(Math.random());
+      return front(side * 0.12 + Math.cos(a) * 0.045 * r, 0.95 + Math.sin(a) * 0.065 * r, 0.08);
+    }
+    if (part < 0.76) {
+      // beak: wide and flat, upper and lower halves
+      tones[i] = TONE.warm;
+      const a = Math.random() * Math.PI * 2, r = Math.sqrt(Math.random());
+      const lower = Math.random() < 0.4;
+      const [x, y, z] = front(Math.cos(a) * 0.27 * r, (lower ? 0.68 : 0.76) + Math.sin(a) * (lower ? 0.045 : 0.06) * r, 0.06);
+      return [x, y, z + 0.12 * (1 - r)];
+    }
+    if (part < 0.9) {
+      // feet: big flat ovals splayed outward, toes forward
+      tones[i] = TONE.warm;
+      const side = Math.random() < 0.5 ? -1 : 1;
+      const a = Math.random() * Math.PI * 2, r = Math.sqrt(Math.random());
+      const fx = Math.cos(a) * 0.36 * r, fz = Math.sin(a) * 0.26 * r;
+      const spread = side * 0.4;
+      return [side * 0.42 + fx * Math.cos(spread) - fz * Math.sin(spread), BOTTOM - 0.06 + rand(-0.03, 0.03), 0.3 + fx * Math.sin(spread) + fz * Math.cos(spread)];
+    }
+    // flippers: hang down at the sides, angled out
+    tones[i] = TONE.dim;
+    const side = Math.random() < 0.5 ? -1 : 1;
+    const [x, y, z] = onSphere(1);
+    const fx = x * 0.12, fy = y * 0.5, fz = z * 0.26, tilt = side * 0.35;
+    return [side * 0.86 + fx * Math.cos(tilt) - fy * Math.sin(tilt), -0.35 + fx * Math.sin(tilt) + fy * Math.cos(tilt), fz];
+  });
+  return { positions: scaled(positions, 1.15), tones };
 };
 
 // ops: the DevOps infinity loop, tilted toward the viewer, with particles flowing
@@ -274,7 +310,7 @@ const eightBall = (n: number): Shape => {
 
 const BUILDERS: Record<FormId, (n: number) => Shape> = {
   harry: blackHole,
-  developer: laptop,
+  developer: penguin,
   devops: pipeline,
   pm: bridge,
   tutor: bulb,

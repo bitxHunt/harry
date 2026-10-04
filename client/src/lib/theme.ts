@@ -14,7 +14,7 @@ export const THEMES = [
 
 export type ThemeId = (typeof THEMES)[number]["id"];
 // No saved choice: Latte on a light-mode device, gold (shwe) on a dark one.
-export const defaultTheme = (): ThemeId =>
+const defaultTheme = (): ThemeId =>
   window.matchMedia("(prefers-color-scheme: light)").matches ? "latte" : "shwe";
 
 const KEY = "holo-accent";

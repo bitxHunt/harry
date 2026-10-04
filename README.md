@@ -4,12 +4,15 @@ Personal site, styled like an Arch Linux desktop seen through a hologram. Each s
 familiar terminal tool: `whoami` (hero), `fastfetch` (about), `git log` (experience),
 `yazi` (projects), `htop` (stack), `systemctl` (life outside work) and `mail` (contact).
 
-- **Hero:** a 3D particle hologram (three.js). Pick a form (dev, ops, pm, tutor, care, pool)
-  and the particles break apart and re-form into a new shape.
-- **Keyboard:** ← → switch forms in the hero; `j` / `k` move through lists; in Stack, `/` or
-  F3 searches and F6 changes the sort. Shortcuts apply to the section on screen.
-- **Themes:** click a colour block in the fastfetch panel (holo, arch, shwe/gold, mono).
-  The choice is saved in `localStorage`.
+- **Hero:** a 3D particle hologram (three.js). Pick a form and the particles break apart and
+  re-form: black hole (harry), Tux the penguin (dev), infinity loop (ops), bridge (pm),
+  lightbulb (tutor), heart (care), 8-ball (pool).
+- **Keyboard** (applies to the section on screen): ← → switch forms in the hero; `j` / `k`
+  move through lists; in About, `h` / `l` change the theme; in Stack, `/` or F3 searches and F6
+  changes the sort.
+- **Themes:** click a colour block in the fastfetch panel: shwe (gold), holo, Catppuccin Mocha,
+  Catppuccin Latte (light), Rosé Pine, Tokyo Night, Decay Green, mono. Without a saved choice
+  the site follows the device: Latte in light mode, gold in dark mode.
 
 ## Stack
 
@@ -41,7 +44,7 @@ The server reads these from `server/.env`: `PORT`, `APP_URL`, `DATABASE_URL`,
 
 ```
 data/                 all site content, one file per topic. Edit text here, not in components.
-  profile.ts          name, links, fastfetch lines, the Myanmar touches flag (culture.myanmar)
+  profile.ts          name, links, status, fastfetch lines, the Myanmar touches flag (culture.myanmar)
   experience.ts       roles (git log) and education
   forms.ts            hero forms: names, taglines, powers, origin, known for
   projects.ts         projects (yazi browser); their tags also feed the htop view
@@ -51,6 +54,7 @@ data/                 all site content, one file per topic. Edit text here, not 
 
 components/
   home/               one file per homepage section (hero, about, experience, projects, skills, off-clock, articles, contact)
+                      + theme-blocks.tsx (the fastfetch colour blocks / theme switch)
   hologram/           the 3D hero: React wrapper, three.js scene, particle shape builders
   terminal/           shared TUI pieces: terminal window, section heading, form field
   effects/            site-wide visuals: cursor, scroll rail, starfield background
@@ -59,7 +63,11 @@ components/
   ui/                 the few shadcn components the article pages still use
 
 hooks/                reveal-on-scroll, text scramble, section keyboard shortcuts, SGT clock
-lib/                  API client, theme switching, class-name helper
+lib/
+  theme.ts            theme list, default (follows the device), apply / cycle, live accent colours
+  tech-usage.ts       builds the htop rows from data/ (which tech was used where, and %USE)
+  api-client.ts       axios instance for the contact + newsletter API
+  utils.ts            class-name helper
 routes/               TanStack file routes (/, /articles, /articles/$slug)
 styles/index.css      design tokens, themes, fonts, animations
 ```
@@ -71,7 +79,9 @@ styles/index.css      design tokens, themes, fonts, animations
 - **Add a hero form:** add it to `data/forms.ts`, then add a shape for its id in
   `components/hologram/hologram-shapes.ts`.
 - **Remove the Burmese touches:** set `culture.myanmar` to `false` in `data/profile.ts`.
-- **Change theme colours:** `html[data-accent=...]` blocks in `styles/index.css` and the swatches in `lib/theme.ts`.
+- **Add or change a theme:** add an `html[data-accent="id"]` block in `styles/index.css`, add it to
+  `THEMES` in `lib/theme.ts`, and add its id + mode to the small script in `index.html`
+  (it applies the saved theme before first paint).
 
 ## Performance notes
 

@@ -25,13 +25,16 @@ const VERTEX = /* glsl */ `
   uniform float uTime;
   attribute float aMix;
   attribute float aScale;
+  attribute float aTone;
   varying float vMix;
+  varying float vTone;
   void main() {
     vec4 mv = modelViewMatrix * vec4(position, 1.0);
     gl_Position = projectionMatrix * mv;
     float twinkle = 0.8 + 0.2 * sin(uTime * 2.0 + aMix * 40.0);
     gl_PointSize = uSize * uSizeMul * aScale * twinkle * uPixelRatio * (1.0 / -mv.z);
     vMix = aMix;
+    vTone = aTone;
   }
 `;
 
@@ -40,13 +43,20 @@ const FRAGMENT = /* glsl */ `
   uniform vec3 uViolet;
   uniform vec3 uPink;
   uniform float uAlpha;
+  uniform float uLight;
   varying float vMix;
+  varying float vTone;
   void main() {
     float d = length(gl_PointCoord - 0.5);
     float alpha = smoothstep(0.5, 0.0, d);
     vec3 col = mix(uCyan, uViolet, smoothstep(0.0, 0.75, vMix));
     col = mix(col, uPink, smoothstep(0.85, 1.0, vMix));
-    gl_FragColor = vec4(col, alpha * uAlpha);
+    float a = uAlpha;
+    // per-particle tones: 1 white (accent on light themes), 2 warm yellow, 3 dim
+    if (vTone > 2.5) { a *= 0.4; }
+    else if (vTone > 1.5) { col = vec3(1.0, 0.72, 0.22); a = max(a, 0.7); }
+    else if (vTone > 0.5) { col = mix(vec3(1.0), uViolet, uLight); a = max(a, 0.6); }
+    gl_FragColor = vec4(col, alpha * a);
   }
 `;
 
@@ -101,6 +111,15 @@ export const createScene = (host: HTMLDivElement, initial: FormId, reduced: bool
   geometry.setAttribute("position", new BufferAttribute(current, 3));
   geometry.setAttribute("aMix", new BufferAttribute(mixes, 1));
   geometry.setAttribute("aScale", new BufferAttribute(scales, 1));
+  const tones = new Float32Array(N);
+  if (initialShape.tones) tones.set(initialShape.tones);
+  geometry.setAttribute("aTone", new BufferAttribute(tones, 1));
+  // particles take the next shape's colour roles as the morph starts
+  const setTones = (next?: Float32Array) => {
+    tones.fill(0);
+    if (next) tones.set(next);
+    geometry.getAttribute("aTone").needsUpdate = true;
+  };
   const material = new ShaderMaterial({
     vertexShader: VERTEX,
     fragmentShader: FRAGMENT,
@@ -111,6 +130,7 @@ export const createScene = (host: HTMLDivElement, initial: FormId, reduced: bool
       uSize: { value: small ? 70 : 85 },
       uSizeMul: { value: initialShape.pointScale ?? 1 },
       uAlpha: { value: isLightTheme() ? 0.38 : 0.62 },
+      uLight: { value: isLightTheme() ? 1 : 0 },
       uPixelRatio: { value: pixelRatio },
       uTime: { value: 0 },
       uCyan: { value: new Color(accentColors().cyan || "#7cf2ff") },
@@ -130,6 +150,7 @@ export const createScene = (host: HTMLDivElement, initial: FormId, reduced: bool
     const next = buildShape(id, N);
     to = next.positions;
     pendingMotion = next.motion;
+    setTones(next.tones);
     targetSizeMul = next.pointScale ?? 1;
     motion = undefined;
     morphStart = clock.getElapsedTime();
@@ -153,6 +174,7 @@ export const createScene = (host: HTMLDivElement, initial: FormId, reduced: bool
     // glow on dark backgrounds, solid ink on light ones
     material.blending = isLightTheme() ? NormalBlending : AdditiveBlending;
     material.uniforms.uAlpha.value = isLightTheme() ? 0.38 : 0.62;
+    material.uniforms.uLight.value = isLightTheme() ? 1 : 0;
     material.needsUpdate = true;
   };
   window.addEventListener(THEME_EVENT, onTheme);

@@ -23,7 +23,7 @@ export const projects: Project[] = [
     kind: "Personal",
     year: "2026",
     description:
-      "A cinematic dashboard that turns my Obsidian study log into analytics: a semester dial, plan-vs-reality tracking, and a focus timer that syncs with my Claude study logger.",
+      "A cinematic dashboard that turns my Obsidian study log into analytics: a semester dial, plan-vs-reality tracking, and a focus timer that syncs with my study logger.",
     tags: ["React", "TanStack", "Express", "Prisma", "PostgreSQL", "Docker"],
     github: null,
     live: null,
