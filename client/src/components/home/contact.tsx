@@ -31,15 +31,15 @@ export function Contact() {
   });
 
   return (
-    <section id="contact" className="mx-auto max-w-6xl px-6 py-24 md:px-10">
+    <section id="contact" className="mx-auto max-w-6xl px-5 py-12 md:px-10 md:py-24">
       <SectionHead n={7} command="mail harry" title="Get in touch" />
-      <div className="grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+      <div className="grid gap-6 md:gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
         <div className="reveal">
           <p className="text-lg leading-relaxed text-muted-foreground">
             Internships, projects, a question about something I've built, or just a chat about tech or billiards.
             Drop me a message and I'll get back to you as soon as I can.
           </p>
-          <dl className="mt-8 space-y-3 font-mono text-sm">
+          <dl className="mt-5 space-y-3 font-mono text-sm md:mt-8">
             <div className="flex gap-3"><dt className="w-20 text-dim">email</dt><dd><a className="text-arch hover:underline" href={`mailto:${profile.email}`}>{profile.email}</a></dd></div>
             {profile.socials.map((s) => (
               <div key={s.label} className="flex gap-3">

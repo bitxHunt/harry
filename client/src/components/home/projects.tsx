@@ -35,7 +35,7 @@ export function Projects() {
   const files = ["README.md", ...(p.image ? ["preview.png"] : [])];
 
   return (
-    <section id="projects" className="mx-auto max-w-6xl px-6 py-24 md:px-10">
+    <section id="projects" className="mx-auto max-w-6xl px-5 py-12 md:px-10 md:py-24">
       <SectionHead n={3} command="yazi ~/projects" title="Projects">
         <p className="max-w-xs text-sm text-muted-foreground">Things I've built at school, at work and for myself.</p>
       </SectionHead>

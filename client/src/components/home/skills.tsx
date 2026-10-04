@@ -57,7 +57,7 @@ export function Skills() {
   const cols = "grid grid-cols-[52px_minmax(0,1fr)_minmax(0,1.1fr)] gap-3 sm:grid-cols-[60px_60px_56px_minmax(0,1fr)_minmax(0,1.2fr)]";
 
   return (
-    <section id="stack" className="mx-auto max-w-6xl px-6 py-24 md:px-10">
+    <section id="stack" className="mx-auto max-w-6xl px-5 py-12 md:px-10 md:py-24">
       <SectionHead n={4} command="htop -u harry" title="Stack" />
       <Terminal title="htop — harry@arch" className="reveal">
         <div className="font-mono text-[12px]">

@@ -27,7 +27,7 @@ export function OffClock() {
   const cols = "grid grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] gap-3 sm:grid-cols-[minmax(0,1fr)_64px_64px_80px_minmax(0,1.6fr)]";
 
   return (
-    <section id="off-clock" className="mx-auto max-w-6xl px-6 py-24 md:px-10">
+    <section id="off-clock" className="mx-auto max-w-6xl px-5 py-12 md:px-10 md:py-24">
       <SectionHead n={5} command="systemctl --user list-units 'life-*'" title="Off the clock" />
       <Terminal title="systemctl --user" className="reveal">
         <div className="font-mono text-[12.5px]" onKeyDown={onKey}>

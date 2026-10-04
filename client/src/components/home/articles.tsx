@@ -32,7 +32,7 @@ export function Articles() {
   });
 
   return (
-    <section id="articles" className="mx-auto max-w-6xl px-6 py-24 md:px-10">
+    <section id="articles" className="mx-auto max-w-6xl px-5 py-12 md:px-10 md:py-24">
       <SectionHead n={6} command="cat ~/writing/*.md" title="Writing">
         <Link to="/articles" className="group inline-flex items-center gap-1.5 text-sm font-medium text-arch">
           All articles <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" />

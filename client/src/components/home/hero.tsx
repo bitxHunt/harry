@@ -35,7 +35,7 @@ export function Hero() {
   return (
     <section id="top" className="relative isolate overflow-hidden">
 
-      <div className="mx-auto grid max-w-6xl items-center gap-10 px-6 pb-16 pt-8 md:px-10 lg:min-h-[calc(100svh-4rem)] lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:pt-0">
+      <div className="mx-auto grid max-w-6xl items-center gap-2 px-5 pb-8 pt-6 md:gap-10 md:px-10 md:pb-16 md:pt-8 lg:min-h-[calc(100svh-4rem)] lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:pt-0">
         <div className="relative z-10 min-w-0">
           <p key={command} className="font-mono text-sm text-dim">
             <span className="text-arch">{profile.handle}@{profile.host}</span> <span className="text-holo">~</span> %{" "}
@@ -56,7 +56,7 @@ export function Hero() {
             {form.tagline}
           </p>
 
-          <dl key={`stats-${form.id}`} className="animate-in fade-in mt-7 grid max-w-xl gap-x-6 gap-y-2.5 font-mono text-[12px] duration-700 sm:grid-cols-[auto_minmax(0,1fr)]">
+          <dl key={`stats-${form.id}`} className="animate-in fade-in mt-5 grid md:mt-7 max-w-xl gap-x-6 gap-y-2.5 font-mono text-[12px] duration-700 sm:grid-cols-[auto_minmax(0,1fr)]">
             <dt className="text-dim">powers</dt>
             <dd className="flex flex-wrap gap-1.5">
               {form.powers.map((p) => (
@@ -77,7 +77,7 @@ export function Hero() {
             </dd>
           </dl>
 
-          <div className="mt-9 flex flex-wrap gap-3">
+          <div className="mt-6 flex flex-wrap gap-3 md:mt-9">
             <a
               href={profile.cv}
               target="_blank"

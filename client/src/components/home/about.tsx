@@ -15,9 +15,9 @@ const ART = String.raw`
 
 export function About() {
   return (
-    <section id="about" className="mx-auto max-w-6xl px-6 py-24 md:px-10">
+    <section id="about" className="mx-auto max-w-6xl px-5 py-12 md:px-10 md:py-24">
       <SectionHead n={1} command="fastfetch" title="About me" />
-      <div className="grid gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
+      <div className="grid gap-6 md:gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
         <Terminal title="kitty — harry@arch: ~" className="reveal">
           <div className="p-6 font-mono text-[12.5px] leading-relaxed">
             <pre className="holo-text mb-5 overflow-hidden text-[clamp(10px,3vw,18px)] font-semibold leading-[1.1] drop-shadow-[0_0_6px_color-mix(in_srgb,var(--holo-cyan)_25%,transparent)]" aria-label="Harry">{ART}</pre>

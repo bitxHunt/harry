@@ -33,7 +33,7 @@ const ScrambleTitle = ({ text }: { text: string }) => {
 };
 
 export const SectionHead = ({ n, command, title, children }: { n: number; command: string; title: string; children?: ReactNode }) => (
-  <div className="reveal mb-10 flex flex-wrap items-end justify-between gap-6">
+  <div className="reveal mb-6 flex flex-wrap items-end justify-between gap-4 md:mb-10 md:gap-6">
     <div className="flex min-w-0 items-center gap-5">
       <IndexTag n={n} />
       <div className="min-w-0">

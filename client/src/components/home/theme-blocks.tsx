@@ -4,6 +4,10 @@ import { useSectionKeys } from "@/hooks/useSectionKeys";
 import { cn } from "@/lib/utils";
 
 // fastfetch's colour blocks double as the theme switch.
+// Split n blocks into equal rows: rows = ceil(n / max), cols = ceil(n / rows).
+// 8 themes, max 5 per row on phones -> 2 rows of 4 (not 5 + 3).
+const evenColumns = (n: number, maxPerRow: number) => Math.ceil(n / Math.ceil(n / maxPerRow));
+
 export const ThemeBlocks = () => {
   const [active, setActive] = useState<ThemeId>(currentTheme);
   useEffect(() => {
@@ -18,7 +22,7 @@ export const ThemeBlocks = () => {
   });
   return (
     <div className="mt-4">
-      <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="Colour theme">
+      <div className="theme-grid gap-2" role="radiogroup" aria-label="Colour theme" style={{ ["--cols" as string]: evenColumns(THEMES.length, 5) }}>
         {THEMES.map((t) => (
           <button
             key={t.id}
@@ -29,7 +33,7 @@ export const ThemeBlocks = () => {
             data-cursor={t.label}
             onClick={() => applyTheme(t.id)}
             className={cn(
-              "h-8 w-11 rounded-md transition md:h-4 md:w-9 md:rounded-sm",
+              "h-8 w-full rounded-md transition md:h-4 md:w-9 md:rounded-sm",
               active === t.id ? "ring-2 ring-foreground ring-offset-2 ring-offset-[var(--background)]" : "opacity-80 hover:opacity-100",
             )}
             style={{ background: `linear-gradient(90deg, ${t.swatch[0]} 50%, ${t.swatch[1]} 50%)` }}

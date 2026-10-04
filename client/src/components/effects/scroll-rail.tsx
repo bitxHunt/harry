@@ -7,6 +7,8 @@ import { cn } from "@/lib/utils";
   thumb can be dragged or the track clicked, so nothing is lost.
 */
 export const ScrollRail = () => {
+  // touch devices show the system's own scroll indicator, so skip ours there
+  const [enabled] = useState(() => window.matchMedia("(pointer: fine)").matches);
   const [visible, setVisible] = useState(false);
   const [dragging, setDragging] = useState(false);
   const thumb = useRef<HTMLDivElement>(null);
@@ -15,6 +17,7 @@ export const ScrollRail = () => {
   const dragStart = useRef({ y: 0, scroll: 0 });
 
   useEffect(() => {
+    if (!enabled) return;
     const update = () => {
       const doc = document.documentElement;
       const t = thumb.current, tr = track.current;
@@ -48,7 +51,7 @@ export const ScrollRail = () => {
       ro.disconnect();
       clearTimeout(hideTimer.current);
     };
-  }, []);
+  }, [enabled]);
 
   const scrollToTrackPoint = (clientY: number) => {
     const tr = track.current!;
@@ -70,6 +73,8 @@ export const ScrollRail = () => {
     const per = max / (tr.clientHeight - t.clientHeight);
     window.scrollTo({ top: dragStart.current.scroll + (e.clientY - dragStart.current.y) * per });
   };
+
+  if (!enabled) return null;
 
   return (
     <div

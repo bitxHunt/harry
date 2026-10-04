@@ -6,10 +6,13 @@ import { Terminal } from "@/components/terminal/terminal";
 
 // Experience as `git log --graph`: each role is a commit, click to expand the diff.
 export function Experience() {
-  const [open, setOpen] = useState<string | null>(experiences[0].hash);
+  // first entry open on desktop; everything collapsed on phones to keep the page short
+  const [open, setOpen] = useState<string | null>(() =>
+    window.matchMedia("(min-width: 768px)").matches ? experiences[0].hash : null,
+  );
 
   return (
-    <section id="experience" className="mx-auto max-w-6xl px-6 py-24 md:px-10">
+    <section id="experience" className="mx-auto max-w-6xl px-5 py-12 md:px-10 md:py-24">
       <SectionHead n={2} command="git log --graph --oneline career" title="Experience" />
       <Terminal title="~/career — git log" className="reveal">
         <ol className="p-3 font-mono text-sm sm:p-5">

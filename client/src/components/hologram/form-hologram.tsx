@@ -48,7 +48,7 @@ export const FormHologram = ({ form, onClick, className }: Props) => {
   }, [form]);
 
   return (
-    <div className={cn("relative aspect-square w-full", className)}>
+    <div className={cn("relative aspect-[5/4] w-full md:aspect-square", className)}>
       {/* static stand-in until the scene is ready (or if WebGL is unavailable) */}
       <div aria-hidden className={cn("pointer-events-none absolute inset-0 grid place-items-center transition-opacity duration-700", ready && "opacity-0")}>
         <div className="size-[58%] rounded-full border border-holo/40 bg-[radial-gradient(circle,color-mix(in_srgb,var(--holo-cyan)_22%,transparent),transparent_65%)] shadow-[0_0_80px_-20px_var(--holo-cyan)]" />
