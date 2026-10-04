@@ -32,7 +32,9 @@ const VERTEX = /* glsl */ `
     vec4 mv = modelViewMatrix * vec4(position, 1.0);
     gl_Position = projectionMatrix * mv;
     float twinkle = 0.8 + 0.2 * sin(uTime * 2.0 + aMix * 40.0);
-    gl_PointSize = uSize * uSizeMul * aScale * twinkle * uPixelRatio * (1.0 / -mv.z);
+    // "fine" particles (Tux's eye whites) are drawn small so the pupil gaps stay dark
+    float fine = aTone > 3.5 ? 0.38 : 1.0;
+    gl_PointSize = uSize * uSizeMul * aScale * twinkle * fine * uPixelRatio * (1.0 / -mv.z);
     vMix = aMix;
     vTone = aTone;
   }
@@ -53,7 +55,8 @@ const FRAGMENT = /* glsl */ `
     col = mix(col, uPink, smoothstep(0.85, 1.0, vMix));
     float a = uAlpha;
     // per-particle tones: 1 white (accent on light themes), 2 warm yellow, 3 dim
-    if (vTone > 2.5) { a *= 0.4; }
+    if (vTone > 3.5) { col = mix(vec3(1.0), uViolet, uLight); a = max(a, 0.85); }
+    else if (vTone > 2.5) { a *= 0.4; }
     else if (vTone > 1.5) { col = vec3(1.0, 0.72, 0.22); a = max(a, 0.7); }
     else if (vTone > 0.5) { col = mix(vec3(1.0), uViolet, uLight); a = max(a, 0.6); }
     gl_FragColor = vec4(col, alpha * a);

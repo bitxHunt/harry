@@ -13,7 +13,7 @@ export type Shape = {
 };
 
 // Colour roles a shape can give its particles (read by the shader in hologram-scene).
-export const TONE = { theme: 0, white: 1, warm: 2, dim: 3 } as const;
+export const TONE = { theme: 0, white: 1, warm: 2, dim: 3, fine: 4 } as const; // fine = small white dots (eyes)
 
 type Vec = [number, number, number];
 
@@ -91,85 +91,81 @@ const blackHole = (n: number): Shape => {
   return { positions, motion, pointScale: 0.72 };
 };
 
-// dev: Tux, modelled on Larry Ewing's original Linux penguin. Pear-shaped dark body,
-// white face + belly, white eyes with pupils, a wide warm beak and big flat feet.
+// dev: Tux, modelled on Larry Ewing's original Linux penguin, sitting: a squat
+// bottom-heavy body on a flat base, white face + belly, big white eyes with dark pupils,
+// a wide warm beak, and flat feet sticking out in front.
 const penguin = (n: number): Shape => {
-  // body half-width at height y: narrow at the head, widest low down (pear shape)
-  const halfWidth = (y: number) => 0.5 + 0.42 * Math.exp(-((y + 0.55) ** 2) / 0.55);
-  const BOTTOM = -1.15, TOP = 1.3;
-  // a point on the body surface at height y and angle a (a = 0 faces the viewer)
+  const BOTTOM = -1.0, TOP = 1.15;
+  // half-width at height y: small head, widest low down (sitting pear)
+  const halfWidth = (y: number) => 0.46 + 0.5 * Math.exp(-((y + 0.5) ** 2) / 0.5);
   const body = (y: number, a: number): Vec => {
-    const w = halfWidth(y);
-    const round = Math.sqrt(Math.max(0, 1 - ((y - (BOTTOM + TOP) / 2) / ((TOP - BOTTOM) / 2)) ** 2)) * 0.35 + 0.65;
-    return [Math.sin(a) * w * round, y, Math.cos(a) * w * 0.8 * round];
+    const t = (y - BOTTOM) / (TOP - BOTTOM);
+    const round = Math.sqrt(Math.max(0, 1 - (2 * t - 1) ** 2)) * 0.3 + 0.7;
+    const w = halfWidth(y) * round * (y < BOTTOM + 0.12 ? 0.92 : 1); // flat seat
+    return [Math.sin(a) * w, y, Math.cos(a) * w * 0.82];
   };
-  // project (x, y) onto the front of the body, lifted by `lift`
   const front = (x: number, y: number, lift = 0.02): Vec => {
-    const w = halfWidth(y);
+    const t = (y - BOTTOM) / (TOP - BOTTOM);
+    const w = halfWidth(y) * (Math.sqrt(Math.max(0, 1 - (2 * t - 1) ** 2)) * 0.3 + 0.7);
     const a = Math.asin(Math.max(-1, Math.min(1, x / (w * 0.98))));
-    const p = body(y, a);
-    return [x, y, p[2] + lift];
+    return [x, y, Math.cos(a) * w * 0.82 + lift];
   };
+  const blob = (cx: number, cy: number, rx: number, ry: number) => {
+    const a = Math.random() * Math.PI * 2, r = Math.sqrt(Math.random());
+    return [cx + Math.cos(a) * rx * r, cy + Math.sin(a) * ry * r] as const;
+  };
+  const EYE_Y = 0.78, EYE_X = 0.16;
   const tones = new Float32Array(n);
   const positions = fill(n, (i) => {
     const part = i / n;
     if (part < 0.3) {
-      tones[i] = TONE.dim; // the black body and head
+      tones[i] = TONE.dim; // black body and head
       return body(rand(BOTTOM, TOP), Math.random() * Math.PI * 2);
     }
-    if (part < 0.52) {
-      // white belly + face: an oval from the chin down, plus the face patch around the eyes
-      tones[i] = TONE.white;
+    if (part < 0.5) {
+      tones[i] = TONE.white; // belly + face patch
       for (;;) {
-        const x = rand(-0.7, 0.7), y = rand(-1.05, 1.15);
-        const belly = (x / 0.62) ** 2 + ((y + 0.3) / 0.78) ** 2 < 1;
-        const face = (x / 0.42) ** 2 + ((y - 0.78) / 0.32) ** 2 < 1;
-        if (belly || face) return front(x, y);
+        const x = rand(-0.8, 0.8), y = rand(-0.95, 1.0);
+        const belly = (x / 0.7) ** 2 + ((y + 0.35) / 0.66) ** 2 < 1;
+        const face = (x / 0.38) ** 2 + ((y - 0.66) / 0.3) ** 2 < 1;
+        const eyeArea = ((Math.abs(x) - EYE_X) / 0.13) ** 2 + ((y - EYE_Y) / 0.18) ** 2 < 1;
+        if ((belly || face) && !eyeArea) return front(x, y);
       }
     }
     if (part < 0.62) {
-      // eyes: white ovals, close together
-      tones[i] = TONE.white;
+      // eye whites: big ovals of fine dots, with a pupil-sized hole looking inward
+      tones[i] = TONE.fine;
       const side = Math.random() < 0.5 ? -1 : 1;
       for (;;) {
-        const a = Math.random() * Math.PI * 2, r = Math.sqrt(Math.random());
-        const x = side * 0.15 + Math.cos(a) * 0.1 * r, y = 0.98 + Math.sin(a) * 0.15 * r;
-        // leave a hole where the pupil sits so it reads as dark
-        if (((x - side * 0.12) / 0.055) ** 2 + ((y - 0.95) / 0.075) ** 2 > 1) return front(x, y, 0.05);
+        const [x, y] = blob(side * EYE_X, EYE_Y, 0.11, 0.16);
+        const pupil = ((x - side * (EYE_X - 0.035)) / 0.055) ** 2 + ((y - (EYE_Y - 0.02)) / 0.085) ** 2 < 1;
+        if (!pupil) return front(x, y, 0.06);
       }
     }
-    if (part < 0.66) {
-      // pupils, looking slightly inward
-      tones[i] = TONE.dim;
-      const side = Math.random() < 0.5 ? -1 : 1;
-      const a = Math.random() * Math.PI * 2, r = Math.sqrt(Math.random());
-      return front(side * 0.12 + Math.cos(a) * 0.045 * r, 0.95 + Math.sin(a) * 0.065 * r, 0.08);
-    }
-    if (part < 0.76) {
+    if (part < 0.72) {
       // beak: wide and flat, upper and lower halves
       tones[i] = TONE.warm;
-      const a = Math.random() * Math.PI * 2, r = Math.sqrt(Math.random());
       const lower = Math.random() < 0.4;
-      const [x, y, z] = front(Math.cos(a) * 0.27 * r, (lower ? 0.68 : 0.76) + Math.sin(a) * (lower ? 0.045 : 0.06) * r, 0.06);
-      return [x, y, z + 0.12 * (1 - r)];
+      const [x, y] = blob(0, lower ? 0.5 : 0.58, 0.26, lower ? 0.045 : 0.06);
+      const [px, py, pz] = front(x, y, 0.06);
+      return [px, py, pz + 0.1 * (1 - Math.abs(x) / 0.26)];
     }
-    if (part < 0.9) {
-      // feet: big flat ovals splayed outward, toes forward
+    if (part < 0.88) {
+      // feet: flat ovals sticking out in front of the seat, toes splayed
       tones[i] = TONE.warm;
       const side = Math.random() < 0.5 ? -1 : 1;
-      const a = Math.random() * Math.PI * 2, r = Math.sqrt(Math.random());
-      const fx = Math.cos(a) * 0.36 * r, fz = Math.sin(a) * 0.26 * r;
-      const spread = side * 0.4;
-      return [side * 0.42 + fx * Math.cos(spread) - fz * Math.sin(spread), BOTTOM - 0.06 + rand(-0.03, 0.03), 0.3 + fx * Math.sin(spread) + fz * Math.cos(spread)];
+      const [fx, fz] = blob(0, 0, 0.32, 0.24);
+      const spread = side * 0.35;
+      return [side * 0.38 + fx * Math.cos(spread) - fz * Math.sin(spread), BOTTOM + rand(-0.03, 0.03), 0.62 + fx * Math.sin(spread) + fz * Math.cos(spread)];
     }
-    // flippers: hang down at the sides, angled out
+    // flippers: resting at the sides, angled slightly out and forward
     tones[i] = TONE.dim;
     const side = Math.random() < 0.5 ? -1 : 1;
     const [x, y, z] = onSphere(1);
-    const fx = x * 0.12, fy = y * 0.5, fz = z * 0.26, tilt = side * 0.35;
-    return [side * 0.86 + fx * Math.cos(tilt) - fy * Math.sin(tilt), -0.35 + fx * Math.sin(tilt) + fy * Math.cos(tilt), fz];
+    const fx = x * 0.12, fy = y * 0.45, fz = z * 0.25, tilt = side * 0.5;
+    return [side * 0.9 + fx * Math.cos(tilt) - fy * Math.sin(tilt), -0.35 + fx * Math.sin(tilt) + fy * Math.cos(tilt), fz + 0.1];
   });
-  return { positions: scaled(positions, 1.15), tones };
+  return { positions: scaled(positions, 1.2), tones };
 };
 
 // ops: the DevOps infinity loop, tilted toward the viewer, with particles flowing
