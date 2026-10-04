@@ -29,7 +29,7 @@ export const ThemeBlocks = () => {
             data-cursor={t.label}
             onClick={() => applyTheme(t.id)}
             className={cn(
-              "h-4 w-9 rounded-sm transition",
+              "h-8 w-11 rounded-md transition md:h-4 md:w-9 md:rounded-sm",
               active === t.id ? "ring-2 ring-foreground ring-offset-2 ring-offset-[var(--background)]" : "opacity-80 hover:opacity-100",
             )}
             style={{ background: `linear-gradient(90deg, ${t.swatch[0]} 50%, ${t.swatch[1]} 50%)` }}
@@ -37,7 +37,7 @@ export const ThemeBlocks = () => {
         ))}
       </div>
       <p className="mt-2 text-[10.5px] text-dim">
-        theme: <span className="text-holo">{THEMES.find((t) => t.id === active)?.label}</span> · click a colour or press h l to switch
+        theme: <span className="text-holo">{THEMES.find((t) => t.id === active)?.label}</span> · tap a colour<span className="hidden md:inline"> or press h l</span> to switch
       </p>
     </div>
   );

@@ -69,8 +69,8 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 px-3 pt-3">
-      <div className="mx-auto flex h-12 max-w-6xl items-center justify-between gap-3 rounded-xl border border-[var(--line)] bg-[color-mix(in_srgb,var(--background)_78%,transparent)] px-2 font-mono text-[12px] backdrop-blur-xl">
-        <Link to="/" className="flex shrink-0 items-center rounded-lg px-2.5 py-1.5 transition hover:bg-panel" aria-label="Home">
+      <div className="mx-auto flex h-14 max-w-6xl items-center md:h-12 justify-between gap-3 rounded-xl border border-[var(--line)] bg-[color-mix(in_srgb,var(--background)_78%,transparent)] px-2 font-mono text-[12px] backdrop-blur-xl">
+        <Link to="/" className="flex h-10 shrink-0 items-center rounded-lg px-2.5 transition hover:bg-panel md:h-auto md:py-1.5" aria-label="Home">
           <span className="text-arch">harry</span>
           <span className="hidden text-dim sm:inline">@arch</span>
           <span className="ml-1 text-holo">~</span>
@@ -89,7 +89,7 @@ export function Header() {
                 title={w.label}
                 aria-current={isActive ? "true" : undefined}
                 className={cn(
-                  "flex h-7 shrink-0 items-center gap-1.5 rounded-md px-2 transition",
+                  "flex h-9 min-w-9 shrink-0 items-center justify-center gap-1.5 rounded-md px-2 transition md:h-7 md:min-w-0",
                   isActive ? "bg-holo text-background" : "text-dim hover:bg-panel hover:text-foreground",
                 )}
               >

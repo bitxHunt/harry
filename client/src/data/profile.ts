@@ -12,7 +12,6 @@ export const profile = {
   socials: [
     { label: "GitHub", href: "https://github.com/bitxHunt" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/thiha-swan-htet-tsh/" },
-    { label: "Instagram", href: "https://www.instagram.com/_tsh_harry/" },
   ],
 };
 

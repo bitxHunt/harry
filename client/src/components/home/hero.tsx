@@ -111,7 +111,7 @@ export function Hero() {
                 onClick={() => transform(i)}
                 data-cursor="transform"
                 className={cn(
-                  "rounded-md px-2.5 py-1.5 transition",
+                  "rounded-md px-3 py-2.5 transition md:px-2.5 md:py-1.5",
                   i === index ? "bg-holo text-background" : "text-dim hover:bg-panel hover:text-foreground",
                 )}
               >
@@ -119,7 +119,7 @@ export function Hero() {
               </button>
             ))}
           </div>
-          <p className="mt-3 text-center font-mono text-[11px] text-dim">click the hologram or pick a form · ← → to cycle</p>
+          <p className="mt-3 text-center font-mono text-[11px] text-dim"><span className="md:hidden">tap the hologram or pick a form</span><span className="hidden md:inline">click the hologram or pick a form · ← → to cycle</span></p>
         </div>
       </div>
     </section>

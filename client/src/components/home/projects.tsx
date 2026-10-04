@@ -54,7 +54,7 @@ export function Projects() {
                     tabIndex={selected ? 0 : -1}
                     onClick={() => setIndex(i)}
                     className={cn(
-                      "flex w-full items-center gap-2.5 rounded-md px-3 py-2 text-left transition",
+                      "flex w-full items-center gap-2.5 rounded-md px-3 py-3 text-left transition md:py-2",
                       selected ? "bg-holo text-background" : "text-muted-foreground hover:bg-panel hover:text-foreground",
                     )}
                   >

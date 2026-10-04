@@ -108,7 +108,7 @@ export function Skills() {
                   style={{ ["--i" as string]: Math.min(i, 14) }}
                   className={cn(
                     cols,
-                    "px-5 py-1",
+                    "px-5 py-2.5 md:py-1",
                     i === selected ? "bg-[color-mix(in_srgb,var(--holo-cyan)_16%,transparent)] text-foreground" : "text-muted-foreground",
                   )}
                 >
@@ -164,7 +164,7 @@ export function Skills() {
           </p>
 
           {/* function key bar: only keys that actually work */}
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 bg-[color-mix(in_srgb,var(--holo-cyan)_7%,transparent)] px-5 py-1.5 text-[11px]">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 bg-[color-mix(in_srgb,var(--holo-cyan)_7%,transparent)] px-5 py-3 text-[11px] md:py-1.5">
             {searching ? (
               <label className="flex items-center gap-2">
                 <span className="text-holo">Search:</span>

@@ -50,7 +50,7 @@ export function OffClock() {
                 style={{ ["--i" as string]: i }}
                 className={cn(
                   cols,
-                  "w-full px-5 py-1.5 text-left transition-colors",
+                  "w-full px-5 py-3 text-left transition-colors md:py-1.5",
                   i === index ? "bg-[color-mix(in_srgb,var(--holo-cyan)_14%,transparent)] text-foreground" : "text-muted-foreground hover:text-foreground",
                 )}
               >

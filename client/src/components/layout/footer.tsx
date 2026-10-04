@@ -11,9 +11,9 @@ export function Footer() {
         </p>
         <ul className="flex flex-wrap gap-4">
           {profile.socials.map((s) => (
-            <li key={s.label}><a href={s.href} target="_blank" rel="noopener noreferrer" className="transition hover:text-holo">{s.label.toLowerCase()}</a></li>
+            <li key={s.label}><a href={s.href} target="_blank" rel="noopener noreferrer" className="inline-block py-2 transition hover:text-holo md:py-0">{s.label.toLowerCase()}</a></li>
           ))}
-          <li><a href={`mailto:${profile.email}`} className="transition hover:text-holo">email</a></li>
+          <li><a href={`mailto:${profile.email}`} className="inline-block py-2 transition hover:text-holo md:py-0">email</a></li>
         </ul>
       </div>
     </footer>

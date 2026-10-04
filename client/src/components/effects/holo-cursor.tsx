@@ -90,7 +90,7 @@ export const HoloCursor = () => {
       rs += ((aiming ? 1 : 0.45) - rs) * 0.2;
       dot.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%) scale(${aiming ? 0.5 : 1})`;
       reticle.style.transform = `translate3d(${rx}px, ${ry}px, 0) translate(-50%, -50%) rotate(${spin}deg) scale(${rs.toFixed(3)})`;
-      label.style.transform = `translate3d(${rx + 28}px, ${ry + 18}px, 0)`;
+      label.style.transform = `translate3d(${rx + 34}px, ${ry + 22}px, 0)`;
 
       ctx.clearRect(0, 0, innerWidth, innerHeight);
       ctx.globalCompositeOperation = blend;
@@ -175,15 +175,15 @@ export const HoloCursor = () => {
   return (
     <div aria-hidden className="pointer-events-none fixed inset-0 z-[95] hidden [.holo-cursor_&]:block">
       <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
-      <div ref={reticleRef} className="absolute left-0 top-0 size-11 rounded-full border border-holo/80 opacity-0 transition-opacity duration-200">
+      <div ref={reticleRef} className="absolute left-0 top-0 size-14 rounded-full border-[1.5px] border-holo/80 opacity-0 transition-opacity duration-200">
         {/* four ticks: the aim marks */}
-        <span className="absolute left-1/2 top-[-5px] h-2 w-px -translate-x-1/2 bg-holo" />
-        <span className="absolute bottom-[-5px] left-1/2 h-2 w-px -translate-x-1/2 bg-holo" />
-        <span className="absolute left-[-5px] top-1/2 h-px w-2 -translate-y-1/2 bg-holo" />
-        <span className="absolute right-[-5px] top-1/2 h-px w-2 -translate-y-1/2 bg-holo" />
+        <span className="absolute left-1/2 top-[-5px] h-2.5 w-[1.5px] -translate-x-1/2 bg-holo" />
+        <span className="absolute bottom-[-5px] left-1/2 h-2.5 w-[1.5px] -translate-x-1/2 bg-holo" />
+        <span className="absolute left-[-5px] top-1/2 h-[1.5px] w-2.5 -translate-y-1/2 bg-holo" />
+        <span className="absolute right-[-5px] top-1/2 h-[1.5px] w-2.5 -translate-y-1/2 bg-holo" />
       </div>
-      <div ref={dotRef} className="absolute left-0 top-0 size-2.5 rounded-full bg-[color-mix(in_srgb,var(--holo-cyan)_25%,white)] opacity-0 shadow-[0_0_6px_1px_var(--holo-cyan),0_0_14px_2px_color-mix(in_srgb,var(--holo-violet)_40%,transparent)] transition-[opacity] duration-200" />
-      <span ref={labelRef} className="absolute left-0 top-0 rounded bg-[color-mix(in_srgb,var(--background)_75%,transparent)] px-1.5 py-0.5 font-mono text-[10px] text-holo opacity-0 transition-opacity duration-150" />
+      <div ref={dotRef} className="absolute left-0 top-0 size-3.5 rounded-full bg-[color-mix(in_srgb,var(--holo-cyan)_25%,white)] opacity-0 shadow-[0_0_6px_1px_var(--holo-cyan),0_0_14px_2px_color-mix(in_srgb,var(--holo-violet)_40%,transparent)] transition-[opacity] duration-200" />
+      <span ref={labelRef} className="absolute left-0 top-0 rounded bg-[color-mix(in_srgb,var(--background)_75%,transparent)] px-2 py-0.5 font-mono text-[11px] text-holo opacity-0 transition-opacity duration-150" />
     </div>
   );
 };
