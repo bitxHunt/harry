@@ -90,7 +90,7 @@ export function Header() {
                 aria-current={isActive ? "true" : undefined}
                 className={cn(
                   "flex h-7 shrink-0 items-center gap-1.5 rounded-md px-2 transition",
-                  isActive ? "bg-holo text-background shadow-[0_0_16px_-2px_var(--holo-cyan)]" : "text-dim hover:bg-panel hover:text-foreground",
+                  isActive ? "bg-holo text-background" : "text-dim hover:bg-panel hover:text-foreground",
                 )}
               >
                 <span className="font-semibold">{w.n}</span>

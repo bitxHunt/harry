@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en" class="dark" data-accent="shwe" data-mode="dark">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/favicon-64.png" />
@@ -10,12 +10,16 @@
     <meta property="og:title" content="Thiha Swan Htet (Harry)" />
     <meta property="og:description" content="Full-stack developer · DevOps · Project manager. Computer Science at NUS." />
     <meta property="og:type" content="website" />
-    <style>html{background:#04060c;color-scheme:dark}</style>
-    <!-- apply the saved accent theme before first paint (see src/lib/theme.ts) -->
+    <style>html{background:#04060c;color-scheme:dark}html[data-mode=light]{background:#eff1f5;color-scheme:light}</style>
+    <!-- apply the saved theme before first paint (ids/modes mirror src/lib/theme.ts) -->
     <script>
       try {
+        var modes = { shwe: "dark", holo: "dark", mocha: "dark", latte: "light", rosepine: "dark", tokyonight: "dark", decaygreen: "dark", mono: "dark" };
         var a = localStorage.getItem("holo-accent");
-        if (a && a !== "holo") document.documentElement.dataset.accent = a;
+        // no saved choice: Latte for light-mode devices, gold for dark
+        if (!a || !modes[a]) a = matchMedia("(prefers-color-scheme: light)").matches ? "latte" : "shwe";
+        document.documentElement.dataset.accent = a;
+        document.documentElement.dataset.mode = modes[a];
       } catch (e) {}
     </script>
   </head>

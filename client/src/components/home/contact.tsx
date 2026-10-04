@@ -96,7 +96,7 @@ export function Contact() {
               <button
                 type="submit"
                 disabled={mutation.isPending}
-                className="inline-flex items-center gap-2 rounded-full bg-arch px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-[0_0_30px_-8px_var(--arch)] transition hover:brightness-110 disabled:opacity-60"
+                className="inline-flex items-center gap-2 rounded-full bg-arch px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-[0_0_16px_-8px_var(--arch)] transition hover:brightness-110 disabled:opacity-60"
               >
                 {mutation.isPending ? "Sending…" : "Send message"}
               </button>

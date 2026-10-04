@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { THEME_EVENT, accentColors } from "@/lib/theme";
+import { THEME_EVENT, accentColors, isLightTheme } from "@/lib/theme";
 
 type Particle = { x: number; y: number; vx: number; vy: number; life: number; max: number; size: number; hue: number };
 
@@ -60,9 +60,11 @@ export const HoloCursor = () => {
 
     const particles: Particle[] = [];
     let palette = { cyan: "124, 242, 255", violet: "167, 139, 250", pink: "240, 171, 252" };
+    let blend: GlobalCompositeOperation = "lighter";
     const readPalette = () => {
       const c = accentColors();
       if (c.cyan) palette = { cyan: rgb(c.cyan), violet: rgb(c.violet), pink: rgb(c.pink) };
+      blend = isLightTheme() ? "source-over" : "lighter"; // glow on dark, ink on light
     };
     readPalette();
     window.addEventListener(THEME_EVENT, readPalette);
@@ -91,7 +93,7 @@ export const HoloCursor = () => {
       label.style.transform = `translate3d(${rx + 28}px, ${ry + 18}px, 0)`;
 
       ctx.clearRect(0, 0, innerWidth, innerHeight);
-      ctx.globalCompositeOperation = "lighter";
+      ctx.globalCompositeOperation = blend;
       for (let i = particles.length - 1; i >= 0; i--) {
         const p = particles[i];
         p.life -= dt;
@@ -180,7 +182,7 @@ export const HoloCursor = () => {
         <span className="absolute left-[-5px] top-1/2 h-px w-2 -translate-y-1/2 bg-holo" />
         <span className="absolute right-[-5px] top-1/2 h-px w-2 -translate-y-1/2 bg-holo" />
       </div>
-      <div ref={dotRef} className="absolute left-0 top-0 size-2.5 rounded-full bg-[color-mix(in_srgb,var(--holo-cyan)_25%,white)] opacity-0 shadow-[0_0_10px_2px_var(--holo-cyan),0_0_22px_4px_color-mix(in_srgb,var(--holo-violet)_60%,transparent)] transition-[opacity] duration-200" />
+      <div ref={dotRef} className="absolute left-0 top-0 size-2.5 rounded-full bg-[color-mix(in_srgb,var(--holo-cyan)_25%,white)] opacity-0 shadow-[0_0_6px_1px_var(--holo-cyan),0_0_14px_2px_color-mix(in_srgb,var(--holo-violet)_40%,transparent)] transition-[opacity] duration-200" />
       <span ref={labelRef} className="absolute left-0 top-0 rounded bg-[color-mix(in_srgb,var(--background)_75%,transparent)] px-1.5 py-0.5 font-mono text-[10px] text-holo opacity-0 transition-opacity duration-150" />
     </div>
   );

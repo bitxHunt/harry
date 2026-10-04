@@ -26,16 +26,8 @@ const onSphere = (r: number): Vec => {
   return [(x / len) * r, (y / len) * r, (z / len) * r];
 };
 const rotX = ([x, y, z]: Vec, a: number): Vec => [x, y * Math.cos(a) - z * Math.sin(a), y * Math.sin(a) + z * Math.cos(a)];
-const rotY = ([x, y, z]: Vec, a: number): Vec => [x * Math.cos(a) + z * Math.sin(a), y, -x * Math.sin(a) + z * Math.cos(a)];
-const rotZ = ([x, y, z]: Vec, a: number): Vec => [x * Math.cos(a) - y * Math.sin(a), x * Math.sin(a) + y * Math.cos(a), z];
-const add = ([x, y, z]: Vec, [a, b, c]: Vec): Vec => [x + a, y + b, z + c];
 
 // surface samplers
-const cylinderY = (r: number, y0: number, y1: number, ridge = 0): Vec => {
-  const a = Math.random() * Math.PI * 2;
-  const rr = r * (1 + ridge * Math.cos(a * 10));
-  return [Math.cos(a) * rr, rand(y0, y1), Math.sin(a) * rr];
-};
 const box = (x0: number, x1: number, y0: number, y1: number, z0: number, z1: number): Vec => {
   const face = Math.floor(Math.random() * 6);
   const x = rand(x0, x1), y = rand(y0, y1), z = rand(z0, z1);
@@ -104,38 +96,45 @@ const blackHole = (n: number): Shape => {
   return { positions, motion, pointScale: 0.72 };
 };
 
-// dev: a hammer and a screwdriver, crossed.
-const toolset = (n: number): Shape =>
-  still(
+// dev: a laptop with a big </> on the screen.
+const laptop = (n: number): Shape => {
+  const TILT = 0.26; // screen leans back
+  const HINGE_Z = -0.25;
+  // a point on the screen plane at (x, y), pushed slightly forward by `lift`
+  const screen = (x: number, y: number, lift = 0): Vec => [x, y, HINGE_Z - (y + 0.85) * Math.tan(TILT) + lift];
+  // thick stroke between two screen points (for the </> glyph)
+  const stroke = (a: [number, number], b: [number, number]): Vec => {
+    const t = Math.random();
+    return screen(a[0] + (b[0] - a[0]) * t + rand(-0.05, 0.05), a[1] + (b[1] - a[1]) * t + rand(-0.05, 0.05), 0.05 + rand(-0.03, 0.03));
+  };
+  const GLYPH: [[number, number], [number, number]][] = [
+    [[-0.72, 0.38], [-0.38, 0.66]], // <
+    [[-0.72, 0.38], [-0.38, 0.1]],
+    [[-0.13, -0.02], [0.13, 0.78]], // /
+    [[0.38, 0.66], [0.72, 0.38]], // >
+    [[0.38, 0.1], [0.72, 0.38]],
+  ];
+  return still(
     fill(n, (i) => {
       const part = i / n;
-      if (part < 0.6) {
-        const h = part / 0.6;
-        let p: Vec;
-        if (h < 0.32) p = cylinderY(0.085, -1.25, 0.78); // handle
-        else if (h < 0.72) p = box(-0.5, 0.5, 0.78, 1.08, -0.15, 0.15); // head
-        else if (h < 0.84) {
-          const [x, y, z] = cylinderY(0.17, 0, 0.2); // striking face, along x
-          p = [y + 0.5, x + 0.93, z];
-        } else {
-          const t = Math.random(); // claw: two prongs curving down
-          const side = Math.random() < 0.5 ? -0.07 : 0.07;
-          p = [-0.5 - t * 0.38, 0.93 - t * t * 0.32 + rand(-0.03, 0.03), side + rand(-0.02, 0.02)];
-        }
-        return add(rotZ([p[0] * 1.2, p[1] * 1.2, p[2] * 1.2], 0.6), [-0.25, 0, 0]);
+      if (part < 0.22) return box(-1.4, 1.4, -1.0, -0.86, HINGE_Z, 1.15); // keyboard deck
+      if (part < 0.32) {
+        // key rows on top of the deck
+        const row = Math.floor(Math.random() * 4);
+        return [Math.round(rand(-1.15, 1.15) / 0.16) * 0.16, -0.84, 0.05 + row * 0.2 + rand(-0.02, 0.02)];
       }
-      const s = (part - 0.6) / 0.4;
-      let p: Vec;
-      if (s < 0.5) p = cylinderY(0.17, -1.25, -0.4, 0.08); // ridged handle
-      else if (s < 0.58) p = cylinderY(0.1, -0.4, -0.3); // ferrule
-      else if (s < 0.9) p = cylinderY(0.045, -0.3, 0.9); // shaft
-      else {
-        const t = Math.random(); // flat tip
-        p = [rand(-0.07, 0.07) * (1 - t * 0.6), 0.9 + t * 0.18, rand(-0.015, 0.015)];
+      if (part < 0.52) {
+        // screen frame: the four edges, a little thick
+        const edge = Math.floor(Math.random() * 4);
+        if (edge === 0) return screen(rand(-1.3, 1.3), -0.82 + rand(-0.03, 0.03));
+        if (edge === 1) return screen(rand(-1.3, 1.3), 1.08 + rand(-0.03, 0.03));
+        return screen((edge === 2 ? -1.3 : 1.3) + rand(-0.03, 0.03), rand(-0.82, 1.08));
       }
-      return add(rotY(rotZ([p[0] * 1.2, p[1] * 1.2, p[2] * 1.2], -0.6), 0.5), [0.25, 0, 0.15]);
+      if (part < 0.6) return screen(rand(-1.25, 1.25), rand(-0.78, 1.04), -0.01); // dim screen glass
+      return stroke(...GLYPH[Math.floor(Math.random() * GLYPH.length)]); // </>
     }),
   );
+};
 
 // ops: the DevOps infinity loop, tilted toward the viewer, with particles flowing
 // around it like a pipeline that never stops.
@@ -275,7 +274,7 @@ const eightBall = (n: number): Shape => {
 
 const BUILDERS: Record<FormId, (n: number) => Shape> = {
   harry: blackHole,
-  developer: toolset,
+  developer: laptop,
   devops: pipeline,
   pm: bridge,
   tutor: bulb,

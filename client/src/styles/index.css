@@ -93,26 +93,16 @@
   --scan: rgba(124, 242, 255, 0.035);
 }
 
-/* Accent themes (picked from the fastfetch colour blocks; see src/lib/theme.ts). */
-html[data-accent="arch"] {
-  --holo-cyan: #4cc3ff;
-  --holo-violet: #7aa2f7;
-  --holo-pink: #bb9af7;
-  --arch: #4cc3ff;
-  --primary: #4cc3ff;
-  --ring: #4cc3ff;
-  --glow: rgba(76, 195, 255, 0.24);
-  --line: rgba(76, 195, 255, 0.1);
-  --scan: rgba(76, 195, 255, 0.035);
-}
+/* Themes (picked from the fastfetch colour blocks; see src/lib/theme.ts).
+   :root above is "holo". Others override accents, and the HyDE ones also the surfaces. */
 html[data-accent="shwe"] {
   --holo-cyan: #f6c66b;
   --holo-violet: #e8954a;
   --holo-pink: #f3a6a0;
-  --arch: #f2b450;
-  --primary: #f2b450;
+  --arch: #f6c66b;
+  --primary: #f6c66b;
   --primary-foreground: #1a1204;
-  --ring: #f2b450;
+  --ring: #f6c66b;
   --glow: rgba(246, 198, 107, 0.2);
   --line: rgba(246, 198, 107, 0.1);
   --scan: rgba(246, 198, 107, 0.035);
@@ -129,6 +119,155 @@ html[data-accent="mono"] {
   --line: rgba(232, 238, 246, 0.09);
   --scan: rgba(232, 238, 246, 0.03);
 }
+/* Catppuccin Mocha */
+html[data-accent="mocha"] {
+  --background: #1e1e2e;
+  --card: #181825;
+  --popover: #181825;
+  --foreground: #cdd6f4;
+  --card-foreground: #cdd6f4;
+  --popover-foreground: #cdd6f4;
+  --secondary: #313244;
+  --muted: #313244;
+  --accent: #313244;
+  --secondary-foreground: #cdd6f4;
+  --accent-foreground: #cdd6f4;
+  --muted-foreground: #a6adc8;
+  --dim: #7f849c;
+  --panel: rgba(24, 24, 37, 0.62);
+  --border: rgba(205, 214, 244, 0.1);
+  --input: rgba(205, 214, 244, 0.1);
+  --holo-cyan: #cba6f7;
+  --holo-violet: #89b4fa;
+  --holo-pink: #f5c2e7;
+  --arch: #cba6f7;
+  --primary: #cba6f7;
+  --primary-foreground: #1e1e2e;
+  --ring: #cba6f7;
+  --glow: rgba(203, 166, 247, 0.18);
+  --line: rgba(203, 166, 247, 0.1);
+  --scan: rgba(203, 166, 247, 0.03);
+}
+/* Catppuccin Latte (light) */
+html[data-accent="latte"] {
+  color-scheme: light;
+  --background: #eff1f5;
+  --card: #e6e9ef;
+  --popover: #e6e9ef;
+  --foreground: #4c4f69;
+  --card-foreground: #4c4f69;
+  --popover-foreground: #4c4f69;
+  --secondary: #ccd0da;
+  --muted: #ccd0da;
+  --accent: #ccd0da;
+  --secondary-foreground: #4c4f69;
+  --accent-foreground: #4c4f69;
+  --muted-foreground: #5c5f77;
+  --dim: #8c8fa1;
+  --panel: rgba(230, 233, 239, 0.75);
+  --border: rgba(76, 79, 105, 0.14);
+  --input: rgba(76, 79, 105, 0.14);
+  --holo-cyan: #8839ef;
+  --holo-violet: #7287fd;
+  --holo-pink: #ea76cb;
+  --arch: #8839ef;
+  --primary: #8839ef;
+  --primary-foreground: #eff1f5;
+  --ring: #8839ef;
+  --glow: rgba(136, 57, 239, 0.12);
+  --line: rgba(76, 79, 105, 0.1);
+  --scan: rgba(76, 79, 105, 0.025);
+}
+/* Rosé Pine */
+html[data-accent="rosepine"] {
+  --background: #191724;
+  --card: #1f1d2e;
+  --popover: #1f1d2e;
+  --foreground: #e0def4;
+  --card-foreground: #e0def4;
+  --popover-foreground: #e0def4;
+  --secondary: #26233a;
+  --muted: #26233a;
+  --accent: #26233a;
+  --secondary-foreground: #e0def4;
+  --accent-foreground: #e0def4;
+  --muted-foreground: #908caa;
+  --dim: #6e6a86;
+  --panel: rgba(31, 29, 46, 0.62);
+  --border: rgba(224, 222, 244, 0.1);
+  --input: rgba(224, 222, 244, 0.1);
+  --holo-cyan: #ebbcba;
+  --holo-violet: #c4a7e7;
+  --holo-pink: #eb6f92;
+  --arch: #ebbcba;
+  --primary: #ebbcba;
+  --primary-foreground: #191724;
+  --ring: #ebbcba;
+  --glow: rgba(235, 188, 186, 0.16);
+  --line: rgba(235, 188, 186, 0.1);
+  --scan: rgba(235, 188, 186, 0.03);
+}
+/* Tokyo Night */
+html[data-accent="tokyonight"] {
+  --background: #1a1b26;
+  --card: #16161e;
+  --popover: #16161e;
+  --foreground: #c0caf5;
+  --card-foreground: #c0caf5;
+  --popover-foreground: #c0caf5;
+  --secondary: #292e42;
+  --muted: #292e42;
+  --accent: #292e42;
+  --secondary-foreground: #c0caf5;
+  --accent-foreground: #c0caf5;
+  --muted-foreground: #a9b1d6;
+  --dim: #565f89;
+  --panel: rgba(22, 22, 30, 0.62);
+  --border: rgba(192, 202, 245, 0.1);
+  --input: rgba(192, 202, 245, 0.1);
+  --holo-cyan: #7aa2f7;
+  --holo-violet: #bb9af7;
+  --holo-pink: #7dcfff;
+  --arch: #7aa2f7;
+  --primary: #7aa2f7;
+  --primary-foreground: #1a1b26;
+  --ring: #7aa2f7;
+  --glow: rgba(122, 162, 247, 0.18);
+  --line: rgba(122, 162, 247, 0.1);
+  --scan: rgba(122, 162, 247, 0.03);
+}
+/* Decay Green (HyDE; approximated) */
+html[data-accent="decaygreen"] {
+  --background: #0f1412;
+  --card: #141a17;
+  --popover: #141a17;
+  --foreground: #dfe8e3;
+  --card-foreground: #dfe8e3;
+  --popover-foreground: #dfe8e3;
+  --secondary: #1d2622;
+  --muted: #1d2622;
+  --accent: #1d2622;
+  --secondary-foreground: #dfe8e3;
+  --accent-foreground: #dfe8e3;
+  --muted-foreground: #a3b5ab;
+  --dim: #6b7d73;
+  --panel: rgba(20, 26, 23, 0.62);
+  --border: rgba(223, 232, 227, 0.1);
+  --input: rgba(223, 232, 227, 0.1);
+  --holo-cyan: #78dba9;
+  --holo-violet: #8fd1c7;
+  --holo-pink: #c3e88d;
+  --arch: #78dba9;
+  --primary: #78dba9;
+  --primary-foreground: #0f1412;
+  --ring: #78dba9;
+  --glow: rgba(120, 219, 169, 0.16);
+  --line: rgba(120, 219, 169, 0.1);
+  --scan: rgba(120, 219, 169, 0.03);
+}
+/* Light themes: stars become faint ink dots */
+html[data-mode="light"] .starfield > span { filter: invert(1); opacity: 0.35; }
+html[data-mode="light"] .nebula { opacity: 0.18; }
 
 @layer base {
   html {
@@ -245,8 +384,8 @@ html[data-accent="mono"] {
 
   .chromatic {
     text-shadow:
-      -1.5px 0 color-mix(in srgb, var(--holo-pink) 50%, transparent),
-      1.5px 0 color-mix(in srgb, var(--holo-cyan) 50%, transparent);
+      -1px 0 color-mix(in srgb, var(--holo-pink) 35%, transparent),
+      1px 0 color-mix(in srgb, var(--holo-cyan) 35%, transparent);
   }
 
   .label {

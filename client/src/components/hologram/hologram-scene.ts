@@ -7,13 +7,14 @@ import {
   BufferAttribute,
   ShaderMaterial,
   AdditiveBlending,
+  NormalBlending,
   Color,
   Points,
   Clock,
 } from "three";
 import type { FormId } from "@/data";
 import { buildShape } from "./hologram-shapes";
-import { THEME_EVENT, accentColors } from "@/lib/theme";
+import { THEME_EVENT, accentColors, isLightTheme } from "@/lib/theme";
 
 export type SceneApi = { morphTo: (id: FormId) => void; dispose: () => void };
 
@@ -38,13 +39,14 @@ const FRAGMENT = /* glsl */ `
   uniform vec3 uCyan;
   uniform vec3 uViolet;
   uniform vec3 uPink;
+  uniform float uAlpha;
   varying float vMix;
   void main() {
     float d = length(gl_PointCoord - 0.5);
     float alpha = smoothstep(0.5, 0.0, d);
     vec3 col = mix(uCyan, uViolet, smoothstep(0.0, 0.75, vMix));
     col = mix(col, uPink, smoothstep(0.85, 1.0, vMix));
-    gl_FragColor = vec4(col, alpha * 0.62);
+    gl_FragColor = vec4(col, alpha * uAlpha);
   }
 `;
 
@@ -104,10 +106,11 @@ export const createScene = (host: HTMLDivElement, initial: FormId, reduced: bool
     fragmentShader: FRAGMENT,
     transparent: true,
     depthWrite: false,
-    blending: AdditiveBlending,
+    blending: isLightTheme() ? NormalBlending : AdditiveBlending,
     uniforms: {
       uSize: { value: small ? 70 : 85 },
       uSizeMul: { value: initialShape.pointScale ?? 1 },
+      uAlpha: { value: isLightTheme() ? 0.38 : 0.62 },
       uPixelRatio: { value: pixelRatio },
       uTime: { value: 0 },
       uCyan: { value: new Color(accentColors().cyan || "#7cf2ff") },
@@ -147,6 +150,10 @@ export const createScene = (host: HTMLDivElement, initial: FormId, reduced: bool
     material.uniforms.uCyan.value.set(c.cyan);
     material.uniforms.uViolet.value.set(c.violet);
     material.uniforms.uPink.value.set(c.pink);
+    // glow on dark backgrounds, solid ink on light ones
+    material.blending = isLightTheme() ? NormalBlending : AdditiveBlending;
+    material.uniforms.uAlpha.value = isLightTheme() ? 0.38 : 0.62;
+    material.needsUpdate = true;
   };
   window.addEventListener(THEME_EVENT, onTheme);
 
@@ -175,7 +182,9 @@ export const createScene = (host: HTMLDivElement, initial: FormId, reduced: bool
     if (!onScreen || document.hidden) return;
     const t = clock.getElapsedTime();
     material.uniforms.uTime.value = t;
-    material.uniforms.uSizeMul.value += (targetSizeMul - material.uniforms.uSizeMul.value) * 0.06;
+    // light themes draw ink, not glow: smaller dots so the shape stays readable
+    const sizeTarget = targetSizeMul * (isLightTheme() ? 0.7 : 1);
+    material.uniforms.uSizeMul.value += (sizeTarget - material.uniforms.uSizeMul.value) * 0.06;
 
     if (morphStart >= 0) {
       const pos = geometry.getAttribute("position").array as Float32Array;

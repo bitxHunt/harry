@@ -3,7 +3,7 @@ import { useScramble } from "@/hooks/useScramble";
 
 // Section index drawn like a selection box in a TUI: [01] with corner brackets.
 const IndexTag = ({ n }: { n: number }) => (
-  <span className="relative grid size-14 shrink-0 place-items-center font-mono text-lg font-semibold text-holo [text-shadow:0_0_14px_var(--holo-cyan)]">
+  <span className="relative grid size-14 shrink-0 place-items-center font-mono text-lg font-semibold text-holo [text-shadow:0_0_8px_color-mix(in_srgb,var(--holo-cyan)_45%,transparent)]">
     <span aria-hidden className="lock-on absolute left-0 top-0 size-3 border-l-2 border-t-2 border-holo/70 [--lx:-10px] [--ly:-10px]" />
     <span aria-hidden className="lock-on absolute right-0 top-0 size-3 border-r-2 border-t-2 border-holo/70 [--lx:10px] [--ly:-10px]" />
     <span aria-hidden className="lock-on absolute bottom-0 left-0 size-3 border-b-2 border-l-2 border-holo/70 [--lx:-10px] [--ly:10px]" />

@@ -1,4 +1,4 @@
-import { useRef, useState, type PointerEvent } from "react";
+import { useState } from "react";
 import { ArrowUpRight, Github } from "lucide-react";
 import { baseForm, culture, forms, profile, type Form } from "@/data";
 import { useSgtTime } from "@/hooks/useSgtTime";
@@ -14,7 +14,6 @@ export function Hero() {
   const time = useSgtTime();
   const [index, setIndex] = useState(0);
   const [pulse, setPulse] = useState(0);
-  const section = useRef<HTMLElement>(null);
   const form = ALL[index];
   const isBase = form.id === "harry";
   const name = useScramble(form.name.toUpperCase(), pulse > 0, 700);
@@ -32,17 +31,9 @@ export function Hero() {
     if (e.key === "ArrowLeft") return transform(index - 1), true;
     return false;
   });
-  // spotlight on the grid follows the mouse
-  const onPointerMove = (e: PointerEvent<HTMLElement>) => {
-    if (e.pointerType !== "mouse" || !section.current) return;
-    const r = section.current.getBoundingClientRect();
-    section.current.style.setProperty("--sx", `${e.clientX - r.left}px`);
-    section.current.style.setProperty("--sy", `${e.clientY - r.top}px`);
-  };
 
   return (
-    <section ref={section} id="top" onPointerMove={onPointerMove} className="relative isolate overflow-hidden">
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(420px_circle_at_var(--sx,70%)_var(--sy,40%),color-mix(in_srgb,var(--holo-cyan)_9%,transparent),transparent_70%)]" />
+    <section id="top" className="relative isolate overflow-hidden">
 
       <div className="mx-auto grid max-w-6xl items-center gap-10 px-6 pb-16 pt-8 md:px-10 lg:min-h-[calc(100svh-4rem)] lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:pt-0">
         <div className="relative z-10 min-w-0">
@@ -91,7 +82,7 @@ export function Hero() {
               href={profile.cv}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 rounded-full bg-arch px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-[0_0_30px_-6px_var(--arch)] transition hover:brightness-110"
+              className="group inline-flex items-center gap-2 rounded-full bg-arch px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-[0_0_16px_-8px_var(--arch)] transition hover:brightness-110"
             >
               View CV <ArrowUpRight className="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </a>
@@ -121,7 +112,7 @@ export function Hero() {
                 data-cursor="transform"
                 className={cn(
                   "rounded-md px-2.5 py-1.5 transition",
-                  i === index ? "bg-holo text-background shadow-[0_0_18px_-4px_var(--holo-cyan)]" : "text-dim hover:bg-panel hover:text-foreground",
+                  i === index ? "bg-holo text-background" : "text-dim hover:bg-panel hover:text-foreground",
                 )}
               >
                 {f.short}

@@ -86,7 +86,7 @@ export const ScrollRail = () => {
         onPointerDown={onThumbDown}
         onPointerMove={onThumbMove}
         onPointerUp={() => setDragging(false)}
-        className="absolute left-0 right-0 top-0 rounded-full bg-holo/70 shadow-[0_0_12px_var(--holo-cyan)] hover:bg-holo"
+        className="absolute left-0 right-0 top-0 rounded-full bg-holo/70 shadow-[0_0_6px_color-mix(in_srgb,var(--holo-cyan)_60%,transparent)] hover:bg-holo"
       />
     </div>
   );

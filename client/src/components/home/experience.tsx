@@ -19,7 +19,7 @@ export function Experience() {
               <li key={e.hash} className="relative grid grid-cols-[22px_minmax(0,1fr)] gap-3">
                 <span className="relative flex justify-center" aria-hidden>
                   {i < experiences.length - 1 && <span className="draw-line absolute bottom-0 top-3 w-px bg-[var(--holo-violet)] opacity-50" style={{ ["--i" as string]: i }} />}
-                  <span className="relative mt-2 size-2.5 rounded-full border-2 border-holo bg-background shadow-[0_0_10px_var(--holo-cyan)]" />
+                  <span className="relative mt-2 size-2.5 rounded-full border-2 border-holo bg-background shadow-[0_0_5px_color-mix(in_srgb,var(--holo-cyan)_60%,transparent)]" />
                 </span>
                 <div className="pb-5">
                   <button

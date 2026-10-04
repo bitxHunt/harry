@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { education, fetchInfo, profile } from "@/data";
-import { THEMES, THEME_EVENT, applyTheme, currentTheme, type ThemeId } from "@/lib/theme";
+import { THEMES, THEME_EVENT, applyTheme, currentTheme, cycleTheme, type ThemeId } from "@/lib/theme";
+import { useSectionKeys } from "@/hooks/useSectionKeys";
 import { cn } from "@/lib/utils";
 import { SectionHead } from "@/components/terminal/section-head";
 import { Terminal } from "@/components/terminal/terminal";
@@ -23,9 +24,14 @@ const ThemeBlocks = () => {
     window.addEventListener(THEME_EVENT, on);
     return () => window.removeEventListener(THEME_EVENT, on);
   }, []);
+  useSectionKeys("about", (e) => {
+    if (e.key === "l" || e.key === "j") return cycleTheme(1), true;
+    if (e.key === "h" || e.key === "k") return cycleTheme(-1), true;
+    return false;
+  });
   return (
     <div className="mt-4">
-      <div className="flex gap-2" role="radiogroup" aria-label="Colour theme">
+      <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="Colour theme">
         {THEMES.map((t) => (
           <button
             key={t.id}
@@ -43,7 +49,9 @@ const ThemeBlocks = () => {
           />
         ))}
       </div>
-      <p className="mt-2 text-[10.5px] text-dim">click a colour to change the site theme</p>
+      <p className="mt-2 text-[10.5px] text-dim">
+        theme: <span className="text-holo">{THEMES.find((t) => t.id === active)?.label}</span> · click a colour or press h l to switch
+      </p>
     </div>
   );
 };
@@ -55,7 +63,7 @@ export function About() {
       <div className="grid gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
         <Terminal title="kitty — harry@arch: ~" className="reveal">
           <div className="p-6 font-mono text-[12.5px] leading-relaxed">
-            <pre className="holo-text mb-5 overflow-hidden text-[clamp(10px,3vw,18px)] font-semibold leading-[1.1] drop-shadow-[0_0_12px_color-mix(in_srgb,var(--holo-cyan)_35%,transparent)]" aria-label="Harry">{ART}</pre>
+            <pre className="holo-text mb-5 overflow-hidden text-[clamp(10px,3vw,18px)] font-semibold leading-[1.1] drop-shadow-[0_0_6px_color-mix(in_srgb,var(--holo-cyan)_25%,transparent)]" aria-label="Harry">{ART}</pre>
             <div>
               <p>
                 <span className="text-arch">{profile.handle}</span>
