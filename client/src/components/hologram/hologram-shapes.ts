@@ -13,7 +13,7 @@ export type Shape = {
 };
 
 // Colour roles a shape can give its particles (read by the shader in hologram-scene).
-export const TONE = { theme: 0, white: 1, warm: 2, dim: 3, fine: 4 } as const; // fine = small white dots (eyes)
+const TONE = { theme: 0, white: 1, warm: 2, dim: 3, fine: 4 } as const; // fine = small white dots (eyes)
 
 type Vec = [number, number, number];
 
@@ -98,15 +98,26 @@ const penguin = (n: number): Shape => {
   const BOTTOM = -1.0, TOP = 1.15;
   // half-width at height y: small head, widest low down (sitting pear)
   const halfWidth = (y: number) => 0.46 + 0.5 * Math.exp(-((y + 0.5) ** 2) / 0.5);
+  // the top of the head closes into a dome; the bottom stays a slightly narrowed flat seat
+  const DOME = 0.62;
+  const width = (y: number) => {
+    const dome = y > DOME ? Math.sqrt(Math.max(0, 1 - ((y - DOME) / (TOP - DOME)) ** 2)) : 1;
+    const seat = y < BOTTOM + 0.12 ? 0.92 : 1;
+    return halfWidth(y) * dome * seat;
+  };
+  // sample heights by surface area so the dome isn't over-dense near the tip
+  const surfaceY = () => {
+    for (;;) {
+      const y = rand(BOTTOM, TOP);
+      if (Math.random() < width(y) / 0.96) return y;
+    }
+  };
   const body = (y: number, a: number): Vec => {
-    const t = (y - BOTTOM) / (TOP - BOTTOM);
-    const round = Math.sqrt(Math.max(0, 1 - (2 * t - 1) ** 2)) * 0.3 + 0.7;
-    const w = halfWidth(y) * round * (y < BOTTOM + 0.12 ? 0.92 : 1); // flat seat
+    const w = width(y);
     return [Math.sin(a) * w, y, Math.cos(a) * w * 0.82];
   };
   const front = (x: number, y: number, lift = 0.02): Vec => {
-    const t = (y - BOTTOM) / (TOP - BOTTOM);
-    const w = halfWidth(y) * (Math.sqrt(Math.max(0, 1 - (2 * t - 1) ** 2)) * 0.3 + 0.7);
+    const w = width(y);
     const a = Math.asin(Math.max(-1, Math.min(1, x / (w * 0.98))));
     return [x, y, Math.cos(a) * w * 0.82 + lift];
   };
@@ -120,7 +131,7 @@ const penguin = (n: number): Shape => {
     const part = i / n;
     if (part < 0.3) {
       tones[i] = TONE.dim; // black body and head
-      return body(rand(BOTTOM, TOP), Math.random() * Math.PI * 2);
+      return body(surfaceY(), Math.random() * Math.PI * 2);
     }
     if (part < 0.5) {
       tones[i] = TONE.white; // belly + face patch
