@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { articles } from '@/data/data';
+import { articles } from '@/data';
 import { ArticleLayout } from '@/components/articles/layout';
 import { FoundingClub } from '@/components/articles/founding-school-club';
 import { BriskWalkPage } from '@/components/articles/brisk-walk';

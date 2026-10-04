@@ -1,59 +1,100 @@
-// import { Button } from "@/components/ui/button";
-// import { ArrowUpRight } from "lucide-react";
+import { useEffect, useState } from "react";
+import { education, fetchInfo, profile } from "@/data";
+import { THEMES, THEME_EVENT, applyTheme, currentTheme, type ThemeId } from "@/lib/theme";
+import { cn } from "@/lib/utils";
+import { SectionHead } from "@/components/terminal/section-head";
+import { Terminal } from "@/components/terminal/terminal";
+
+// "HARRY" in the figlet Doom font, where fastfetch would print a logo. Plain ASCII only,
+// so it renders in the bundled monospace font.
+const ART = String.raw`
+ _   _   ___  ______________   __
+| | | | / _ \ | ___ \ ___ \ \ / /
+| |_| |/ /_\ \| |_/ / |_/ /\ V / 
+|  _  ||  _  ||    /|    /  \ /  
+| | | || | | || |\ \| |\ \  | |  
+\_| |_/\_| |_/\_| \_\_| \_| \_/`;
+
+// fastfetch's colour blocks double as the theme switch.
+const ThemeBlocks = () => {
+  const [active, setActive] = useState<ThemeId>(currentTheme);
+  useEffect(() => {
+    const on = (e: Event) => setActive((e as CustomEvent<ThemeId>).detail);
+    window.addEventListener(THEME_EVENT, on);
+    return () => window.removeEventListener(THEME_EVENT, on);
+  }, []);
+  return (
+    <div className="mt-4">
+      <div className="flex gap-2" role="radiogroup" aria-label="Colour theme">
+        {THEMES.map((t) => (
+          <button
+            key={t.id}
+            role="radio"
+            aria-checked={active === t.id}
+            aria-label={`${t.label} theme`}
+            title={t.label}
+            data-cursor={t.label}
+            onClick={() => applyTheme(t.id)}
+            className={cn(
+              "h-4 w-9 rounded-sm transition",
+              active === t.id ? "ring-2 ring-foreground ring-offset-2 ring-offset-[var(--background)]" : "opacity-80 hover:opacity-100",
+            )}
+            style={{ background: `linear-gradient(90deg, ${t.swatch[0]} 50%, ${t.swatch[1]} 50%)` }}
+          />
+        ))}
+      </div>
+      <p className="mt-2 text-[10.5px] text-dim">click a colour to change the site theme</p>
+    </div>
+  );
+};
 
 export function About() {
   return (
-    <section
-      id="about"
-      className="border-t border-neutral-200 dark:border-white/20 bg-neutral-50 dark:bg-neutral-900"
-    >
-      <div className="max-w-6xl mx-auto px-8 md:px-10 py-20">
-        <div className="grid md:grid-cols-2 gap-4 md:gap-12 items-center">
-          {/* Left — text + button (desktop only button) */}
-          <div className="text-center md:text-left">
-            <p className="text-xs font-medium uppercase tracking-widest text-indigo-500 dark:text-indigo-300 mb-3">
-              About
-            </p>
-            <h2 className="text-3xl font-bold tracking-tight mb-6">
-              A bit about me
-            </h2>
-            <p className="text-base text-neutral-600 dark:text-neutral-400 leading-relaxed mb-4">
-              My name is Thiha Swan Htet, a final-year IT diploma student. I
-              picked up web development a couple of years ago and haven't
-              stopped building since.
-            </p>
-            <p className="text-base text-neutral-600 dark:text-neutral-400 leading-relaxed mb-8">
-              I also run community workshops, take on leadership roles, and care
-              about making technology accessible to everyone.
-            </p>
-
-            {/* Desktop button — hidden on mobile */}
-            {/* <div className="hidden md:block">
-              <Button className="shimmer">
-                Read more <ArrowUpRight className="ml-1 h-4 w-4" />
-              </Button>
-            </div> */}
-          </div>
-
-          {/* Right — YouTube embed + mobile button */}
-          <div className="flex flex-col gap-4">
-            <div className="rounded-2xl overflow-hidden border border-neutral-200 dark:border-white/20 aspect-video w-full">
-              <iframe
-                className="w-full h-full"
-                src="https://www.youtube.com/embed/PbpP_F_-t7Q?si=3pWQeoGSjs1U6w9S"
-                title="About me"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
+    <section id="about" className="mx-auto max-w-6xl px-6 py-24 md:px-10">
+      <SectionHead n={1} command="fastfetch" title="About me" />
+      <div className="grid gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
+        <Terminal title="kitty — harry@arch: ~" className="reveal">
+          <div className="p-6 font-mono text-[12.5px] leading-relaxed">
+            <pre className="holo-text mb-5 overflow-hidden text-[clamp(10px,3vw,18px)] font-semibold leading-[1.1] drop-shadow-[0_0_12px_color-mix(in_srgb,var(--holo-cyan)_35%,transparent)]" aria-label="Harry">{ART}</pre>
+            <div>
+              <p>
+                <span className="text-arch">{profile.handle}</span>
+                <span className="text-dim">@</span>
+                <span className="text-arch">{profile.host}</span>
+              </p>
+              <p className="text-dim">{"-".repeat(10)}</p>
+              <dl className="stagger mt-1 space-y-0.5">
+                {fetchInfo.map(([k, v], i) => (
+                  <div key={k} className="flex gap-2" style={{ ["--i" as string]: i }}>
+                    <dt className="w-20 shrink-0 text-holo">{k}</dt>
+                    <dd className="min-w-0 text-foreground">{v}</dd>
+                  </div>
+                ))}
+              </dl>
+              <ThemeBlocks />
             </div>
-
-            {/* Mobile button — hidden on desktop */}
-            {/* <div className="block md:hidden">
-              <Button variant="outline" className="w-full">
-                Read more <ArrowUpRight className="ml-1 h-4 w-4" />
-              </Button>
-            </div> */}
           </div>
+        </Terminal>
+
+        <div className="reveal space-y-5 text-lg leading-relaxed text-muted-foreground" style={{ ["--d" as string]: 1 }}>
+          <p>
+            I'm <span className="text-foreground">Harry</span>, a Computer Science student at NUS from a polytechnic background.
+            I picked up web development in 2023 and haven't stopped building since: full-stack apps, the CI and cloud
+            underneath them, and lately the people side as a project manager.
+          </p>
+          <p>
+            I like systems that are honest about what's happening, which is why my laptop runs Arch and my side project
+            tracks where my study hours actually go.
+          </p>
+          <ul className="space-y-3 border-t border-[var(--line)] pt-5">
+            {education.map((e) => (
+              <li key={e.school} className="grid grid-cols-[minmax(0,1fr)_auto] gap-x-4 text-sm">
+                <span className="font-medium text-foreground">{e.school}</span>
+                <span className="font-mono text-xs text-dim">{e.period}</span>
+                <span className="col-span-2 text-muted-foreground">{e.detail}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>

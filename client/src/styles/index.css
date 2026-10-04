@@ -1,20 +1,40 @@
-@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+/* Burmese: only downloaded when Burmese text is on screen (unicode-range). */
+@import "@fontsource/noto-sans-myanmar/myanmar-400.css";
+
+/* Self-hosted, Latin only. One family (Sora) for headings and body, plus a mono
+   for terminal text. */
+@font-face {
+  font-family: "Sora Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 800;
+  src: url("@fontsource-variable/sora/files/sora-latin-wght-normal.woff2") format("woff2-variations");
+}
+@font-face {
+  font-family: "JetBrains Mono Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 800;
+  src: url("@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2") format("woff2-variations");
+}
+
 @custom-variant dark (&:is(.dark *));
 
+/*
+  Hologram portfolio. Dark only: deep navy-black, cyan/violet light, Arch blue as the accent.
+*/
 @theme inline {
-  --font-sans: "Inter", sans-serif;
-  --font-heading: "Space Grotesk", sans-serif;
+  --font-sans: "Sora Variable", "Noto Sans Myanmar", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Sora Variable", ui-sans-serif, sans-serif;
+  --font-mono: "JetBrains Mono Variable", "Noto Sans Myanmar", ui-monospace, monospace;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --radius-2xl: calc(var(--radius) + 8px);
-  --radius-3xl: calc(var(--radius) + 12px);
-  --radius-4xl: calc(var(--radius) + 16px);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -33,140 +53,326 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
+  --color-holo: var(--holo-cyan);
+  --color-holo-violet: var(--holo-violet);
+  --color-arch: var(--arch);
+  --color-dim: var(--dim);
+  --color-panel: var(--panel);
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(0.99 0.003 90);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(0.99 0.003 90);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(0.99 0.003 90);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.585 0.233 277.1);
-  --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  color-scheme: dark;
+  --radius: 0.75rem;
+  --background: #04060c;
+  --foreground: #e3eeff;
+  --card: #0a101c;
+  --card-foreground: #e3eeff;
+  --popover: #0a101c;
+  --popover-foreground: #e3eeff;
+  --primary: #36a9e6;
+  --primary-foreground: #021018;
+  --secondary: #111a2a;
+  --secondary-foreground: #e3eeff;
+  --muted: #111a2a;
+  --muted-foreground: #8593ad;
+  --accent: #111a2a;
+  --accent-foreground: #e3eeff;
+  --destructive: #ff6b81;
+  --border: rgba(130, 190, 255, 0.12);
+  --input: rgba(130, 190, 255, 0.18);
+  --ring: #36a9e6;
+
+  --holo-cyan: #7cf2ff;
+  --holo-violet: #a78bfa;
+  --holo-pink: #f0abfc;
+  --arch: #36a9e6;
+  --dim: #5d6b84;
+  --panel: rgba(12, 22, 40, 0.55);
+  --glow: rgba(54, 169, 230, 0.26);
+  --line: rgba(124, 242, 255, 0.1);
+  --scan: rgba(124, 242, 255, 0.035);
 }
 
-.dark {
-  --background: oklch(0.09 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.145 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.673 0.182 277.1);
-  --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+/* Accent themes (picked from the fastfetch colour blocks; see src/lib/theme.ts). */
+html[data-accent="arch"] {
+  --holo-cyan: #4cc3ff;
+  --holo-violet: #7aa2f7;
+  --holo-pink: #bb9af7;
+  --arch: #4cc3ff;
+  --primary: #4cc3ff;
+  --ring: #4cc3ff;
+  --glow: rgba(76, 195, 255, 0.24);
+  --line: rgba(76, 195, 255, 0.1);
+  --scan: rgba(76, 195, 255, 0.035);
+}
+html[data-accent="shwe"] {
+  --holo-cyan: #f6c66b;
+  --holo-violet: #e8954a;
+  --holo-pink: #f3a6a0;
+  --arch: #f2b450;
+  --primary: #f2b450;
+  --primary-foreground: #1a1204;
+  --ring: #f2b450;
+  --glow: rgba(246, 198, 107, 0.2);
+  --line: rgba(246, 198, 107, 0.1);
+  --scan: rgba(246, 198, 107, 0.035);
+}
+html[data-accent="mono"] {
+  --holo-cyan: #e8eef6;
+  --holo-violet: #8b97a8;
+  --holo-pink: #cfd8e3;
+  --arch: #e8eef6;
+  --primary: #e8eef6;
+  --primary-foreground: #04060c;
+  --ring: #e8eef6;
+  --glow: rgba(232, 238, 246, 0.14);
+  --line: rgba(232, 238, 246, 0.09);
+  --scan: rgba(232, 238, 246, 0.03);
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
   }
   * {
     @apply border-border outline-ring/50;
   }
+  html { background: var(--background); scrollbar-width: none; }
+  html::-webkit-scrollbar { display: none; }
+  /* inner scroll areas: hidden scrollbars too (they still scroll) */
+  .no-scrollbar { scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  /* body stays transparent so the fixed starfield behind it shows through */
   body {
-    @apply bg-background text-foreground;
+    @apply bg-transparent text-foreground antialiased;
     font-family: var(--font-sans);
   }
   h1, h2, h3 {
     font-family: var(--font-heading);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  /* custom cursor: hide the native one, except in text fields */
+  html.holo-cursor, html.holo-cursor * { cursor: none !important; }
+  html.holo-cursor input, html.holo-cursor textarea, html.holo-cursor select, html.holo-cursor [contenteditable="true"] { cursor: text !important; }
+  ::selection {
+    background: var(--holo-cyan);
+    color: var(--background);
+  }
+}
+
+@layer components {
+  /* Page background: drifting starfield + faint nebulae (pure CSS, transform-only motion). */
+  .starfield { position: fixed; inset: 0; z-index: -10; overflow: hidden; pointer-events: none; }
+  .starfield > span { position: absolute; left: 0; top: 0; width: 100%; height: 200%; will-change: transform; }
+  .stars-s {
+    background-image:
+    radial-gradient(1px 1px at 82px 38px, rgba(220,240,255,0.55), transparent),
+    radial-gradient(1px 1px at 101px 166px, rgba(220,240,255,0.55), transparent),
+    radial-gradient(1px 1px at 12px 18px, rgba(220,240,255,0.55), transparent),
+    radial-gradient(1px 1px at 210px 137px, rgba(220,240,255,0.55), transparent),
+    radial-gradient(1px 1px at 24px 93px, rgba(220,240,255,0.55), transparent),
+    radial-gradient(1px 1px at 149px 14px, rgba(220,240,255,0.55), transparent),
+    radial-gradient(1px 1px at 129px 54px, rgba(220,240,255,0.55), transparent),
+    radial-gradient(1px 1px at 9px 22px, rgba(220,240,255,0.55), transparent),
+    radial-gradient(1px 1px at 111px 107px, rgba(220,240,255,0.55), transparent),
+    radial-gradient(1px 1px at 17px 61px, rgba(220,240,255,0.55), transparent),
+    radial-gradient(1px 1px at 23px 141px, rgba(220,240,255,0.55), transparent),
+    radial-gradient(1px 1px at 108px 15px, rgba(220,240,255,0.55), transparent),
+    radial-gradient(1px 1px at 211px 144px, rgba(220,240,255,0.55), transparent),
+    radial-gradient(1px 1px at 31px 57px, rgba(220,240,255,0.55), transparent);
+    background-size: 220px 220px;
+    animation: drift 240s linear infinite;
+  }
+  .stars-m {
+    background-image:
+    radial-gradient(1.6px 1.6px at 322px 321px, rgba(220,240,255,0.75), transparent),
+    radial-gradient(1.6px 1.6px at 298px 31px, rgba(220,240,255,0.75), transparent),
+    radial-gradient(1.6px 1.6px at 295px 299px, rgba(220,240,255,0.75), transparent),
+    radial-gradient(1.6px 1.6px at 203px 25px, rgba(220,240,255,0.75), transparent),
+    radial-gradient(1.6px 1.6px at 113px 23px, rgba(220,240,255,0.75), transparent),
+    radial-gradient(1.6px 1.6px at 285px 68px, rgba(220,240,255,0.75), transparent),
+    radial-gradient(1.6px 1.6px at 148px 214px, rgba(220,240,255,0.75), transparent),
+    radial-gradient(1.6px 1.6px at 73px 276px, rgba(220,240,255,0.75), transparent),
+    radial-gradient(1.6px 1.6px at 60px 292px, rgba(220,240,255,0.75), transparent),
+    radial-gradient(1.6px 1.6px at 157px 286px, rgba(220,240,255,0.75), transparent);
+    background-size: 420px 420px;
+    animation: drift 170s linear infinite;
+  }
+  .stars-l {
+    background-image:
+    radial-gradient(2.2px 2.2px at 185px 105px, rgba(220,240,255,0.9), transparent),
+    radial-gradient(2.2px 2.2px at 595px 584px, rgba(220,240,255,0.9), transparent),
+    radial-gradient(2.2px 2.2px at 192px 381px, rgba(220,240,255,0.9), transparent),
+    radial-gradient(2.2px 2.2px at 99px 560px, rgba(220,240,255,0.9), transparent),
+    radial-gradient(2.2px 2.2px at 64px 577px, rgba(220,240,255,0.9), transparent),
+    radial-gradient(2.2px 2.2px at 61px 633px, rgba(220,240,255,0.9), transparent);
+    background-size: 640px 640px;
+    animation: drift 120s linear infinite;
+  }
+  .stars-m { animation: drift 170s linear infinite, twinkle 6s ease-in-out infinite alternate; }
+  .nebula { position: absolute; border-radius: 9999px; filter: blur(90px); opacity: 0.22; will-change: transform; }
+  .nebula-a { width: 55vw; height: 55vw; left: 45%; top: -20vw; background: var(--holo-cyan); opacity: 0.1; animation: nebula 40s ease-in-out infinite alternate; }
+  .nebula-b { width: 45vw; height: 45vw; left: -15vw; top: 55vh; background: var(--holo-violet); opacity: 0.1; animation: nebula 55s ease-in-out infinite alternate-reverse; }
+
+  /* Hologram panel: translucent, lit top edge, scanlines. */
+  .holo-panel {
+    position: relative;
+    border: 1px solid var(--line);
+    background: var(--panel);
+    border-radius: 1rem;
+    backdrop-filter: blur(10px);
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--holo-cyan) 18%, transparent);
+  }
+  .holo-panel::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: repeating-linear-gradient(to bottom, var(--scan) 0 1px, transparent 1px 3px);
+  }
+
+  .holo-text {
+    background: linear-gradient(100deg, var(--holo-cyan) 0%, var(--holo-violet) 45%, var(--holo-pink) 60%, var(--holo-cyan) 100%);
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: holo-shift 9s linear infinite;
+  }
+
+  .chromatic {
+    text-shadow:
+      -1.5px 0 color-mix(in srgb, var(--holo-pink) 50%, transparent),
+      1.5px 0 color-mix(in srgb, var(--holo-cyan) 50%, transparent);
+  }
+
+  .label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+
+  /* Border light that follows the cursor (vars set by HoloCursor). */
+  .holo-panel::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    pointer-events: none;
+    background: radial-gradient(260px circle at var(--mx, -999px) var(--my, -999px), color-mix(in srgb, var(--holo-cyan) 75%, transparent), transparent 60%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .holo-panel:hover::before { opacity: 1; }
+
+  /* Children print one after another once their section is revealed. */
+  .stagger > * {
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+    transition-delay: calc(var(--i, 0) * 60ms + 200ms);
+  }
+  .in .stagger > *, .stagger.in > * { opacity: 1; transform: none; }
+
+  /* A line that draws itself downward (git graph). */
+  .draw-line { transform: scaleY(0); transform-origin: top; transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1); transition-delay: calc(var(--i, 0) * 180ms + 250ms); }
+  .in .draw-line { transform: scaleY(1); }
+
+  /* section tag brackets close in when the section appears */
+  .lock-on { opacity: 0; transform: translate(var(--lx), var(--ly)); transition: transform 0.6s cubic-bezier(0.34, 1.5, 0.5, 1) 0.15s, opacity 0.3s ease 0.15s; }
+  .in .lock-on { opacity: 1; transform: none; }
+
+  /* pacman-style progress bar */
+  .fill-bar { width: 0; transition: width 0.9s cubic-bezier(0.65, 0, 0.35, 1); transition-delay: calc(var(--i, 0) * 160ms + 200ms); }
+  .in .fill-bar { width: 100%; }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: calc(var(--d, 0) * 80ms);
+  }
+  .reveal.in {
+    opacity: 1;
+    transform: none;
   }
 }
 
 @layer utilities {
-  .animate-marquee {
-    animation: marquee 25s linear infinite;
+  @keyframes drift {
+    to { transform: translate3d(0, -50%, 0); }
   }
-  .animate-marquee-reverse {
-    animation: marquee-reverse 25s linear infinite;
+  @keyframes twinkle {
+    from { opacity: 0.55; }
+    to { opacity: 1; }
   }
-  @keyframes marquee {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
+  @keyframes nebula {
+    to { transform: translate3d(-6vw, 8vh, 0) scale(1.15); }
   }
-  @keyframes marquee-reverse {
-    from { transform: translateX(-50%); }
-    to   { transform: translateX(0); }
+  @keyframes holo-shift {
+    to { background-position: -220% 0; }
   }
-
-  .shimmer {
-    position: relative;
+  @keyframes spin-hand {
+    to { transform: rotate(360deg); }
+  }
+  /* A projector warming up: a few uneven flickers, then steady. */
+  @keyframes power-on {
+    0% { opacity: 0.3; transform: scale(0.96); filter: brightness(1.6); }
+    10% { opacity: 0.85; }
+    14% { opacity: 0.2; }
+    22% { opacity: 1; }
+    28% { opacity: 0.5; }
+    36% { opacity: 1; transform: none; filter: none; }
+    100% { opacity: 1; transform: none; filter: none; }
+  }
+  @keyframes sweep-band {
+    from { transform: translateY(-120%); }
+    to { transform: translateY(120%); }
+  }
+  @keyframes caret {
+    50% { opacity: 0; }
+  }
+  @keyframes float {
+    50% { transform: translateY(-6px); }
+  }
+  @keyframes typing {
+    from { width: 0; }
+    to { width: calc(var(--n) * 1ch); }
+  }
+  .typing {
+    display: inline-block;
     overflow: hidden;
+    white-space: nowrap;
+    vertical-align: bottom;
+    width: calc(var(--n) * 1ch);
+    animation: typing 0.9s steps(var(--n)) 0.25s both;
   }
-  .shimmer::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 60%;
-    height: 100%;
-    background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.22) 50%, transparent 60%);
-    pointer-events: none;
+  /* transformation: the headline settling into place */
+  @keyframes stretch-in {
+    0% { letter-spacing: 0.08em; filter: blur(4px); opacity: 0.3; }
+    100% { letter-spacing: -0.03em; filter: none; opacity: 1; }
   }
-  .shimmer:hover::before {
-    animation: shimmer-sweep 0.6s ease forwards;
-  }
-  @keyframes shimmer-sweep {
-    to { left: 150%; }
+  .animate-stretch-in { animation: stretch-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  .animate-spin-hand { animation: spin-hand linear infinite; }
+  .animate-power-on { animation: power-on 1.1s ease-out both; }
+  .animate-caret { animation: caret 1s steps(1) infinite; }
+  .animate-float { animation: float 6s ease-in-out infinite; }
+  .animate-sweep { animation: sweep-band 5.5s linear infinite; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .starfield > span, .nebula, .holo-text, .animate-power-on, .animate-caret, .animate-float, .animate-sweep, .typing, .animate-stretch-in { animation: none !important; }
+    .reveal, .stagger > * { opacity: 1; transform: none; transition: none; }
+    .draw-line { transform: none; transition: none; }
+    .fill-bar { width: 100%; transition: none; }
+    .lock-on { opacity: 1; transform: none; transition: none; }
   }
 }

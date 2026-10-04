@@ -1,25 +1,43 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/Logo.png" />
+    <link rel="icon" type="image/png" href="/favicon-64.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Thiha Swan Htet</title>
+    <title>Thiha Swan Htet (Harry) · Developer</title>
+    <meta name="description" content="Thiha Swan Htet (Harry): Computer Science at NUS. Full-stack developer, DevOps and project manager. Projects, experience and writing." />
+    <meta name="theme-color" content="#04060c" />
+    <meta property="og:title" content="Thiha Swan Htet (Harry)" />
+    <meta property="og:description" content="Full-stack developer · DevOps · Project manager. Computer Science at NUS." />
+    <meta property="og:type" content="website" />
+    <style>html{background:#04060c;color-scheme:dark}</style>
+    <!-- apply the saved accent theme before first paint (see src/lib/theme.ts) -->
+    <script>
+      try {
+        var a = localStorage.getItem("holo-accent");
+        if (a && a !== "holo") document.documentElement.dataset.accent = a;
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <div id="root"></div>
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-MZWH7T8BXC"
-    ></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);
       }
       gtag("js", new Date());
-
       gtag("config", "G-MZWH7T8BXC");
+      // Load Google Analytics after the page is up so it never competes with first paint.
+      window.addEventListener("load", function () {
+        var load = function () {
+          var s = document.createElement("script");
+          s.async = true;
+          s.src = "https://www.googletagmanager.com/gtag/js?id=G-MZWH7T8BXC";
+          document.head.appendChild(s);
+        };
+        "requestIdleCallback" in window ? requestIdleCallback(load, { timeout: 3000 }) : setTimeout(load, 1500);
+      });
     </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>

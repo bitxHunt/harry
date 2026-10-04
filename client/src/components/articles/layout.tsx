@@ -65,7 +65,7 @@ export function ArticleLayout({
           [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:mb-4 [&_ul]:text-neutral-600 dark:[&_ul]:text-neutral-400
           [&_li]:mb-1.5 [&_li]:leading-relaxed
           [&_strong]:font-semibold [&_strong]:text-black dark:[&_strong]:text-white
-          [&_blockquote]:border-l-2 [&_blockquote]:border-indigo-500 [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-neutral-500 [&_blockquote]:my-6
+          [&_blockquote]:border-l-2 [&_blockquote]:border-holo [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-neutral-500 [&_blockquote]:my-6
         "
         >
           {children}

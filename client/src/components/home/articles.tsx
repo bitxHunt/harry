@@ -3,18 +3,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { AxiosError } from "axios";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 
 import { public_api } from "@/lib/api-client";
 import { SubscriptionFormSchema } from "@/types/schemas/form.schema";
 import type { SubscriptionFormType } from "@/types/form.type";
-
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Field, FieldError } from "@/components/ui/field";
-
-import { ArrowUpRight } from "lucide-react";
-import { ArrowRight } from "lucide-react";
+import { articles } from "@/data";
+import { SectionHead } from "@/components/terminal/section-head";
+import { HoloInput } from "@/components/terminal/field";
 
 const postSubscribe = async (formData: SubscriptionFormType) => {
   const response = await public_api.post("/subscribe", formData);
@@ -29,97 +25,62 @@ export function Articles() {
 
   const mutation = useMutation({
     mutationFn: postSubscribe,
-    onSuccess: () => {
-      form.reset();
-    },
+    onSuccess: () => form.reset(),
     onError: (error: AxiosError<{ success: boolean; message: string }>) => {
       console.error("Subscribe error:", error);
     },
   });
 
-  function onSubmit(formData: SubscriptionFormType) {
-    mutation.mutate(formData);
-  }
-
   return (
-    <section
-      id="articles"
-      className="border-t border-neutral-200 dark:border-white/20"
-    >
-      <div className="max-w-6xl mx-auto px-8 md:px-10 py-20">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          {/* Left — unchanged */}
-          <div className="text-center md:text-left">
-            <p className="text-xs font-medium uppercase tracking-widest text-indigo-500 dark:text-indigo-300 mb-4">
-              Writing
-            </p>
-            <h2 className="text-3xl font-bold tracking-tight mb-3">Articles</h2>
-            <p className="text-base text-neutral-500 dark:text-neutral-400 max-w-md leading-relaxed mb-6">
-              I'm working on writing about things I've built and learnt. First
-              few pieces are in the works.
-            </p>
-            <Button variant="outline" className="rounded-full" asChild>
-              <Link to="/articles">
-                Explore articles <ArrowUpRight className="ml-1 h-4 w-4" />
+    <section id="articles" className="mx-auto max-w-6xl px-6 py-24 md:px-10">
+      <SectionHead n={6} command="cat ~/writing/*.md" title="Writing">
+        <Link to="/articles" className="group inline-flex items-center gap-1.5 text-sm font-medium text-arch">
+          All articles <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" />
+        </Link>
+      </SectionHead>
+
+      <div className="grid gap-5 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
+        <ul className="grid gap-4">
+          {articles.map((a, i) => (
+            <li key={a.slug} className="reveal" style={{ ["--d" as string]: i }}>
+              <Link to="/articles/$slug" params={{ slug: a.slug }} className="group holo-panel block p-6 transition hover:border-[color-mix(in_srgb,var(--holo-cyan)_40%,transparent)]">
+                <p className="font-mono text-[11px] text-dim">{a.date} · {a.readTime} · <span className="text-holo">#{a.tag.toLowerCase()}</span></p>
+                <h3 className="mt-2 flex items-center justify-between gap-4 text-2xl font-bold uppercase tracking-tight">
+                  {a.title}
+                  <ArrowUpRight className="size-5 shrink-0 text-dim transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-holo" />
+                </h3>
+                <p className="mt-3 line-clamp-2 leading-relaxed text-muted-foreground">{a.excerpt}</p>
               </Link>
-            </Button>
-          </div>
+            </li>
+          ))}
+        </ul>
 
-          {/* Right — notify me */}
-          <div className="border border-neutral-200 dark:border-white/20 rounded-2xl p-8 flex flex-col gap-4">
-            <div className="flex items-center gap-2">
-              <Badge
-                variant="outline"
-                className="rounded-full px-3 py-1 text-xs text-indigo-300 dark:text-indigo-300 border-indigo-500/40"
-              >
-                ✦ Work in Progress
-              </Badge>
-            </div>
-            <p className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
-              Get notified when I publish
-            </p>
-            <p className="text-xs text-neutral-400 leading-relaxed">
-              Drop your email and I'll let you know when the first article is
-              out.
-            </p>
-
-            {mutation.isSuccess ? (
-              <p className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
-                You're in ✓
-              </p>
-            ) : (
-              <form onSubmit={form.handleSubmit(onSubmit)}>
-                <Controller
-                  name="email"
-                  control={form.control}
-                  render={({ field, fieldState }) => (
-                    <Field data-invalid={fieldState.invalid}>
-                      <div className="flex gap-2 mt-1">
-                        <Input
-                          {...field}
-                          type="email"
-                          placeholder="example@gmail.com"
-                          aria-invalid={fieldState.invalid}
-                          className="text-sm flex-1 min-w-0"
-                        />
-                        <Button
-                          type="submit"
-                          size="icon"
-                          className="shrink-0"
-                          disabled={mutation.isPending}
-                        >
-                          <ArrowRight className="h-4 w-4" />
-                        </Button>
-                      </div>
-                      {fieldState.invalid && (
-                        <FieldError errors={[fieldState.error]} />
-                      )}
-                    </Field>
-                  )}
-                />
-              </form>
-            )}
-          </div>
+        <div className="reveal holo-panel flex flex-col p-6" style={{ ["--d" as string]: 1 }}>
+          <p className="font-mono text-[11px] text-dim">newsletter</p>
+          <h3 className="mt-2 text-2xl font-bold uppercase tracking-tight">Get new posts by email</h3>
+          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">I write about things I've built and learnt. You'll only hear from me when there's a new post.</p>
+          {mutation.isSuccess ? (
+            <p className="mt-auto pt-5 font-mono text-sm text-holo">✓ You're subscribed. Thanks!</p>
+          ) : (
+            <form onSubmit={form.handleSubmit((d) => mutation.mutate(d))} className="mt-auto flex gap-2 pt-5" noValidate>
+              <Controller
+                name="email"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <div className="flex-1">
+                    <HoloInput {...field} type="email" placeholder="you@example.com" aria-label="Email" autoComplete="email" aria-invalid={fieldState.invalid} />
+                    {fieldState.error && <p className="mt-1.5 font-mono text-[11px] text-destructive">error: {fieldState.error.message}</p>}
+                  </div>
+                )}
+              />
+              <button type="submit" disabled={mutation.isPending} className="h-[42px] shrink-0 rounded-lg bg-arch px-4 text-sm font-semibold text-primary-foreground transition hover:brightness-110 disabled:opacity-60">
+                {mutation.isPending ? "…" : "Subscribe"}
+              </button>
+            </form>
+          )}
+          {mutation.isError && (
+            <p className="mt-2 font-mono text-[11px] text-destructive">error: {mutation.error.response?.data?.message ?? "couldn't subscribe right now"}</p>
+          )}
         </div>
       </div>
     </section>

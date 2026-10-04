@@ -6,23 +6,10 @@ import { AxiosError } from "axios";
 import { public_api } from "@/lib/api-client";
 import { EnquiryFormSchema } from "@/types/schemas/form.schema";
 import type { EnquiryFormType } from "@/types/form.type";
-
-import { Button } from "@/components/ui/button";
-import {
-  Field,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import { InputGroup, InputGroupTextarea } from "@/components/ui/input-group";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { profile } from "@/data";
+import { SectionHead } from "@/components/terminal/section-head";
+import { Terminal } from "@/components/terminal/terminal";
+import { FieldShell, HoloInput, HoloTextarea } from "@/components/terminal/field";
 
 const postEnquiry = async (formData: EnquiryFormType) => {
   const response = await public_api.post("/enquiry", formData);
@@ -32,153 +19,90 @@ const postEnquiry = async (formData: EnquiryFormType) => {
 export function Contact() {
   const form = useForm<EnquiryFormType>({
     resolver: zodResolver(EnquiryFormSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      message: "",
-    },
+    defaultValues: { name: "", email: "", message: "" },
   });
 
   const mutation = useMutation({
     mutationFn: postEnquiry,
-    onSuccess: () => {
-      form.reset();
-    },
+    onSuccess: () => form.reset(),
     onError: (error: AxiosError<{ success: boolean; message: string }>) => {
       console.error("Enquiry error:", error);
     },
   });
 
-  function onSubmit(formData: EnquiryFormType) {
-    mutation.mutate(formData);
-  }
-
   return (
-    <section
-      id="contact"
-      className="bg-neutral-950 text-white [&_*]:outline-white/10"
-    >
-      <div className="max-w-6xl mx-auto px-8 md:px-10 py-20">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          {/* Left */}
-          <div className="text-center md:text-left">
-            <p className="text-xs font-medium uppercase tracking-widest text-indigo-300 mb-3">
-              Contact
-            </p>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-3">
-              Want to work together?
-            </h2>
-            <p className="text-neutral-400 text-base max-w-md leading-relaxed">
-              Whether it's a project, an opportunity, or just a conversation —
-              I'm open to it. Reach out anytime.
-            </p>
-          </div>
+    <section id="contact" className="mx-auto max-w-6xl px-6 py-24 md:px-10">
+      <SectionHead n={7} command="mail harry" title="Get in touch" />
+      <div className="grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+        <div className="reveal">
+          <p className="text-lg leading-relaxed text-muted-foreground">
+            Internships, projects, a question about something I've built, or just a chat about tech or billiards.
+            Drop me a message and I'll get back to you as soon as I can.
+          </p>
+          <dl className="mt-8 space-y-3 font-mono text-sm">
+            <div className="flex gap-3"><dt className="w-20 text-dim">email</dt><dd><a className="text-arch hover:underline" href={`mailto:${profile.email}`}>{profile.email}</a></dd></div>
+            {profile.socials.map((s) => (
+              <div key={s.label} className="flex gap-3">
+                <dt className="w-20 text-dim">{s.label.toLowerCase()}</dt>
+                <dd><a className="text-foreground hover:text-holo" href={s.href} target="_blank" rel="noopener noreferrer">{s.href.replace(/^https?:\/\/(www\.)?/, "")}</a></dd>
+              </div>
+            ))}
+          </dl>
+        </div>
 
-          {/* Right — card + form */}
+        <Terminal title="~/inbox — new message" className="reveal">
           {mutation.isSuccess ? (
-            <div className="flex flex-col gap-2">
-              <p className="text-lg font-semibold">Message sent ✓</p>
-              <p className="text-neutral-400 text-sm">
-                Thanks for reaching out. I'll get back to you soon.
-              </p>
+            <div className="p-8 font-mono text-sm">
+              <p className="text-holo">✓ Message sent</p>
+              <p className="mt-2 text-muted-foreground">Thanks for reaching out. I'll get back to you soon.</p>
+              <button onClick={() => mutation.reset()} className="mt-6 text-xs text-arch hover:underline">send another</button>
             </div>
           ) : (
-            <Card className="bg-white/5 border-white/10">
-              <CardHeader>
-                <CardTitle className="text-white">Get in touch</CardTitle>
-                <CardDescription className="text-neutral-400">
-                  Fill in the form and I'll get back to you as soon as I can.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <form id="enquiry-form" onSubmit={form.handleSubmit(onSubmit)}>
-                  <FieldGroup>
-                    {/* Name + Email row */}
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      <Controller
-                        name="name"
-                        control={form.control}
-                        render={({ field, fieldState }) => (
-                          <Field data-invalid={fieldState.invalid}>
-                            <FieldLabel className="text-sm text-neutral-400 uppercase tracking-widest">
-                              Name
-                            </FieldLabel>
-                            <Input
-                              {...field}
-                              placeholder="Your name"
-                              aria-invalid={fieldState.invalid}
-                              className="bg-white/5 border-white/10 text-white placeholder:text-neutral-600 focus-visible:ring-white/20"
-                            />
-                            {fieldState.invalid && (
-                              <FieldError errors={[fieldState.error]} />
-                            )}
-                          </Field>
-                        )}
-                      />
-                      <Controller
-                        name="email"
-                        control={form.control}
-                        render={({ field, fieldState }) => (
-                          <Field data-invalid={fieldState.invalid}>
-                            <FieldLabel className="text-sm text-neutral-400 uppercase tracking-widest">
-                              Email
-                            </FieldLabel>
-                            <Input
-                              {...field}
-                              type="email"
-                              placeholder="example@gmail.com"
-                              aria-invalid={fieldState.invalid}
-                              className="bg-white/5 border-white/10 text-white placeholder:text-neutral-600 focus-visible:ring-white/20"
-                            />
-                            {fieldState.invalid && (
-                              <FieldError errors={[fieldState.error]} />
-                            )}
-                          </Field>
-                        )}
-                      />
-                    </div>
-
-                    {/* Message */}
-                    <Controller
-                      name="message"
-                      control={form.control}
-                      render={({ field, fieldState }) => (
-                        <Field data-invalid={fieldState.invalid}>
-                          <FieldLabel className="text-sm text-neutral-400 uppercase tracking-widest">
-                            Message
-                          </FieldLabel>
-                          <InputGroup className="outline-none">
-                            <InputGroupTextarea
-                              {...field}
-                              placeholder="Send a message..."
-                              rows={4}
-                              aria-invalid={fieldState.invalid}
-                              className="bg-white/5 border-white/10 text-white placeholder:text-neutral-600 focus-visible:ring-white/20 resize-none min-h-24"
-                            />
-                          </InputGroup>
-                          {fieldState.invalid && (
-                            <FieldError errors={[fieldState.error]} />
-                          )}
-                        </Field>
-                      )}
-                    />
-                  </FieldGroup>
-
-                  <div className="mt-5">
-                    <Button
-                      type="submit"
-                      form="enquiry-form"
-                      disabled={mutation.isPending}
-                      className="w-auto bg-white text-black hover:bg-neutral-200"
-                    >
-                      {mutation.isPending ? "Sending..." : "Send enquiry"}
-                    </Button>
-                  </div>
-                </form>
-              </CardContent>
-            </Card>
+            <form onSubmit={form.handleSubmit((data) => mutation.mutate(data))} className="space-y-4 p-6" noValidate>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <Controller
+                  name="name"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <FieldShell id="name" label="name" error={fieldState.error?.message}>
+                      <HoloInput id="name" {...field} placeholder="Your name" autoComplete="name" aria-invalid={fieldState.invalid} />
+                    </FieldShell>
+                  )}
+                />
+                <Controller
+                  name="email"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <FieldShell id="email" label="email" error={fieldState.error?.message}>
+                      <HoloInput id="email" type="email" {...field} placeholder="you@example.com" autoComplete="email" aria-invalid={fieldState.invalid} />
+                    </FieldShell>
+                  )}
+                />
+              </div>
+              <Controller
+                name="message"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <FieldShell id="message" label="message" error={fieldState.error?.message}>
+                    <HoloTextarea id="message" {...field} rows={5} placeholder="What's on your mind?" aria-invalid={fieldState.invalid} />
+                  </FieldShell>
+                )}
+              />
+              {mutation.isError && (
+                <p className="font-mono text-xs text-destructive">
+                  error: {mutation.error.response?.data?.message ?? "couldn't send right now"}. You can also email me directly.
+                </p>
+              )}
+              <button
+                type="submit"
+                disabled={mutation.isPending}
+                className="inline-flex items-center gap-2 rounded-full bg-arch px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-[0_0_30px_-8px_var(--arch)] transition hover:brightness-110 disabled:opacity-60"
+              >
+                {mutation.isPending ? "Sending…" : "Send message"}
+              </button>
+            </form>
           )}
-        </div>
+        </Terminal>
       </div>
     </section>
   );

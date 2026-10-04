@@ -96,7 +96,7 @@ export function FoundingClub() {
         href="https://www.sp.edu.sg/courses/schools/sma/happenings/detail/soc-happenings/national-software-competition-(nsc)-2025"
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center gap-2 text-indigo-500 dark:text-indigo-300 hover:underline"
+        className="inline-flex items-center gap-2 text-arch dark:text-holo hover:underline"
       >
         Read the official article from Singapore Polytechnic →
       </a>

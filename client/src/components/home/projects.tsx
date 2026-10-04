@@ -1,136 +1,120 @@
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { ArrowUpRight, Github, BookOpen } from "lucide-react";
-import { projects } from "@/data/data";
+import { useRef, useState, type KeyboardEvent } from "react";
+import { useSectionKeys } from "@/hooks/useSectionKeys";
+import { ArrowUpRight, File, Folder, FolderOpen, Github } from "lucide-react";
+import { projects } from "@/data";
+import { cn } from "@/lib/utils";
+import { SectionHead } from "@/components/terminal/section-head";
+import { Terminal } from "@/components/terminal/terminal";
 
+/*
+  Projects as a two-pane file manager, the way yazi or ranger look on my machine:
+  folders on the left, a preview of the selected one on the right. Arrow keys or
+  j / k move the selection when the list has focus.
+*/
 export function Projects() {
+  const [index, setIndex] = useState(0);
+  const listRef = useRef<HTMLUListElement>(null);
+  const p = projects[index];
+
+  const move = (next: number) => {
+    const i = (next + projects.length) % projects.length;
+    setIndex(i);
+    listRef.current?.querySelectorAll<HTMLButtonElement>("button")[i]?.focus();
+  };
+  // arrows inside the list; j/k whenever the section is on screen
+  const onKey = (e: KeyboardEvent) => {
+    if (e.key === "ArrowDown") { e.preventDefault(); move(index + 1); }
+    if (e.key === "ArrowUp") { e.preventDefault(); move(index - 1); }
+  };
+  useSectionKeys("projects", (e) => {
+    if (e.key === "j") return setIndex((i) => (i + 1) % projects.length), true;
+    if (e.key === "k") return setIndex((i) => (i - 1 + projects.length) % projects.length), true;
+    return false;
+  });
+
+  const files = ["README.md", ...(p.image ? ["preview.png"] : [])];
+
   return (
-    <section
-      id="projects"
-      className="border-t border-neutral-200 dark:border-white/10"
-    >
-      <div className="max-w-6xl mx-auto px-8 md:px-10 py-20">
-        {/* Header */}
-        <div className="mb-12 text-center md:text-left">
-          <p className="text-xs font-medium uppercase tracking-widest text-indigo-500 dark:text-indigo-300 mb-3">
-            Projects
-          </p>
-          <h2 className="text-3xl font-bold tracking-tight">
-            Things I've built
-          </h2>
+    <section id="projects" className="mx-auto max-w-6xl px-6 py-24 md:px-10">
+      <SectionHead n={3} command="yazi ~/projects" title="Projects">
+        <p className="max-w-xs text-sm text-muted-foreground">Things I've built at school, at work and for myself.</p>
+      </SectionHead>
+
+      <Terminal title={`yazi — ~/projects/${p.slug}`} className="reveal">
+        <div className="grid md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.6fr)]">
+          {/* left pane: the folders */}
+          <ul ref={listRef} role="listbox" aria-label="Projects" onKeyDown={onKey} className="border-b border-[var(--line)] p-2 font-mono text-[13px] md:border-b-0 md:border-r">
+            {projects.map((proj, i) => {
+              const selected = i === index;
+              return (
+                <li key={proj.slug}>
+                  <button
+                    role="option"
+                    aria-selected={selected}
+                    tabIndex={selected ? 0 : -1}
+                    onClick={() => setIndex(i)}
+                    className={cn(
+                      "flex w-full items-center gap-2.5 rounded-md px-3 py-2 text-left transition",
+                      selected ? "bg-holo text-background" : "text-muted-foreground hover:bg-panel hover:text-foreground",
+                    )}
+                  >
+                    {selected ? <FolderOpen className="size-4 shrink-0" /> : <Folder className="size-4 shrink-0 text-arch" />}
+                    <span className="truncate">{proj.slug}/</span>
+                    <span className={cn("ml-auto text-[11px]", selected ? "text-background/70" : "text-dim")}>{proj.year}</span>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+
+          {/* right pane: preview */}
+          <div key={p.slug} className="animate-in fade-in flex min-h-[420px] flex-col p-6 duration-300 md:p-8">
+            <p className="font-mono text-[11px] text-dim">{p.kind} · {p.year}</p>
+            <h3 className="mt-2 text-3xl font-bold uppercase tracking-tight md:text-4xl">{p.title}</h3>
+            <p className="mt-4 max-w-xl leading-relaxed text-muted-foreground">{p.description}</p>
+
+            <ul className="mt-5 flex flex-wrap gap-1.5">
+              {p.tags.map((t) => (
+                <li key={t} className="rounded border border-[var(--line)] px-2 py-0.5 font-mono text-[10.5px] text-holo">{t}</li>
+              ))}
+            </ul>
+
+            <div className="mt-6 grid gap-5 sm:grid-cols-[minmax(0,1fr)_auto]">
+              <ul className="font-mono text-[12px] text-dim">
+                {files.map((f) => (
+                  <li key={f} className="flex items-center gap-2 py-0.5">
+                    {f.endsWith("/") ? <Folder className="size-3.5 text-arch" /> : <File className="size-3.5" />}
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              {p.image && (
+                <img src={p.image} alt={`${p.title} screenshot`} loading="lazy" decoding="async" className="h-28 w-44 rounded-lg border border-[var(--line)] object-cover object-top opacity-90" />
+              )}
+            </div>
+
+            <div className="mt-auto flex flex-wrap gap-2 pt-6">
+              {p.github && (
+                <a href={p.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] px-4 py-2 text-sm transition hover:border-holo hover:text-holo">
+                  <Github className="size-4" /> Source
+                </a>
+              )}
+              {(p.live ?? p.article) && (
+                <a href={(p.live ?? p.article)!} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] px-4 py-2 text-sm transition hover:border-holo hover:text-holo">
+                  {p.live ? "Live site" : "Read more"} <ArrowUpRight className="size-4" />
+                </a>
+              )}
+              {!p.github && !p.live && !p.article && <p className="font-mono text-[11px] text-dim">source is private</p>}
+            </div>
+          </div>
         </div>
-
-        {/* Grid */}
-        <div className="grid md:grid-cols-3 gap-5">
-          {projects.map((p, i) => (
-            <Card
-              key={i}
-              className="group flex flex-col border-neutral-200 dark:border-white/20 hover:border-indigo-300/60 dark:hover:border-indigo-400/40 hover:-translate-y-1 hover:shadow-lg hover:shadow-indigo-500/10 dark:hover:shadow-indigo-400/10 transition-all duration-300 rounded-2xl overflow-hidden p-0"
-            >
-              {/* Project image */}
-              <div className="h-56 w-full overflow-hidden bg-neutral-100 dark:bg-neutral-800/60">
-                {p.image ? (
-                  <img
-                    src={p.image}
-                    alt={p.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                ) : (
-                  <div className="w-full h-full bg-gradient-to-br from-indigo-500/10 via-neutral-100 to-neutral-200 dark:from-indigo-500/10 dark:via-neutral-800 dark:to-neutral-900 flex items-center justify-center">
-                    <span className="text-xs tracking-widest uppercase text-neutral-400 dark:text-neutral-600">
-                      Preview
-                    </span>
-                  </div>
-                )}
-              </div>
-
-              <CardContent className="p-6 flex flex-col gap-3 flex-1">
-                {/* Highlight badge */}
-                {p.highlight && (
-                  <span className="text-xs text-neutral-400">
-                    {p.highlight}
-                  </span>
-                )}
-
-                {/* Title + description */}
-                <div className="flex-1">
-                  <h3 className="text-base font-semibold tracking-tight mb-2">
-                    {p.title}
-                  </h3>
-                  <p className="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">
-                    {p.description}
-                  </p>
-                </div>
-
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2">
-                  {p.tags.map((t) => (
-                    <Badge
-                      key={t}
-                      variant="secondary"
-                      className="rounded-full text-xs font-normal px-2.5"
-                    >
-                      {t}
-                    </Badge>
-                  ))}
-                </div>
-
-                {/* Links */}
-                <div className="flex gap-2 pt-4 mt-auto">
-                  {p.github && (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="rounded-full text-xs h-7 px-3"
-                      asChild
-                    >
-                      <a
-                        href={p.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Github className="h-3 w-3 mr-1" /> Code
-                      </a>
-                    </Button>
-                  )}
-                  {p.article && (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="rounded-full text-xs h-7 px-3"
-                      asChild
-                    >
-                      <a
-                        href={p.article}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <BookOpen className="h-3 w-3 mr-1" /> Article
-                      </a>
-                    </Button>
-                  )}
-                  {p.live && (
-                    <Button
-                      size="sm"
-                      className="rounded-full text-xs h-7 px-3"
-                      asChild
-                    >
-                      <a
-                        href={p.live}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Live <ArrowUpRight className="h-3 w-3 ml-1" />
-                      </a>
-                    </Button>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+        {/* status line, like yazi's footer */}
+        <div className="flex items-center justify-between border-t border-[var(--line)] px-4 py-2 font-mono text-[11px] text-dim">
+          <span><span className="rounded bg-arch px-1.5 text-primary-foreground">NOR</span> ~/projects/{p.slug}</span>
+          <span className="hidden sm:inline">j k to move</span>
+          <span>{index + 1}/{projects.length}</span>
         </div>
-      </div>
+      </Terminal>
     </section>
   );
 }

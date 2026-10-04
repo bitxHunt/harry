@@ -14,7 +14,7 @@ import {
 import { Search, ArrowUpRight } from "lucide-react";
 
 import { type Category, type ArticlePost } from "@/types/article.type";
-import { articles } from "@/data/data";
+import { articles } from "@/data";
 
 const categories: Category[] = ["All", "Events", "Community", "Life", "Dev"];
 
@@ -27,7 +27,7 @@ function FilterPanel({
 }) {
   return (
     <div className="flex flex-col gap-1">
-      <p className="text-xs font-medium uppercase tracking-widest text-indigo-500 dark:text-indigo-300 mb-4">
+      <p className="text-xs font-medium uppercase tracking-widest text-arch dark:text-holo mb-4">
         Category
       </p>
       {categories.map((c) => (
@@ -36,7 +36,7 @@ function FilterPanel({
           onClick={() => onSelect(c)}
           className={`text-left text-sm px-3 py-2.5 rounded-xl transition-all duration-200 ${
             selected === c
-              ? "bg-indigo-500 text-white font-medium"
+              ? "bg-arch text-white font-medium"
               : "text-neutral-500 hover:text-black dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-white/5"
           }`}
         >
@@ -52,7 +52,7 @@ function ArticleCard({ post }: { post: ArticlePost }) {
     <Link
       to="/articles/$slug"
       params={{ slug: post.slug }}
-      className="group flex flex-col gap-4 p-6 rounded-2xl border border-neutral-200 dark:border-white/20 hover:border-indigo-300/60 dark:hover:border-indigo-400/40 hover:-translate-y-1 hover:shadow-lg hover:shadow-indigo-500/10 dark:hover:shadow-indigo-400/10 transition-all duration-300 cursor-pointer bg-white dark:bg-neutral-950"
+      className="group flex flex-col gap-4 p-6 rounded-2xl border border-neutral-200 dark:border-white/20 hover:border-holo/60 dark:hover:border-holo/40 hover:-translate-y-1 hover:shadow-lg hover:shadow-indigo-500/10 dark:hover:shadow-indigo-400/10 transition-all duration-300 cursor-pointer bg-white dark:bg-neutral-950"
     >
       {/* Meta row */}
       <div className="flex items-center justify-between gap-2 flex-wrap">
@@ -77,7 +77,7 @@ function ArticleCard({ post }: { post: ArticlePost }) {
 
       {/* Title + excerpt */}
       <div className="flex-1">
-        <h3 className="text-base font-semibold tracking-tight leading-snug mb-2 group-hover:text-indigo-500 dark:group-hover:text-indigo-300 transition-colors duration-200">
+        <h3 className="text-base font-semibold tracking-tight leading-snug mb-2 group-hover:text-holo dark:group-hover:text-holo transition-colors duration-200">
           {post.title}
         </h3>
         <p className="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">
@@ -86,7 +86,7 @@ function ArticleCard({ post }: { post: ArticlePost }) {
       </div>
 
       {/* Read more */}
-      <div className="flex items-center gap-1 text-xs text-neutral-400 group-hover:text-indigo-500 dark:group-hover:text-indigo-300 transition-colors duration-200 pt-1">
+      <div className="flex items-center gap-1 text-xs text-neutral-400 group-hover:text-holo dark:group-hover:text-holo transition-colors duration-200 pt-1">
         Read more <ArrowUpRight className="h-3 w-3" />
       </div>
     </Link>
@@ -113,7 +113,7 @@ export function ArticlesPage() {
       {/* Page header */}
       <div className="border-b border-neutral-200 dark:border-white/10">
         <div className="max-w-6xl mx-auto px-8 md:px-10 py-16">
-          <p className="text-xs font-medium uppercase tracking-widest text-indigo-500 dark:text-indigo-300 mb-3">
+          <p className="text-xs font-medium uppercase tracking-widest text-arch dark:text-holo mb-3">
             Writing
           </p>
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
@@ -204,7 +204,7 @@ export function ArticlesPage() {
                     setSelected("All");
                     setSearch("");
                   }}
-                  className="text-xs text-indigo-500 dark:text-indigo-300 hover:underline mt-1"
+                  className="text-xs text-arch dark:text-holo hover:underline mt-1"
                 >
                   Reset filters
                 </button>
