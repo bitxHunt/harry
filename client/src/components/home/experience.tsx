@@ -12,7 +12,7 @@ export function Experience() {
   );
 
   return (
-    <section id="experience" className="mx-auto max-w-6xl px-5 py-12 md:px-10 md:py-24">
+    <section id="experience" className="mx-auto max-w-6xl px-5 py-12 md:px-10 md:py-16 lg:py-24">
       <SectionHead n={2} command="git log --graph --oneline career" title="Experience" />
       <Terminal title="~/career — git log" className="reveal">
         <ol className="p-3 font-mono text-sm sm:p-5">

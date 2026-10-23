@@ -15,7 +15,7 @@ const ART = String.raw`
 
 export function About() {
   return (
-    <section id="about" className="mx-auto max-w-6xl px-5 py-12 md:px-10 md:py-24">
+    <section id="about" className="mx-auto max-w-6xl px-5 py-12 md:px-10 md:py-16 lg:py-24">
       <SectionHead n={1} command="fastfetch" title="About me" />
       <div className="grid gap-6 md:gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
         <Terminal title="kitty — harry@arch: ~" className="reveal">

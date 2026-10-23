@@ -35,13 +35,13 @@ export function Projects() {
   const files = ["README.md", ...(p.image ? ["preview.png"] : [])];
 
   return (
-    <section id="projects" className="mx-auto max-w-6xl px-5 py-12 md:px-10 md:py-24">
+    <section id="projects" className="mx-auto max-w-6xl px-5 py-12 md:px-10 md:py-16 lg:py-24">
       <SectionHead n={3} command="yazi ~/projects" title="Projects">
         <p className="max-w-xs text-sm text-muted-foreground">Things I've built at school, at work and for myself.</p>
       </SectionHead>
 
       <Terminal title={`yazi — ~/projects/${p.slug}`} className="reveal">
-        <div className="grid md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.6fr)]">
+        <div className="grid md:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)] lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.6fr)]">
           {/* left pane: the folders */}
           <ul ref={listRef} role="listbox" aria-label="Projects" onKeyDown={onKey} className="border-b border-[var(--line)] p-2 font-mono text-[13px] md:border-b-0 md:border-r">
             {projects.map((proj, i) => {
@@ -60,7 +60,7 @@ export function Projects() {
                   >
                     {selected ? <FolderOpen className="size-4 shrink-0" /> : <Folder className="size-4 shrink-0 text-arch" />}
                     <span className="truncate">{proj.slug}/</span>
-                    <span className={cn("ml-auto text-[11px]", selected ? "text-background/70" : "text-dim")}>{proj.year}</span>
+                    <span className={cn("ml-auto shrink-0 whitespace-nowrap text-[11px]", selected ? "text-background/70" : "text-dim")}>{proj.year}</span>
                   </button>
                 </li>
               );

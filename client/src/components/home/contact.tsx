@@ -31,7 +31,7 @@ export function Contact() {
   });
 
   return (
-    <section id="contact" className="mx-auto max-w-6xl px-5 py-12 md:px-10 md:py-24">
+    <section id="contact" className="mx-auto max-w-6xl px-5 py-12 md:px-10 md:py-16 lg:py-24">
       <SectionHead n={7} command="mail harry" title="Get in touch" />
       <div className="grid gap-6 md:gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
         <div className="reveal">
@@ -40,11 +40,11 @@ export function Contact() {
             Drop me a message and I'll get back to you as soon as I can.
           </p>
           <dl className="mt-5 space-y-3 font-mono text-sm md:mt-8">
-            <div className="flex gap-3"><dt className="w-20 text-dim">email</dt><dd><a className="text-arch hover:underline" href={`mailto:${profile.email}`}>{profile.email}</a></dd></div>
+            <div className="flex gap-3"><dt className="w-20 shrink-0 text-dim">email</dt><dd className="min-w-0 [overflow-wrap:anywhere]"><a className="text-arch hover:underline" href={`mailto:${profile.email}`}>{profile.email}</a></dd></div>
             {profile.socials.map((s) => (
               <div key={s.label} className="flex gap-3">
-                <dt className="w-20 text-dim">{s.label.toLowerCase()}</dt>
-                <dd><a className="text-foreground hover:text-holo" href={s.href} target="_blank" rel="noopener noreferrer">{s.href.replace(/^https?:\/\/(www\.)?/, "")}</a></dd>
+                <dt className="w-20 shrink-0 text-dim">{s.label.toLowerCase()}</dt>
+                <dd className="min-w-0 [overflow-wrap:anywhere]"><a className="text-foreground hover:text-holo" href={s.href} target="_blank" rel="noopener noreferrer">{s.href.replace(/^https?:\/\/(www\.)?/, "")}</a></dd>
               </div>
             ))}
           </dl>

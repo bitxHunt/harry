@@ -27,7 +27,7 @@ export function OffClock() {
   const cols = "grid grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] gap-3 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)]";
 
   return (
-    <section id="off-clock" className="mx-auto max-w-6xl px-5 py-12 md:px-10 md:py-24">
+    <section id="off-clock" className="mx-auto max-w-6xl px-5 py-12 md:px-10 md:py-16 lg:py-24">
       <SectionHead n={5} command="systemctl --user list-units 'life-*'" title="Off the clock" />
       <Terminal title="systemctl --user" className="reveal">
         <div className="font-mono text-[12.5px]" onKeyDown={onKey}>
@@ -67,7 +67,7 @@ export function OffClock() {
                 <span className="text-holo">●</span> <span className="text-foreground">{unit.unit}.service</span> <span className="text-dim">- {unit.title}</span>
               </p>
               <span className="text-dim sm:text-right">Loaded:</span>
-              <span className="text-muted-foreground">loaded (~/.config/systemd/user/{unit.unit}.service; <span className="text-holo">enabled</span>)</span>
+              <span className="min-w-0 text-muted-foreground [overflow-wrap:anywhere]">loaded (~/.config/systemd/user/{unit.unit}.service; <span className="text-holo">enabled</span>)</span>
               <span className="text-dim sm:text-right">Active:</span>
               <span className="text-muted-foreground"><span className="text-holo">active (running)</span>{unit.since ? ` since ${unit.since}` : ""}</span>
               <span className="text-dim sm:text-right">Tags:</span>
