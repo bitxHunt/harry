@@ -15,6 +15,8 @@ export const useSectionKeys = (sectionId: string, onKey: (e: KeyboardEvent) => b
   useEffect(() => {
     const el = document.getElementById(sectionId);
     if (!el) return;
+    // Clicking plain text doesn't move focus, so let the section itself take it.
+    if (!el.hasAttribute("tabindex")) el.tabIndex = -1;
     const listener = (e: KeyboardEvent) => {
       if (e.ctrlKey || e.metaKey || e.altKey) return;
       const target = e.target as HTMLElement;
