@@ -1,6 +1,4 @@
-import IMCSToolKit from "@/assets/IMCS_Toolkit.png";
 import ILFLogo from "@/assets/ILF_Logo.png";
-import SASApp from "@/assets/SAS_App.png";
 
 export type Project = {
   slug: string;
@@ -15,51 +13,60 @@ export type Project = {
   image?: string;
 };
 
-// Shown in a two-pane file browser (list + preview).
+// Shown in a two-pane file browser (list + preview). Same order and facts as the CV.
 export const projects: Project[] = [
   {
-    slug: "study-buddy",
-    title: "Study Buddy",
-    kind: "Personal",
+    slug: "pickme",
+    title: "PickMe",
+    kind: "LifeHack 2026 · 1st Runner-up",
     year: "2026",
     description:
-      "A cinematic dashboard that turns my Obsidian study log into analytics: a semester dial, plan-vs-reality tracking, and a focus timer that syncs with my study logger.",
-    tags: ["React", "TanStack", "Express", "Prisma", "PostgreSQL", "Docker"],
-    github: null,
+      "Simulates how AI shopping agents rank products. It separates what a product page says from what the product actually does, to show which losses one sentence of copy can fix. I built the first prototype, then ported it to Next.js and React, added product photo upload and deployed it on Render.",
+    tags: ["Next.js", "React", "Render"],
+    github: "https://github.com/bitxHunt/Lifehack-26",
     live: null,
   },
   {
-    slug: "imcs-toolkit",
-    title: "IMCS Toolkit",
-    kind: "Industry Now Curriculum",
-    year: "2025",
+    slug: "csdrills",
+    title: "CSDrills",
+    kind: "Personal project",
+    year: "2026",
     description:
-      "AI-powered business excellence toolkit with automated digital forms and a management dashboard for 500 users. Led DevOps: Terraform, GitHub Actions, AWS.",
-    tags: ["React", "Express", "Prisma", "AWS", "Terraform", "Docker"],
+      "An offline-first quiz racing PWA for three NUS modules (Java, computer organisation, maths), with 60+ stations and parameterised question generators. Every answer is verified with javac, gcc and independent checkers (35,000+ generated variants).",
+    tags: ["TypeScript", "Vite", "PWA"],
     github: null,
+    live: "https://csdrills.onrender.com",
+  },
+  {
+    slug: "portfolio",
+    title: "Personal Portfolio Site",
+    kind: "Personal project",
+    year: "2026",
+    description:
+      "This site: Arch Linux-styled, with a 3D particle hologram in three.js, built with React 19, TanStack Router and Tailwind CSS 4 on an Express 5 + Prisma back end.",
+    tags: ["React", "TanStack", "Tailwind CSS", "three.js", "Express", "Prisma"],
+    github: "https://github.com/bitxHunt/harry",
     live: null,
-    article: "https://www.instagram.com/p/DGiCphstgqk/",
-    image: IMCSToolKit,
   },
   {
     slug: "authinc",
     title: "AuthINC",
-    kind: "Industry Now Curriculum",
+    kind: "Full Stack Developer · Industry Now Curriculum",
     year: "2024",
     description:
-      "Scalable multi-site authentication with a 24-student team: OAuth for GitHub, LinkedIn and Google, custom JWT access and refresh tokens, a cron-driven log queue and Playwright CI.",
-    tags: ["React", "shadcn/ui", "Express", "Prisma", "Playwright", "Azure"],
+      "An authentication system for multi-site management, with OAuth (GitHub, LinkedIn, Google) and a custom JWT access and refresh token mechanism. CI/CD with Playwright and Jest, hosted on Azure and Render.",
+    tags: ["React", "Express", "Prisma", "Playwright", "Jest", "Azure", "Render"],
     github: null,
     live: null,
   },
   {
     slug: "learning-festival",
     title: "International Learning Festival",
-    kind: "Lead developer",
+    kind: "Lead Full Stack Developer · INC Pathway",
     year: "2024",
     description:
-      "Led 3 students to refactor and extend the app for SP's International Learning Festival: Google Maps, token security, Artillery load testing and analytics.",
-    tags: ["React", "Tailwind", "Express", "Firebase", "Google Maps"],
+      "Led 3 students to refactor an existing event app, adding Google Maps integration, token security and logging. Load tested with Artillery and added Google Analytics.",
+    tags: ["React", "Express", "Firebase Authentication", "Google Maps", "Artillery"],
     github: "https://github.com/bitxHunt/INC_International-Learning-Festival",
     live: null,
     article:
@@ -67,25 +74,13 @@ export const projects: Project[] = [
     image: ILFLogo,
   },
   {
-    slug: "smart-attendance",
-    title: "Smart Attendance System",
-    kind: "SMU · CS102",
-    year: "2025",
-    description:
-      "Attendance management with Java and OpenCV, using facial recognition to track and record student attendance automatically.",
-    tags: ["JavaFX", "Maven", "OpenCV", "PostgreSQL", "Supabase"],
-    github: "https://github.com/bitxHunt/Smart-Attendance-System",
-    live: null,
-    image: SASApp,
-  },
-  {
     slug: "cleaning-platform",
-    title: "Cleaning Service Platform",
-    kind: "SP · J2EE",
-    year: "2025",
+    title: "Cleaning Service Booking Platform",
+    kind: "ST0510 J2EE Application Development",
+    year: "2024–25",
     description:
-      "Full-stack booking platform with a CMS for services and pricing, PayNow QR and card payments, and automated confirmations and receipts.",
-    tags: ["Java Servlets", "Spring Boot", "DaisyUI"],
+      "A booking platform with a CMS for services and pricing, and PayNow QR and card payments with automatic receipts.",
+    tags: ["Java Servlets", "Spring Boot"],
     github: "https://github.com/bitxHunt/J2EE-Assignment1",
     live: null,
   },

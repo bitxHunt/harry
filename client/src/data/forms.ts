@@ -30,7 +30,7 @@ export const forms: Form[] = [
     tagline: "Builds web apps end to end, from the database schema to the last button.",
     powers: ["React", "TanStack", "Express", "Prisma", "PostgreSQL"],
     origin: "Singapore Polytechnic, 2023",
-    knownFor: "RExus Bioenergy site and CMS, Study Buddy",
+    knownFor: "PickMe (LifeHack 2026 1st runner-up), CSDrills",
   },
   {
     id: "devops",

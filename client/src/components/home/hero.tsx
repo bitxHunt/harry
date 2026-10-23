@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ArrowUpRight, Github } from "lucide-react";
 import { baseForm, culture, forms, profile, type Form } from "@/data";
 import { useSgtTime } from "@/hooks/useSgtTime";
@@ -14,6 +14,7 @@ export function Hero() {
   const time = useSgtTime();
   const [index, setIndex] = useState(0);
   const [pulse, setPulse] = useState(0);
+  const tabsRef = useRef<HTMLDivElement>(null);
   const form = ALL[index];
   const isBase = form.id === "harry";
   const name = useScramble(form.name.toUpperCase(), pulse > 0, 700);
@@ -24,8 +25,11 @@ export function Hero() {
     if (next === index) return;
     setIndex(next);
     setPulse((p) => p + 1);
+    // roving tabs: keyboard focus follows the selected form
+    const tabs = tabsRef.current;
+    if (tabs?.contains(document.activeElement)) tabs.querySelectorAll<HTMLButtonElement>('[role="tab"]')[next]?.focus();
   };
-  // ← → switch forms whenever the hero is on screen
+  // ← → switch forms while focus is in the hero
   useSectionKeys("top", (e) => {
     if (e.key === "ArrowRight") return transform(index + 1), true;
     if (e.key === "ArrowLeft") return transform(index - 1), true;
@@ -43,7 +47,17 @@ export function Hero() {
             <span className="animate-caret ml-0.5 inline-block h-4 w-2 translate-y-0.5 bg-holo" />
           </p>
 
-          <h1 key={form.id} aria-label={form.name} className="chromatic animate-stretch-in mt-6 text-[clamp(2.6rem,6.4vw,5.4rem)] font-extrabold uppercase leading-[0.95] tracking-[-0.03em]">
+          {/* heading and tagline reserve their tallest size on desktop, so the buttons below stay put between forms */}
+          <h1
+            key={form.id}
+            aria-label={form.name}
+            className={cn(
+              "chromatic animate-stretch-in mt-6 font-extrabold uppercase tracking-[-0.03em]",
+              // long names ("The Project Manager") step down a size so they stay on two lines
+              form.name.length > 16 ? "text-[clamp(2.3rem,5.2vw,4.4rem)] lg:min-h-[calc(1.9em*5.4/4.4)]" : "text-[clamp(2.6rem,6.4vw,5.4rem)] lg:min-h-[1.9em]",
+              "leading-[0.95]", // after the size: tailwind-merge drops a leading that comes before a text size
+            )}
+          >
             {name}
           </h1>
           <p className="mt-4 font-mono text-sm text-dim">
@@ -52,11 +66,11 @@ export function Hero() {
               : <>form <span className="text-[var(--holo-pink)]">{index}/{forms.length}</span> · still Harry underneath</>}
           </p>
 
-          <p key={form.tagline} className="animate-in fade-in slide-in-from-bottom-1 mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground duration-500">
+          <p key={form.tagline} className="animate-in fade-in slide-in-from-bottom-1 mt-6 max-w-xl text-lg lg:min-h-[5.5rem] leading-relaxed text-muted-foreground duration-500">
             {form.tagline}
           </p>
 
-          <dl key={`stats-${form.id}`} className="animate-in fade-in mt-5 grid md:mt-7 max-w-xl gap-x-6 gap-y-2.5 font-mono text-[12px] duration-700 sm:grid-cols-[auto_minmax(0,1fr)]">
+          <dl key={`stats-${form.id}`} className="animate-in fade-in mt-5 grid md:mt-7 lg:min-h-[6.2rem] max-w-xl gap-x-6 gap-y-2.5 font-mono text-[12px] duration-700 sm:grid-cols-[auto_minmax(0,1fr)]">
             <dt className="text-dim">powers</dt>
             <dd className="flex flex-wrap gap-1.5">
               {form.powers.map((p) => (
@@ -101,7 +115,7 @@ export function Hero() {
           </div>
 
           {/* form picker: plain text, like workspace tabs */}
-          <div role="tablist" aria-label="Forms" className="mt-2 flex flex-wrap justify-center gap-1 font-mono text-[12px]">
+          <div ref={tabsRef} role="tablist" aria-label="Forms" className="mt-2 flex flex-wrap justify-center gap-1 font-mono text-[12px]">
             {ALL.map((f, i) => (
               <button
                 key={f.id}

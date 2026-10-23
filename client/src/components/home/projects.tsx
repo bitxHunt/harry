@@ -21,7 +21,7 @@ export function Projects() {
     setIndex(i);
     listRef.current?.querySelectorAll<HTMLButtonElement>("button")[i]?.focus();
   };
-  // arrows inside the list; j/k whenever the section is on screen
+  // arrows inside the list; j/k anywhere in the section once it has focus
   const onKey = (e: KeyboardEvent) => {
     if (e.key === "ArrowDown") { e.preventDefault(); move(index + 1); }
     if (e.key === "ArrowUp") { e.preventDefault(); move(index - 1); }

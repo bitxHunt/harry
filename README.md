@@ -28,7 +28,7 @@ familiar terminal tool: `whoami` (hero), `fastfetch` (about), `git log` (experie
 # client (http://localhost:3000)
 cd client
 pnpm install
-echo "VITE_DEV_API_URL=http://localhost:5000/api" > .env
+echo "VITE_API_URL=http://localhost:5000/api" > .env
 pnpm dev
 
 # server (contact form + newsletter)

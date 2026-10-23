@@ -28,14 +28,13 @@ const labelFor = (el: HTMLElement) => {
 };
 
 /*
-  The site's cursor: a bright core with a comet trail of the same particles as the
+  A comet trail behind the normal system cursor, made of the same particles as the
   hero hologram. Over anything clickable it opens into an aim reticle with a short
   label; a click throws a small burst. Mouse devices only; text fields keep the native
-  caret; reduced motion keeps the native cursor. Also drives the panel border light.
+  caret; reduced motion turns it off. Also drives the panel border light.
 */
 export const HoloCursor = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const dotRef = useRef<HTMLDivElement>(null);
   const reticleRef = useRef<HTMLDivElement>(null);
   const labelRef = useRef<HTMLSpanElement>(null);
 
@@ -46,7 +45,6 @@ export const HoloCursor = () => {
 
     const canvas = canvasRef.current!;
     const ctx = canvas.getContext("2d")!;
-    const dot = dotRef.current!;
     const reticle = reticleRef.current!;
     const label = labelRef.current!;
     const dpr = Math.min(window.devicePixelRatio, 2);
@@ -83,12 +81,11 @@ export const HoloCursor = () => {
     const loop = (now: number) => {
       const dt = Math.min((now - last) / 1000, 0.05);
       last = now;
-      // the reticle eases after the pointer; the dot is exact
-      rx += (x - rx) * 0.22;
-      ry += (y - ry) * 0.22;
+      // the reticle eases after the pointer
+      rx += (x - rx) * 0.35;
+      ry += (y - ry) * 0.35;
       spin += dt * (aiming ? 90 : 0);
       rs += ((aiming ? 1 : 0.45) - rs) * 0.2;
-      dot.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%) scale(${aiming ? 0.5 : 1})`;
       reticle.style.transform = `translate3d(${rx}px, ${ry}px, 0) translate(-50%, -50%) rotate(${spin}deg) scale(${rs.toFixed(3)})`;
       label.style.transform = `translate3d(${rx + 34}px, ${ry + 22}px, 0)`;
 
@@ -127,7 +124,7 @@ export const HoloCursor = () => {
         hidden = false;
         root.classList.toggle("holo-cursor-text", inText);
       }
-      dot.style.opacity = reticle.style.opacity = inText ? "0" : "1";
+      reticle.style.opacity = inText ? "0" : "1";
 
       const hit = inText ? null : target.closest<HTMLElement>(CLICKABLE + ", [data-cursor]");
       aiming = !!hit;
@@ -155,7 +152,7 @@ export const HoloCursor = () => {
     };
     const onLeave = () => {
       hidden = true;
-      dot.style.opacity = reticle.style.opacity = label.style.opacity = "0";
+      reticle.style.opacity = label.style.opacity = "0";
     };
 
     window.addEventListener("pointermove", onMove, { passive: true });
@@ -182,7 +179,6 @@ export const HoloCursor = () => {
         <span className="absolute left-[-5px] top-1/2 h-[1.5px] w-2.5 -translate-y-1/2 bg-holo" />
         <span className="absolute right-[-5px] top-1/2 h-[1.5px] w-2.5 -translate-y-1/2 bg-holo" />
       </div>
-      <div ref={dotRef} className="absolute left-0 top-0 size-3.5 rounded-full bg-[color-mix(in_srgb,var(--holo-cyan)_25%,white)] opacity-0 shadow-[0_0_6px_1px_var(--holo-cyan),0_0_14px_2px_color-mix(in_srgb,var(--holo-violet)_40%,transparent)] transition-[opacity] duration-200" />
       <span ref={labelRef} className="absolute left-0 top-0 rounded bg-[color-mix(in_srgb,var(--background)_75%,transparent)] px-2 py-0.5 font-mono text-[11px] text-holo opacity-0 transition-opacity duration-150" />
     </div>
   );

@@ -1,9 +1,10 @@
 import { useEffect, useRef } from "react";
 
 /*
-  Keyboard shortcuts that work while a section is on screen, without clicking into it
-  first. Ignored while typing in a field or when a modifier key is held. The handler
-  returns true when it used the key (the browser default is then prevented).
+  Keyboard shortcuts for one section. They only fire while focus is inside that
+  section (click or Tab into it first), so single-letter keys never hijack the page.
+  Ignored while typing in a field or when a modifier key is held. The handler returns
+  true when it used the key (the browser default is then prevented).
 */
 export const useSectionKeys = (sectionId: string, onKey: (e: KeyboardEvent) => boolean) => {
   const handler = useRef(onKey);
@@ -14,18 +15,14 @@ export const useSectionKeys = (sectionId: string, onKey: (e: KeyboardEvent) => b
   useEffect(() => {
     const el = document.getElementById(sectionId);
     if (!el) return;
-    let active = false;
-    const io = new IntersectionObserver(([e]) => { active = e.isIntersecting; }, { threshold: 0.35 });
-    io.observe(el);
     const listener = (e: KeyboardEvent) => {
-      if (!active || e.ctrlKey || e.metaKey || e.altKey) return;
-      if ((e.target as HTMLElement).closest("input, textarea, select, [contenteditable='true']")) return;
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+      const target = e.target as HTMLElement;
+      if (!el.contains(target)) return;
+      if (target.closest("input, textarea, select, [contenteditable='true']")) return;
       if (handler.current(e)) e.preventDefault();
     };
-    window.addEventListener("keydown", listener);
-    return () => {
-      io.disconnect();
-      window.removeEventListener("keydown", listener);
-    };
+    el.addEventListener("keydown", listener);
+    return () => el.removeEventListener("keydown", listener);
   }, [sectionId]);
 };

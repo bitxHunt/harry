@@ -1,5 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
-import { useScramble } from "@/hooks/useScramble";
+import type { ReactNode } from "react";
 
 // Section index drawn like a selection box in a TUI: [01] with corner brackets.
 const IndexTag = ({ n }: { n: number }) => (
@@ -12,26 +11,6 @@ const IndexTag = ({ n }: { n: number }) => (
   </span>
 );
 
-// Decodes the title the first time it scrolls into view.
-const ScrambleTitle = ({ text }: { text: string }) => {
-  const ref = useRef<HTMLSpanElement>(null);
-  const [seen, setSeen] = useState(false);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const io = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) {
-        setSeen(true);
-        io.disconnect();
-      }
-    }, { threshold: 0.6 });
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-  const out = useScramble(text, seen, 600);
-  return <span ref={ref} aria-label={text}><span aria-hidden>{out}</span></span>;
-};
-
 export const SectionHead = ({ n, command, title, children }: { n: number; command: string; title: string; children?: ReactNode }) => (
   <div className="reveal mb-6 flex flex-wrap items-end justify-between gap-4 md:mb-10 md:gap-6">
     <div className="flex min-w-0 items-center gap-5">
@@ -41,7 +20,7 @@ export const SectionHead = ({ n, command, title, children }: { n: number; comman
           <span className="text-arch">harry@arch</span> <span className="text-holo">~</span> % {command}
         </p>
         <h2 className="mt-1.5 text-[clamp(1.8rem,4.5vw,3rem)] font-bold uppercase leading-none tracking-tight">
-          <ScrambleTitle text={title} />
+          {title}
         </h2>
       </div>
     </div>

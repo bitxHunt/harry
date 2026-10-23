@@ -2,13 +2,11 @@ import { experiences, projects } from "@/data";
 
 // Experience tags that are technologies (the rest, like "stakeholders", are not).
 const EXPERIENCE_TECH: Record<string, string> = {
-  react: "React",
-  express: "Express",
-  prisma: "Prisma",
-  terraform: "Terraform",
-  aws: "AWS",
   python: "Python",
-  "ci/cd": "CI/CD",
+  terraform: "Terraform",
+  "github-actions": "GitHub Actions",
+  aws: "AWS",
+  docker: "Docker",
 };
 
 export type Source = { name: string; kind: "project" | "role"; when: string };

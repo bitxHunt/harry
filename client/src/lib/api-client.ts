@@ -1,5 +1,5 @@
 import Axios, { type InternalAxiosRequestConfig } from "axios";
-import { env } from "@/config/env";
+import { API_URL } from "@/config/env";
 
 function publicRequestInterceptor(config: InternalAxiosRequestConfig) {
   if (config.headers) {
@@ -9,7 +9,7 @@ function publicRequestInterceptor(config: InternalAxiosRequestConfig) {
 }
 
 export const public_api = Axios.create({
-  baseURL: env.VITE_DEV_API_URL + "/public",
+  baseURL: API_URL + "/public",
 });
 
 public_api.interceptors.request.use(publicRequestInterceptor);

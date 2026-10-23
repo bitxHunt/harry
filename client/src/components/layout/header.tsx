@@ -68,16 +68,16 @@ export function Header() {
   const active = useActiveSection(onHome);
 
   return (
-    <header className="sticky top-0 z-50 px-3 pt-3">
-      <div className="mx-auto flex h-14 max-w-6xl items-center md:h-12 justify-between gap-3 rounded-xl border border-[var(--line)] bg-[color-mix(in_srgb,var(--background)_78%,transparent)] px-2 font-mono text-[12px] backdrop-blur-xl">
-        <Link to="/" className="flex h-10 shrink-0 items-center rounded-lg px-2.5 transition hover:bg-panel md:h-auto md:py-1.5" aria-label="Home">
+    <header className="sticky top-0 z-50 mx-auto max-w-6xl px-5 pt-3 md:px-10">
+      <div className="flex h-14 items-center md:h-12 justify-between gap-2 rounded-xl border border-[var(--line)] bg-[color-mix(in_srgb,var(--background)_78%,transparent)] px-2 font-mono text-[12px] backdrop-blur-xl">
+        <Link to="/" className="flex h-10 shrink-0 items-center rounded-lg px-2 transition hover:bg-panel md:h-auto md:py-1.5" aria-label="Home">
           <span className="text-arch">harry</span>
           <span className="hidden text-dim sm:inline">@arch</span>
           <span className="ml-1 text-holo">~</span>
-          <span className="animate-caret ml-1 inline-block h-3.5 w-1.5 bg-holo" aria-hidden />
+          <span className="animate-caret ml-1 hidden h-3.5 w-1.5 bg-holo sm:inline-block" aria-hidden />
         </Link>
 
-        <nav aria-label="Sections" className="flex min-w-0 items-center gap-0.5 overflow-x-auto [scrollbar-width:none]">
+        <nav aria-label="Sections" className="flex min-w-0 items-center overflow-x-auto sm:gap-0.5 [scrollbar-width:none]">
           {WORKSPACES.map((w) => {
             const isActive = onHome && active === w.id;
             return (
@@ -89,18 +89,18 @@ export function Header() {
                 title={w.label}
                 aria-current={isActive ? "true" : undefined}
                 className={cn(
-                  "flex h-9 min-w-9 shrink-0 items-center justify-center gap-1.5 rounded-md px-2 transition md:h-7 md:min-w-0",
+                  "flex h-9 min-w-8 shrink-0 items-center justify-center gap-1.5 rounded-md px-1.5 transition sm:min-w-9 sm:px-2 md:h-7 md:min-w-0",
                   isActive ? "bg-holo text-background" : "text-dim hover:bg-panel hover:text-foreground",
                 )}
               >
                 <span className="font-semibold">{w.n}</span>
-                <span className={cn("hidden xl:inline", isActive && "md:inline")}>{w.label}</span>
+                <span className="hidden md:inline">{w.label}</span>
               </Link>
             );
           })}
         </nav>
 
-        <span className="hidden shrink-0 px-2 text-dim md:inline">{time} SGT</span>
+        <span className="hidden shrink-0 px-2 text-dim lg:inline">{time} SGT</span>
       </div>
     </header>
   );

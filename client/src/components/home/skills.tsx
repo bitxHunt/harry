@@ -1,6 +1,6 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useSectionKeys } from "@/hooks/useSectionKeys";
-import { experiences, projects, stack } from "@/data";
+import { certifications, experiences, projects, stack } from "@/data";
 import { buildRows } from "@/lib/tech-usage";
 import { cn } from "@/lib/utils";
 import { SectionHead } from "@/components/terminal/section-head";
@@ -15,7 +15,14 @@ export function Skills() {
   const [selected, setSelected] = useState(0);
   const [searching, setSearching] = useState(false);
   const [expanded, setExpanded] = useState(false);
-  const TOP = 10;
+  // fewer rows on phones; the rest are one tap away
+  const [TOP, setTop] = useState(() => (window.matchMedia("(min-width: 768px)").matches ? 8 : 5));
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)");
+    const on = () => setTop(mq.matches ? 8 : 5);
+    mq.addEventListener("change", on);
+    return () => mq.removeEventListener("change", on);
+  }, []);
   const searchRef = useRef<HTMLInputElement>(null);
   const tableRef = useRef<HTMLDivElement>(null);
   const [cardTop, setCardTop] = useState<number | null>(null);
@@ -27,7 +34,7 @@ export function Skills() {
   // no inner scrollbar: show the top processes, the rest on request (or while searching)
   const shown = expanded || query ? visible : visible.slice(0, TOP);
   const current = shown[Math.min(selected, shown.length - 1)];
-  const maxGroup = Math.max(...stack.map((g) => g.packages.length));
+  const maxGroup = Math.max(...stack.map((g) => g.items.length));
   const maxShare = Math.max(...rows.map((r) => r.share));
   const bar = (share: number) => Math.max(1, Math.round((share / maxShare) * 14));
 
@@ -66,22 +73,23 @@ export function Skills() {
             <div className="space-y-1.5">
               {stack.map((g, i) => (
                 <div key={g.group} className="flex items-center gap-2">
-                  <span className="w-12 text-holo">{g.group}</span>
+                  <span className="w-12 text-holo">{g.short}</span>
                   <span className="text-dim">[</span>
                   <span className="relative h-3.5 flex-1 overflow-hidden">
-                    <span className="absolute inset-y-0 left-0 overflow-hidden" style={{ width: `${(g.packages.length / maxGroup) * 100}%` }}>
+                    <span className="absolute inset-y-0 left-0 overflow-hidden" style={{ width: `${(g.items.length / maxGroup) * 100}%` }}>
                       <span className="fill-bar block h-full overflow-hidden whitespace-nowrap leading-[14px] tracking-[-1px] text-holo" style={{ ["--i" as string]: i }}>
                         {"|".repeat(80)}
                       </span>
                     </span>
                   </span>
-                  <span className="w-16 text-right text-dim">{g.packages.length} pkgs]</span>
+                  <span className="w-16 text-right text-dim">{g.items.length} pkgs]</span>
                 </div>
               ))}
             </div>
             <div className="space-y-1.5 text-dim">
               <p>Tasks: <span className="text-foreground">{sources}</span> ({projects.length} projects, {experiences.length} roles), <span className="text-foreground">{rows.length}</span> techs</p>
               <p>Uptime: <span className="text-foreground">building since 2023</span></p>
+              <p className="hidden md:block">Certs: <span className="text-foreground">{certifications.join(", ")}</span></p>
               <p>Most used: <span className="text-holo">{[...rows].sort((a, b) => b.share - a.share).slice(0, 3).map((r) => r.name).join(", ")}</span></p>
               <p className="pt-2 text-[11px]">%USE = share of my projects and roles that used it</p>
             </div>
@@ -128,7 +136,7 @@ export function Skills() {
                 onClick={() => setExpanded((x) => !x)}
                 className="w-full border-t border-[var(--line)] px-5 py-2 text-left text-dim transition hover:bg-panel hover:text-holo"
               >
-                {expanded ? "▴ show top 10" : `▾ show all ${visible.length} processes`}
+                {expanded ? `▴ show top ${TOP}` : `▾ show all ${visible.length} processes`}
               </button>
             )}
           </div>

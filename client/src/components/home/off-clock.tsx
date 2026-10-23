@@ -14,7 +14,7 @@ export function OffClock() {
   const [index, setIndex] = useState(0);
   const unit = offClock[index];
   const next = (d: number) => setIndex((i) => (i + d + offClock.length) % offClock.length);
-  // arrows inside the list; j/k whenever the section is on screen
+  // arrows inside the list; j/k anywhere in the section once it has focus
   const onKey = (e: KeyboardEvent) => {
     if (e.key === "ArrowDown") { e.preventDefault(); next(1); }
     if (e.key === "ArrowUp") { e.preventDefault(); next(-1); }
@@ -24,7 +24,7 @@ export function OffClock() {
     if (e.key === "k") return next(-1), true;
     return false;
   });
-  const cols = "grid grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] gap-3 sm:grid-cols-[minmax(0,1fr)_64px_64px_80px_minmax(0,1.6fr)]";
+  const cols = "grid grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] gap-3 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)]";
 
   return (
     <section id="off-clock" className="mx-auto max-w-6xl px-5 py-12 md:px-10 md:py-24">
@@ -34,19 +34,15 @@ export function OffClock() {
           {/* list-units */}
           <div className={cn(cols, "border-b border-[var(--line)] px-5 py-2 text-dim")}>
             <span>UNIT</span>
-            <span className="hidden sm:block">LOAD</span>
-            <span className="hidden sm:block">ACTIVE</span>
-            <span className="hidden sm:block">SUB</span>
-            <span>DESCRIPTION</span>
+            <span>WHAT IT IS</span>
           </div>
-          <div role="listbox" aria-label="Life outside work" tabIndex={0} className="stagger py-1 outline-none focus-visible:ring-1 focus-visible:ring-holo/50">
+          <div role="listbox" aria-label="Life outside work" tabIndex={0} className="stagger py-1">
             {offClock.map((o, i) => (
               <button
                 key={o.unit}
                 role="option"
                 aria-selected={i === index}
                 onClick={() => setIndex(i)}
-                onMouseEnter={() => setIndex(i)}
                 style={{ ["--i" as string]: i }}
                 className={cn(
                   cols,
@@ -55,9 +51,6 @@ export function OffClock() {
                 )}
               >
                 <span className="truncate"><span className="text-holo">●</span> {o.unit}.service</span>
-                <span className="hidden sm:block">loaded</span>
-                <span className="hidden text-holo sm:block">active</span>
-                <span className="hidden text-holo sm:block">running</span>
                 <span className="truncate">{o.title}</span>
               </button>
             ))}

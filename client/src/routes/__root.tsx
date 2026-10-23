@@ -12,6 +12,16 @@ const RouterDevtools = import.meta.env.DEV
   ? lazy(() => import("@tanstack/react-router-devtools").then((m) => ({ default: m.TanStackRouterDevtools })))
   : () => null;
 
+// Last resort if a whole route crashes: plain text, never a raw stack trace.
+const RouteError = () => (
+  <section className="mx-auto max-w-2xl px-5 py-24 font-mono text-sm text-muted-foreground">
+    <p className="text-foreground">Something on this page broke.</p>
+    <p className="mt-2">
+      Refresh to try again, or <a className="text-arch underline-offset-4 hover:underline" href="/">go back home</a>.
+    </p>
+  </section>
+);
+
 const RootLayout = () => (
   <div>
     <Starfield />
@@ -34,5 +44,6 @@ const RootLayout = () => (
 export const Route = createRootRoute({
   component: RootLayout,
   pendingComponent: LoadingScreen,
+  errorComponent: RouteError,
   pendingMinMs: 300,
 });

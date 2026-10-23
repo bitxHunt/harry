@@ -6,9 +6,9 @@ import { Terminal } from "@/components/terminal/terminal";
 
 // Experience as `git log --graph`: each role is a commit, click to expand the diff.
 export function Experience() {
-  // first entry open on desktop; everything collapsed on phones to keep the page short
+  // the role marked `open` starts expanded on desktop; everything collapsed on phones to keep the page short
   const [open, setOpen] = useState<string | null>(() =>
-    window.matchMedia("(min-width: 768px)").matches ? experiences[0].hash : null,
+    window.matchMedia("(min-width: 768px)").matches ? (experiences.find((e) => e.open) ?? experiences[0]).hash : null,
   );
 
   return (
@@ -36,7 +36,7 @@ export function Experience() {
                     <span className="font-sans text-muted-foreground">@ {e.org}</span>
                     <span className="ml-auto text-xs text-dim">{e.period}</span>
                   </button>
-                  <div className={cn("grid transition-[grid-template-rows] duration-500 ease-out", expanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]")}>
+                  <div className={cn("grid transition-[grid-template-rows] duration-[250ms] ease-out", expanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]")}>
                     <div className="overflow-hidden">
                       <ul className="mt-2 space-y-1.5 px-2 font-sans text-[15px] leading-relaxed text-muted-foreground">
                         {e.bullets.map((b) => (

@@ -86,7 +86,7 @@
   --holo-violet: #a78bfa;
   --holo-pink: #f0abfc;
   --arch: #36a9e6;
-  --dim: #5d6b84;
+  --dim: #717f99;
   --panel: rgba(12, 22, 40, 0.55);
   --glow: rgba(54, 169, 230, 0.26);
   --line: rgba(124, 242, 255, 0.1);
@@ -133,7 +133,7 @@ html[data-accent="mocha"] {
   --secondary-foreground: #cdd6f4;
   --accent-foreground: #cdd6f4;
   --muted-foreground: #a6adc8;
-  --dim: #7f849c;
+  --dim: #878ca6;
   --panel: rgba(24, 24, 37, 0.62);
   --border: rgba(205, 214, 244, 0.1);
   --input: rgba(205, 214, 244, 0.1);
@@ -163,7 +163,7 @@ html[data-accent="latte"] {
   --secondary-foreground: #4c4f69;
   --accent-foreground: #4c4f69;
   --muted-foreground: #5c5f77;
-  --dim: #8c8fa1;
+  --dim: #65687e;
   --panel: rgba(230, 233, 239, 0.75);
   --border: rgba(76, 79, 105, 0.14);
   --input: rgba(76, 79, 105, 0.14);
@@ -192,7 +192,7 @@ html[data-accent="rosepine"] {
   --secondary-foreground: #e0def4;
   --accent-foreground: #e0def4;
   --muted-foreground: #908caa;
-  --dim: #6e6a86;
+  --dim: #86829e;
   --panel: rgba(31, 29, 46, 0.62);
   --border: rgba(224, 222, 244, 0.1);
   --input: rgba(224, 222, 244, 0.1);
@@ -221,7 +221,7 @@ html[data-accent="tokyonight"] {
   --secondary-foreground: #c0caf5;
   --accent-foreground: #c0caf5;
   --muted-foreground: #a9b1d6;
-  --dim: #565f89;
+  --dim: #7f84a6;
   --panel: rgba(22, 22, 30, 0.62);
   --border: rgba(192, 202, 245, 0.1);
   --input: rgba(192, 202, 245, 0.1);
@@ -250,7 +250,7 @@ html[data-accent="decaygreen"] {
   --secondary-foreground: #dfe8e3;
   --accent-foreground: #dfe8e3;
   --muted-foreground: #a3b5ab;
-  --dim: #6b7d73;
+  --dim: #7a8c82;
   --panel: rgba(20, 26, 23, 0.62);
   --border: rgba(223, 232, 227, 0.1);
   --input: rgba(223, 232, 227, 0.1);
@@ -277,6 +277,11 @@ html[data-mode="light"] .nebula { opacity: 0.18; }
   * {
     @apply border-border outline-ring/50;
   }
+  /* keyboard focus is always visible, in the theme's accent */
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
   html { background: var(--background); scrollbar-width: none; }
   html::-webkit-scrollbar { display: none; }
   /* body stays transparent so the fixed starfield behind it shows through */
@@ -289,9 +294,6 @@ html[data-mode="light"] .nebula { opacity: 0.18; }
     font-weight: 700;
     letter-spacing: -0.02em;
   }
-  /* custom cursor: hide the native one, except in text fields */
-  html.holo-cursor, html.holo-cursor * { cursor: none !important; }
-  html.holo-cursor input, html.holo-cursor textarea, html.holo-cursor select, html.holo-cursor [contenteditable="true"] { cursor: text !important; }
   ::selection {
     background: var(--holo-cyan);
     color: var(--background);
@@ -428,7 +430,7 @@ html[data-mode="light"] .nebula { opacity: 0.18; }
   @media (min-width: 768px) { .theme-grid { display: flex; flex-wrap: wrap; max-width: none; } }
 
   /* section tag brackets close in when the section appears */
-  .lock-on { opacity: 0; transform: translate(var(--lx), var(--ly)); transition: transform 0.6s cubic-bezier(0.34, 1.5, 0.5, 1) 0.15s, opacity 0.3s ease 0.15s; }
+  .lock-on { opacity: 0; transform: translate(var(--lx), var(--ly)); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.15s, opacity 0.3s ease 0.15s; }
   .in .lock-on { opacity: 1; transform: none; }
 
   /* pacman-style progress bar */
@@ -479,17 +481,17 @@ html[data-mode="light"] .nebula { opacity: 0.18; }
     width: calc(var(--n) * 1ch);
     animation: typing 0.9s steps(var(--n)) 0.25s both;
   }
-  /* transformation: the headline settling into place */
+  /* transformation: the headline settling into place (transform + opacity only, no layout) */
   @keyframes stretch-in {
-    0% { letter-spacing: 0.08em; filter: blur(4px); opacity: 0.3; }
-    100% { letter-spacing: -0.03em; filter: none; opacity: 1; }
+    0% { transform: translateY(0.12em) scaleX(1.06); opacity: 0.3; }
+    100% { transform: none; opacity: 1; }
   }
-  .animate-stretch-in { animation: stretch-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  .animate-stretch-in { transform-origin: left center; animation: stretch-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
   .animate-spin-hand { animation: spin-hand linear infinite; }
   .animate-caret { animation: caret 1s steps(1) infinite; }
 
   @media (prefers-reduced-motion: reduce) {
-    .starfield > span, .nebula, .holo-text, .animate-caret, .typing, .animate-stretch-in { animation: none !important; }
+    .starfield > span, .nebula, .holo-text, .animate-caret, .typing, .animate-stretch-in, .animate-spin-hand { animation: none !important; }
     .reveal, .stagger > * { opacity: 1; transform: none; transition: none; }
     .draw-line { transform: none; transition: none; }
     .fill-bar { width: 100%; transition: none; }

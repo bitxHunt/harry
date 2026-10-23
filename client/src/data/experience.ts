@@ -8,43 +8,32 @@ export type Experience = {
   tags: string[];
   bullets: string[];
   head?: boolean;
+  open?: boolean; // expanded by default on desktop
 };
 
-// Newest first, shown like `git log`.
+// Same order and facts as the CV, shown like `git log`.
 export const experiences: Experience[] = [
   {
+    hash: "5b81f2d",
+    role: "Coding Instructor (Part-time)",
+    org: "Strive Math, NovaLearn, private tutoring",
+    period: "Sep 2025 – Present",
+    tags: ["python", "scratch", "micro:bit"],
+    head: true,
+    bullets: [
+      "Run Python classes at Strive Math, visualising maths with code through art and animation projects.",
+      "Tutor students privately in programming, including Scratch, and built micro:bit lessons for NovaLearn.",
+    ],
+  },
+  {
     hash: "e7c9a41",
-    role: "Project Manager (Intern)",
+    role: "Project Manager (Internship)",
     org: "Orfeostory Pte. Ltd.",
     period: "Dec 2025 – Jun 2026",
     tags: ["delivery", "stakeholders", "scrum"],
     bullets: [
-      "Managed end-to-end delivery of 5+ web and mobile projects for clients including National Institute of Education, Kopi Brewery, Aquinas Law, SBC Corporate Management and Calvary Carpentry, from proposal through testing, launch and handover training.",
-      "Led cross-functional teams (design, development, QA, SEO) and handled module scoping, timelines and stakeholder communication across every project.",
-    ],
-  },
-  {
-    hash: "5b81f2d",
-    role: "Coding Instructor (Part-time)",
-    org: "Strive Math",
-    period: "Sep 2025 – Present",
-    tags: ["teaching", "python"],
-    head: true,
-    bullets: [
-      "Teach Python programming fundamentals to primary school students.",
-      "Design interdisciplinary lessons that combine mathematics with coding, guiding students through visual art and animation projects in the company's web IDE.",
-    ],
-  },
-  {
-    hash: "a3d09c7",
-    role: "Web Developer",
-    org: "RExus Bioenergy",
-    period: "Apr 2025 – Oct 2025",
-    tags: ["react", "express", "prisma"],
-    bullets: [
-      "Designed and built a responsive company website and CMS to attract potential stakeholders.",
-      "Developed REST APIs and integrated third-party data sources for real-time reporting.",
-      "Maintained the production environment with monitoring, security patches and performance work.",
+      "Managed end-to-end delivery of 5+ web and mobile projects for clients including National Institute of Education, Kopi Brewery and Aquinas Law, from proposal through testing, launch and handover training.",
+      "Led cross-functional teams (design, development, QA, SEO) and managed scoping, timelines and client communication.",
     ],
   },
   {
@@ -52,17 +41,17 @@ export const experiences: Experience[] = [
     role: "Lead DevOps",
     org: "IMCS Toolkit @ Singapore Polytechnic",
     period: "Oct 2024 – Aug 2025",
-    tags: ["terraform", "aws", "ci/cd"],
+    tags: ["terraform", "github-actions", "aws", "docker"],
+    open: true,
     bullets: [
-      "Built an AI-powered business excellence toolkit with automated digital forms and a management dashboard for 500 users.",
-      "Implemented infrastructure-as-code with Terraform and GitHub Actions for automated testing, containerised deployments and AWS provisioning.",
-      "Integrated budget alarms and an AI autofill feature with AWS OpenSearch and Bedrock.",
+      "Developed an AI-powered business excellence toolkit with automated digital forms and a management dashboard for 500 users.",
+      "Implemented infrastructure as code with Terraform and GitHub Actions for automated testing, containerised deployments and AWS provisioning.",
+      "Integrated budget alarms and an AI autofill feature using AWS OpenSearch and Bedrock.",
     ],
   },
 ];
 
 export const education = [
-  { school: "National University of Singapore", detail: "Bachelor of Computing, Computer Science", period: "2026 – 2030" },
-  { school: "Singapore Management University", detail: "Semester exchange, Computer Science", period: "Aug – Dec 2025" },
-  { school: "Singapore Polytechnic", detail: "Diploma in Information Technology with Merit", period: "2023 – 2026" },
+  { school: "National University of Singapore", detail: "Bachelor of Computing, Computer Science", period: "Aug 2026 – Aug 2030" },
+  { school: "Singapore Polytechnic", detail: "Diploma in Information Technology with Merit, Director's Honour Roll · SMU exchange (Java, discrete maths)", period: "Apr 2023 – Apr 2026" },
 ];

@@ -8,6 +8,7 @@ import { Projects } from "@/components/home/projects";
 import { Skills } from "@/components/home/skills";
 import { OffClock } from "@/components/home/off-clock";
 import { useReveal } from "@/hooks/useReveal";
+import { SectionError } from "@/components/layout/section-error";
 
 // Below the fold, and they pull in the form libraries (react-hook-form, zod, axios),
 // so they load after first paint instead of with it.
@@ -39,9 +40,11 @@ function HomePage() {
       <Projects />
       <Skills />
       <OffClock />
-      <Suspense fallback={<SectionFallback />}>
-        <LazySections />
-      </Suspense>
+      <SectionError>
+        <Suspense fallback={<SectionFallback />}>
+          <LazySections />
+        </Suspense>
+      </SectionError>
     </>
   );
 }
