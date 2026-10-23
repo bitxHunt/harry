@@ -21,9 +21,20 @@ export const projects: Project[] = [
     kind: "LifeHack 2026 · 1st Runner-up",
     year: "2026",
     description:
-      "Simulates how AI shopping agents rank products. It separates what a product page says from what the product actually does, to show which losses one sentence of copy can fix. I built the first prototype, then ported it to Next.js and React, added product photo upload and deployed it on Render.",
-    tags: ["Next.js", "React", "Render"],
+      "Simulates how AI shopping agents rank products. It separates what a product page says from what the product actually does, to show which losses one sentence of copy can fix. I built the first prototype, then ported it to Next.js and React, added product photo upload and deployed it on Vercel.",
+    tags: ["Next.js", "React", "Vercel"],
     github: "https://github.com/bitxHunt/Lifehack-26",
+    live: null,
+  },
+  {
+    slug: "study-buddy",
+    title: "Study Buddy",
+    kind: "Personal project",
+    year: "2026",
+    description:
+      "A dashboard that reads my study log and shows where my study time goes, with a focus timer that saves each session back to the log.",
+    tags: ["React", "TanStack", "Express", "Prisma", "PostgreSQL", "Docker"],
+    github: null,
     live: null,
   },
   {
@@ -36,17 +47,6 @@ export const projects: Project[] = [
     tags: ["TypeScript", "Vite", "PWA"],
     github: null,
     live: "https://csdrills.onrender.com",
-  },
-  {
-    slug: "study-buddy",
-    title: "Study Buddy",
-    kind: "Personal project",
-    year: "2026",
-    description:
-      "A dashboard that reads my study log and shows where my study time goes, with a focus timer that saves each session back to the log.",
-    tags: ["React", "TanStack", "Express", "Prisma", "PostgreSQL", "Docker"],
-    github: null,
-    live: null,
   },
   {
     slug: "portfolio",
