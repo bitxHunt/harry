@@ -39,7 +39,7 @@ export function Hero() {
   return (
     <section id="top" className="relative isolate overflow-hidden">
 
-      <div className="mx-auto grid max-w-6xl items-center gap-2 px-5 pb-8 pt-6 md:gap-10 md:px-10 md:pb-16 md:pt-8 lg:min-h-[calc(100svh-4rem)] lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:pt-0">
+      <div className="mx-auto grid max-w-6xl items-center gap-2 px-5 pb-8 pt-6 md:gap-10 md:px-10 md:pb-4 md:pt-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:landscape:min-h-[calc(100svh-4rem)] lg:landscape:pb-16 lg:landscape:pt-0">
         <div className="relative z-10 min-w-0">
           <p key={command} className="font-mono text-sm text-dim">
             <span className="text-arch">{profile.handle}@{profile.host}</span> <span className="text-holo">~</span> %{" "}
