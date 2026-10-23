@@ -16,15 +16,15 @@ export type Project = {
 // Shown in a two-pane file browser (list + preview). Same order and facts as the CV.
 export const projects: Project[] = [
   {
-    slug: "pickme",
-    title: "PickMe",
-    kind: "LifeHack 2026 · 1st Runner-up",
+    slug: "csdrills",
+    title: "CSDrills",
+    kind: "Personal project",
     year: "2026",
     description:
-      "Simulates how AI shopping agents rank products. It separates what a product page says from what the product actually does, to show which losses one sentence of copy can fix. I built the first prototype, then ported it to Next.js and React, added product photo upload and deployed it on Vercel.",
-    tags: ["Next.js", "React", "Vercel"],
-    github: "https://github.com/bitxHunt/Lifehack-26",
-    live: null,
+      "An offline-first quiz racing PWA for three NUS modules (Java, computer organisation, maths), with 60+ stations and parameterised question generators. Every answer is verified with javac, gcc and independent checkers (35,000+ generated variants).",
+    tags: ["TypeScript", "Vite", "PWA"],
+    github: null,
+    live: "https://csdrills.onrender.com",
   },
   {
     slug: "study-buddy",
@@ -38,15 +38,15 @@ export const projects: Project[] = [
     live: null,
   },
   {
-    slug: "csdrills",
-    title: "CSDrills",
-    kind: "Personal project",
+    slug: "pickme",
+    title: "PickMe",
+    kind: "LifeHack 2026 · 1st Runner-up",
     year: "2026",
     description:
-      "An offline-first quiz racing PWA for three NUS modules (Java, computer organisation, maths), with 60+ stations and parameterised question generators. Every answer is verified with javac, gcc and independent checkers (35,000+ generated variants).",
-    tags: ["TypeScript", "Vite", "PWA"],
-    github: null,
-    live: "https://csdrills.onrender.com",
+      "Simulates how AI shopping agents rank products. It separates what a product page says from what the product actually does, to show which losses one sentence of copy can fix. I built the first prototype, then ported it to Next.js and React, added product photo upload and deployed it on Vercel.",
+    tags: ["Next.js", "React", "Vercel"],
+    github: "https://github.com/bitxHunt/Lifehack-26",
+    live: null,
   },
   {
     slug: "portfolio",
