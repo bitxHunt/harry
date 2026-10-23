@@ -38,6 +38,17 @@ export const projects: Project[] = [
     live: "https://csdrills.onrender.com",
   },
   {
+    slug: "study-buddy",
+    title: "Study Buddy",
+    kind: "Personal project",
+    year: "2026",
+    description:
+      "A dashboard that reads my study log and shows where my study time goes, with a focus timer that saves each session back to the log.",
+    tags: ["React", "TanStack", "Express", "Prisma", "PostgreSQL", "Docker"],
+    github: null,
+    live: null,
+  },
+  {
     slug: "portfolio",
     title: "Personal Portfolio Site",
     kind: "Personal project",
